@@ -32,13 +32,13 @@ class AddPayrollForeignKeys extends Migration
     public function down()
     {
         Schema::table('payout_deductions', function (Blueprint $table) {
-            $table->dropForeign('payoutid');
-            $table->dropForeign('type');
+            $table->dropForeign(['payoutid']);
+            $table->dropForeign(['type']);
         });
         
 
         Schema::table('employee_active_deductions', function (Blueprint $table) {
-            $table->dropForeign('type');
+            $table->dropForeign(['type']);
         });        
     }
 }

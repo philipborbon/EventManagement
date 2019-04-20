@@ -17,9 +17,9 @@ class CreateMonthlyPayoutsTable extends Migration
             $table->increments('id');
             $table->integer('userid')->unsigned();
             $table->double('payout', 8, 2);
-            $table->double('actualpayout', 8, 2);
-            $table->dateTime('dateavailable');
-            $table->dateTime('datecollected'); 
+            $table->double('actualpayout', 8, 2)->nullable();
+            $table->dateTime('dateavailable')->nullable();
+            $table->dateTime('datecollected')->nullable();
             $table->timestamps();
             
             $table->foreign('userid')->references('id')->on('users');

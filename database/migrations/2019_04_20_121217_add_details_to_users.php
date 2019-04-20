@@ -17,10 +17,10 @@ class AddDetailsToUsers extends Migration
             $table->renameColumn('name', 'firstname');
             $table->string('lastname');
             $table->enum('usertype', ['employee', 'investor', 'participants']);
-            $table->integer('age')->unsigned();
-            $table->text('address');
-            $table->enum('sex', ['F', 'M']);
-            $table->enum('maritalstatus', ['single', 'married', 'divorced', 'separated', 'widowed']);
+            $table->integer('age')->unsigned()->nullable();
+            $table->text('address')->nullable();
+            $table->enum('sex', ['F', 'M'])->nullable();
+            $table->enum('maritalstatus', ['single', 'married', 'divorced', 'separated', 'widowed'])->nullable();
         });
     }
 
@@ -31,12 +31,14 @@ class AddDetailsToUsers extends Migration
      */
     public function down()
     {
-            $table->renameColumn('firstname', 'name');
+        Schema::table('users', function (Blueprint $table) {
+            DB::statement('ALTER TABLE users CHANGE firstname name VARCHAR(255)');
             $table->dropColumn('lastname');
             $table->dropColumn('usertype');
             $table->dropColumn('age');
             $table->dropColumn('address');
             $table->dropColumn('sex');
             $table->dropColumn('maritalstatus');
+        });
     }
 }
