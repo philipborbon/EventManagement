@@ -3,15 +3,10 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
-use EventManagement\DeductionType;
+use EventManagement\Event;
 
-class DeductionTypeController extends Controller
+class EventController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,8 +19,8 @@ class DeductionTypeController extends Controller
      */
     public function index()
     {
-        $types = DeductionType::all();
-        return view('deductiontype.index', compact('types'));
+        $events = Event::all();
+        return view('event.index', compact('events'));
     }
 
     /**
@@ -35,7 +30,7 @@ class DeductionTypeController extends Controller
      */
     public function create()
     {
-        return view('deductiontype.create');
+        return view('event.create');
     }
 
     /**
@@ -46,14 +41,15 @@ class DeductionTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $type = $this->validate(request(), [
-          'name' => 'required|string',
-          'description' => 'nullable|string'
+        $event = $this->validate(request(), [
+            'description' => 'required|string',
+            'location' => 'required|string',
+            'date' => 'nullable|date'
         ]);
 
-        DeductionType::create($type);
+        Event::create($event);
 
-        return back()->with('success', 'Type has been added.');;
+        return back()->with('success', 'Event has been added.');
     }
 
     /**
@@ -75,8 +71,8 @@ class DeductionTypeController extends Controller
      */
     public function edit($id)
     {
-        $type = DeductionType::find($id);
-        return view('deductiontype.edit', compact('type','id'));
+        $event = Event::find($id);
+        return view('event.edit', compact('id', 'event'));
     }
 
     /**
@@ -88,18 +84,20 @@ class DeductionTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $type = DeductionType::find($id);
+        $event = Event::find($id);
 
         $this->validate(request(), [
-          'name' => 'required|string',
-          'description' => 'nullable|string'
+            'description' => 'required|string',
+            'location' => 'required|string',
+            'date' => 'nullable|date'
         ]);
-        $type->name = $request->get('name');
-        $type->description = $request->get('description');
-        $type->save();
+        $event->description = $request->get('description');
+        $event->location = $request->get('location');
+        $event->date = $request->get('date');
+        $event->save();
 
 
-        return redirect('deductiontypes')->with('success','Type has been updated.');
+        return redirect('events')->with('success','Event has been updated.');
     }
 
     /**
@@ -110,8 +108,6 @@ class DeductionTypeController extends Controller
      */
     public function destroy($id)
     {
-        $type = DeductionType::find($id);
-        $type->delete();
-        return redirect('deductiontypes')->with('success','Type has been  deleted.');
+        //
     }
 }

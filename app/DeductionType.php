@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class DeductionType extends Model
 {
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'description'];
 }

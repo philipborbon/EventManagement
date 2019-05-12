@@ -11,19 +11,38 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group row">
-                            <label class="col-lg-4 col-form-label text-lg-right">Name</label>
+                            <label class="col-lg-4 col-form-label text-lg-right">First Name</label>
 
                             <div class="col-lg-6">
                                 <input
                                         type="text"
-                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                        name="name"
-                                        value="{{ old('name') }}"
+                                        class="form-control{{ $errors->has('firstname') ? ' is-invalid' : '' }}"
+                                        name="firstname"
+                                        value="{{ old('firstname') }}"
                                         required
                                 >
-                                @if ($errors->has('name'))
+                                @if ($errors->has('firstname'))
                                     <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('firstname') }}</strong>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-lg-4 col-form-label text-lg-right">Last Name</label>
+
+                            <div class="col-lg-6">
+                                <input
+                                        type="text"
+                                        class="form-control{{ $errors->has('lastname') ? ' is-invalid' : '' }}"
+                                        name="lastname"
+                                        value="{{ old('lastname') }}"
+                                        required
+                                >
+                                @if ($errors->has('lastname'))
+                                    <div class="invalid-feedback">
+                                        <strong>{{ $errors->first('lastname') }}</strong>
                                     </div>
                                 @endif
                             </div>

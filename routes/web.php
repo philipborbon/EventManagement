@@ -12,16 +12,18 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->action('HomeController@index');
+    } else {
+        return view('welcome');
+    }
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('deductiontype','DeductionTypeController');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
+Route::resource('events','EventController');
+Route::resource('salarygrades','SalaryGradeController');
+Route::resource('deductiontypes','DeductionTypeController');
+Route::resource('users','UserController');

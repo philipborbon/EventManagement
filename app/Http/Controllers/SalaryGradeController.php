@@ -3,15 +3,11 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
-use EventManagement\DeductionType;
+use EventManagement\SalaryGrade;
+use EventManagement\User;
 
-class DeductionTypeController extends Controller
+class SalaryGradeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('auth');
@@ -24,8 +20,8 @@ class DeductionTypeController extends Controller
      */
     public function index()
     {
-        $types = DeductionType::all();
-        return view('deductiontype.index', compact('types'));
+        $users = SalaryGrade::with('user')->get();
+        return view('salarygrade.index', compact('users'));
     }
 
     /**
@@ -35,7 +31,8 @@ class DeductionTypeController extends Controller
      */
     public function create()
     {
-        return view('deductiontype.create');
+        $users = User::where('usertype', 'employee')->get();
+        return view('salarygrade.create', compact('users'));
     }
 
     /**
@@ -46,14 +43,22 @@ class DeductionTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $type = $this->validate(request(), [
-          'name' => 'required|string',
-          'description' => 'nullable|string'
+        $input = $this->validate(request(), [
+            'userid' => 'required|exists:users,id',
+            'dailypay' => 'required|regex:/^\d+(\.\d{1,2})?$/'
         ]);
 
-        DeductionType::create($type);
+        $grade = SalaryGrade::where('userid', $input['userid'])->first();
 
-        return back()->with('success', 'Type has been added.');;
+        if ($grade) {
+            $grade->dailypay = $input['dailypay'];
+            $grade->save();
+
+            return redirect('salarygrades')->with('success', 'Salary has been updated.');
+        } else {
+            SalaryGrade::create($input);
+            return redirect('salarygrades')->with('success', 'Salary has been assigned.');
+        }
     }
 
     /**
@@ -75,8 +80,10 @@ class DeductionTypeController extends Controller
      */
     public function edit($id)
     {
-        $type = DeductionType::find($id);
-        return view('deductiontype.edit', compact('type','id'));
+        $users = User::where('usertype', 'employee')->get();
+        $grade = SalaryGrade::find($id);
+
+        return view('salarygrade.create', compact('users', 'grade'));
     }
 
     /**
@@ -88,18 +95,7 @@ class DeductionTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $type = DeductionType::find($id);
-
-        $this->validate(request(), [
-          'name' => 'required|string',
-          'description' => 'nullable|string'
-        ]);
-        $type->name = $request->get('name');
-        $type->description = $request->get('description');
-        $type->save();
-
-
-        return redirect('deductiontypes')->with('success','Type has been updated.');
+        //
     }
 
     /**
@@ -110,8 +106,8 @@ class DeductionTypeController extends Controller
      */
     public function destroy($id)
     {
-        $type = DeductionType::find($id);
-        $type->delete();
-        return redirect('deductiontypes')->with('success','Type has been  deleted.');
+        $grade = SalaryGrade::find($id);
+        $grade->delete();
+        return redirect('salarygrades')->with('success','Salary has been removed.');
     }
 }

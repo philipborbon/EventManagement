@@ -4,6 +4,7 @@ namespace EventManagement;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use EventManagement\SalaryGrade;
 
 class User extends Authenticatable
 {
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password',
+        'firstname', 'lastname', 'email', 'password', 'usertype', 'age', 'address', 'sex', 'maritalstatus'
     ];
 
     /**
@@ -26,4 +27,27 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function getFullname()
+    {
+      return "{$this->firstname} {$this->lastname}";
+    }
+
+    public function getUserType(){
+        $type = $this->usertype;
+
+        $description = "";
+
+        $types = config('enums.usertype');
+
+        if ( array_key_exists($type, $types) ) {
+            $description = $types[$type];
+        }
+
+        return $description;
+    }
+
+    public function hasSalaryGrade(){
+        $this->hasOne(SalaryGrade::class, 'userid');
+    }
 }
