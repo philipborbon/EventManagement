@@ -3,6 +3,7 @@
 namespace EventManagement;
 
 use Illuminate\Database\Eloquent\Model;
+use EventManagement\Activity;
 
 class Event extends Model
 {
@@ -20,5 +21,9 @@ class Event extends Model
         }
 
         return $description;
+    }
+
+    public function activities(){
+        return $this->hasMany(Activity::class, 'eventid');
     }
 }

@@ -15,12 +15,15 @@ class CreateRentalSpacesTable extends Migration
     {
         Schema::create('rental_spaces', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('description')->nullable();
+            $table->integer('eventid')->unsigned();
+            $table->text('name')->nullable();
             $table->text('location')->nullable();
             $table->double('area', 8, 2)->nullable();
-            $table->boolean('available')->nullable();
+            $table->enum('status', ['available', 'reserved', 'rented'])->default('available');
             $table->double('amount', 8, 2)->nullable();
             $table->timestamps();
+            
+            $table->foreign('eventid')->references('id')->on('events');
         });
     }
 

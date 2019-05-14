@@ -47,7 +47,7 @@ class User extends Authenticatable
         return $description;
     }
 
-    public function hasSalaryGrade(){
+    public function salaryGrade(){
         $this->hasOne(SalaryGrade::class, 'userid');
     }
 }

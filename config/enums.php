@@ -24,5 +24,11 @@ return [
 		'active' => 'Active',
 		'done' => 'Done',
 		'cancelled' => 'Cancelled'
+	],
+
+	'spacestatus' => [
+		'available' => 'Available',
+		'reserved' => 'Reserved',
+		'rented' => 'Rented'
 	]
 ];

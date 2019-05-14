@@ -23,6 +23,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::resource('rentalspaces','RentalSpaceController');
+Route::resource('rentalareatypes','RentalAreaTypeController');
 Route::resource('activities','ActivityController');
 Route::resource('events','EventController');
 Route::resource('salarygrades','SalaryGradeController');
