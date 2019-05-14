@@ -10,29 +10,26 @@
           <p>{{ Session::get('success') }}</p>
         </div>
         @endif
-        <div class="m-1 text-right"><a href="{{action('EventController@create')}}" class="btn btn-primary">Add Event</a></div>
+        <div class="m-1 text-right"><a href="{{action('ActivityController@create')}}" class="btn btn-primary">Add Activity</a></div>
         <table class="table">
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
-              <th scope="col">Start</th>
-              <th scope="col">End</th>
+              <th scope="col">Schedule</th>
               <th scope="col">Status</th>
               <th scope="col" colspan="2">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($events as $event)
+            @foreach($activities as $activity)
             <tr>
-              <th scope="row">{{$event->id}}</th>
-              <td>{{$event->name}}</td>
-              <td>{{$event->startdate}}</td>
-              <td>{{$event->enddate}}</td>
-              <td>{{$event->getStatus()}}</td>
-              <td><a href="{{action('EventController@edit', $event['id'])}}" class="btn btn-warning">Edit</a></td>
+              <th scope="row">{{$activity->id}}</th>
+              <td>{{$activity->name}}</td>
+              <td>{{$activity->schedule}}</td>
+              <td><a href="{{action('ActivityController@edit', $activity['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>
-                <form action="{{action('EventController@destroy', $event['id'])}}" method="post">
+                <form action="{{action('ActivityController@destroy', $activity['id'])}}" method="post">
                   {{csrf_field()}}
                   <input name="_method" type="hidden" value="DELETE">
                   <button class="btn btn-danger" type="submit">Delete</button>

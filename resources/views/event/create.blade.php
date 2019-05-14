@@ -13,6 +13,18 @@
   <form method="POST" action="{{ url('events') }}">
       {{ csrf_field() }}
 
+    <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+        <label for="name" class="control-label">Name</label>
+
+        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+
+        @if ($errors->has('name'))
+            <span class="help-block">
+                <strong>{{ $errors->first('name') }}</strong>
+            </span>
+        @endif
+    </div>
+
     <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
         <label for="description" class="control-label">Description</label>
 
@@ -25,34 +37,54 @@
         @endif
     </div>
 
-    <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
-        <label for="location" class="control-label">Location</label>
-
-        <input id="location" type="text" class="form-control" name="location" value="{{ old('location') }}" required autofocus>
-
-        @if ($errors->has('location'))
-            <span class="help-block">
-                <strong>{{ $errors->first('location') }}</strong>
-            </span>
-        @endif
-    </div>
-
     <div class="row">
         <div class="col-6">
-        <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
-            <label for="date" class="control-label">Date</label>
+        <div class="form-group{{ $errors->has('startdate') ? ' has-error' : '' }}">
+            <label for="startdate" class="control-label">Start Date</label>
 
-            <input id="date" type="date" class="form-control" name="date" value="{{ old('date') }}" autofocus>
+            <input id="startdate" type="date" class="form-control" name="startdate" value="{{ old('startdate') }}" required autofocus>
 
-            @if ($errors->has('date'))
+            @if ($errors->has('startdate'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('date') }}</strong>
+                    <strong>{{ $errors->first('startdate') }}</strong>
                 </span>
             @endif
         </div>
         </div>
 
-        <div class="col"></div>
+        <div class="col-6">
+        <div class="form-group{{ $errors->has('enddate') ? ' has-error' : '' }}">
+            <label for="enddate" class="control-label">End Date</label>
+
+            <input id="enddate" type="date" class="form-control" name="enddate" value="{{ old('enddate') }}" required autofocus>
+
+            @if ($errors->has('enddate'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('enddate') }}</strong>
+                </span>
+            @endif
+        </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+        <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+            <label for="status" class="control-label">Status</label>
+
+            <select id="status" class="form-control" name="status" autofocus>
+              @foreach(config('enums.eventstatus') as $key => $value)
+                <option value="{{ $key }}" {{ old('status') == $key ? 'selected' : '' }}>{{ $value }}</option>
+              @endforeach
+            </select>
+
+            @if ($errors->has('status'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('status') }}</strong>
+                </span>
+            @endif
+        </div>
+        </div>
     </div>
 
     <div class="form-group">

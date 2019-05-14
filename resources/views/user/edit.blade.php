@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h1>Create New User</h1>
+  <h1>Update User</h1>
 
   @if (Session::has('success'))
   <div class="alert alert-success">
@@ -14,6 +14,7 @@
       {{ csrf_field() }}
 
       <input name="_method" type="hidden" value="PATCH">
+
       <div class="row">
 
         <div class="col">

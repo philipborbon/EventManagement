@@ -15,6 +15,11 @@ class CreateRentalSpacesTable extends Migration
     {
         Schema::create('rental_spaces', function (Blueprint $table) {
             $table->increments('id');
+            $table->text('description')->nullable();
+            $table->text('location')->nullable();
+            $table->double('area', 8, 2)->nullable();
+            $table->boolean('available')->nullable();
+            $table->double('amount', 8, 2)->nullable();
             $table->timestamps();
         });
     }

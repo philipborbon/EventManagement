@@ -3,16 +3,11 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use EventManagement\Activity;
 use EventManagement\Event;
 
-class EventController extends Controller
+class ActivityController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -20,8 +15,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
-        return view('event.index', compact('events'));
+        $activities = Activity::all();
+        return view('activity.index', compact('activities'));
     }
 
     /**
@@ -31,7 +26,8 @@ class EventController extends Controller
      */
     public function create()
     {
-        return view('event.create');
+        $events = Event::where('status', 'active')->get();
+        return view('activity.create', compact('events'));
     }
 
     /**
@@ -43,16 +39,15 @@ class EventController extends Controller
     public function store(Request $request)
     {
         $event = $this->validate(request(), [
+            'eventid' => 'required|exists:events,id',
             'name' => 'required|string',
-            'description' => 'required|string',
-            'startdate' => 'required|date',
-            'enddate' => 'required|date|after_or_equal:startdate',
-            'status' => Rule::in(['cancelled', 'active', 'done'])
+            'location' => 'required|string',
+            'schedule' => 'required|date'
         ]);
 
-        Event::create($event);
+        Activity::create($event);
 
-        return back()->with('success', 'Event has been added.');
+        return back()->with('success', 'Activity has been added.');
     }
 
     /**
@@ -74,8 +69,9 @@ class EventController extends Controller
      */
     public function edit($id)
     {
-        $event = Event::find($id);
-        return view('event.edit', compact('id', 'event'));
+        $activity = Activity::find($id);
+        $events = Event::where('status', 'active')->get();
+        return view('activity.edit', compact('id', 'activity', 'events'));
     }
 
     /**
@@ -87,23 +83,22 @@ class EventController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $event = Event::find($id);
+        $activity = Activity::find($id);
 
         $this->validate(request(), [
+            'eventid' => 'required|exists:events,id',
             'name' => 'required|string',
-            'description' => 'required|string',
-            'startdate' => 'required|date',
-            'enddate' => 'required|date|after_or_equal:startdate',
-            'status' => Rule::in(['cancelled', 'active', 'done'])
+            'location' => 'required|string',
+            'schedule' => 'required|date'
         ]);
-        $event->name = $request->get('name');
-        $event->description = $request->get('description');
-        $event->startdate = $request->get('startdate');
-        $event->enddate = $request->get('enddate');
-        $event->status = $request->get('status');
-        $event->save();
+        
+        $activity->eventid = $request->get('eventid');
+        $activity->name = $request->get('name');
+        $activity->location = $request->get('location');
+        $activity->schedule = $request->get('schedule');
+        $activity->save();
 
-        return redirect('events')->with('success','Event has been updated.');
+        return redirect('activities')->with('success','Activity has been updated.');
     }
 
     /**
@@ -114,8 +109,6 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        $event = Event::find($id);
-        $event->delete();
-        return redirect('events')->with('success','Event has been deleted.');
+        //
     }
 }

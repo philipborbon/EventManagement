@@ -18,5 +18,11 @@ return [
 	'sex' => [
 		'M' => 'Male',
 		'F' => 'Female'
+	],
+
+	'eventstatus' => [
+		'active' => 'Active',
+		'done' => 'Done',
+		'cancelled' => 'Cancelled'
 	]
 ];
