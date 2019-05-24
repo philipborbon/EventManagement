@@ -14,13 +14,13 @@ class AddPayrollForeignKeys extends Migration
     public function up()
     {
         Schema::table('payout_deductions', function (Blueprint $table) {
-            $table->foreign('payoutid')->references('id')->on('monthly_payouts');
-            $table->foreign('type')->references('id')->on('deduction_types');
+            $table->foreign('payoutid')->references('id')->on('monthly_payouts')->onDelete('cascade');
+            $table->foreign('type')->references('id')->on('deduction_types')->onDelete('cascade');
         });
         
 
         Schema::table('employee_active_deductions', function (Blueprint $table) {
-            $table->foreign('type')->references('id')->on('deduction_types');
+            $table->foreign('type')->references('id')->on('deduction_types')->onDelete('cascade');
         });        
     }
 

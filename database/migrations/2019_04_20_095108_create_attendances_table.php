@@ -23,7 +23,7 @@ class CreateAttendancesTable extends Migration
             $table->enum('status', ['onduty', 'onleave']);
             $table->timestamps();
             
-            $table->foreign('userid')->references('id')->on('users');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -22,7 +22,7 @@ class CreateMonthlyPayoutsTable extends Migration
             $table->dateTime('datecollected')->nullable();
             $table->timestamps();
             
-            $table->foreign('userid')->references('id')->on('users');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

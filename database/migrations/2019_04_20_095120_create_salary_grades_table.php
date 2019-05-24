@@ -19,7 +19,7 @@ class CreateSalaryGradesTable extends Migration
             $table->double('dailypay', 8, 2);
             $table->timestamps();
             
-            $table->foreign('userid')->references('id')->on('users');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

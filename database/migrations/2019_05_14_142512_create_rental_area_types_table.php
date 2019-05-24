@@ -21,7 +21,7 @@ class CreateRentalAreaTypesTable extends Migration
 
         Schema::table('rental_spaces', function (Blueprint $table) {
             $table->integer('typeid')->unsigned();
-            $table->foreign('typeid')->references('id')->on('rental_area_types');
+            $table->foreign('typeid')->references('id')->on('rental_area_types')->onDelete('cascade');
         });
     }
 

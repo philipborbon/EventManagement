@@ -21,7 +21,7 @@ class CreateActivitiesTable extends Migration
             $table->dateTime('schedule')->nullable();
             $table->timestamps();
 
-            $table->foreign('eventid')->references('id')->on('events');
+            $table->foreign('eventid')->references('id')->on('events')->onDelete('cascade');
         });
     }
 

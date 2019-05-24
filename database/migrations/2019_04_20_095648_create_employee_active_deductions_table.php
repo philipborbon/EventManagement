@@ -20,7 +20,7 @@ class CreateEmployeeActiveDeductionsTable extends Migration
             $table->boolean('isActive');
             $table->timestamps();
             
-            $table->foreign('userid')->references('id')->on('users');
+            $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

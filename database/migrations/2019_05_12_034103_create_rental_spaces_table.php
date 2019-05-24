@@ -23,7 +23,7 @@ class CreateRentalSpacesTable extends Migration
             $table->double('amount', 8, 2)->nullable();
             $table->timestamps();
             
-            $table->foreign('eventid')->references('id')->on('events');
+            $table->foreign('eventid')->references('id')->on('events')->onDelete('cascade');
         });
     }
 
