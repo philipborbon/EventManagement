@@ -29,4 +29,7 @@ Route::resource('activities','ActivityController');
 Route::resource('events','EventController');
 Route::resource('salarygrades','SalaryGradeController');
 Route::resource('deductiontypes','DeductionTypeController');
-Route::resource('users','UserController');
+
+Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
+	Route::resource('users','UserController');
+});
