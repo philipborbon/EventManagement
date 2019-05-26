@@ -2,13 +2,13 @@
 
 return [
 	'usertype' => [
+		'admin' => 'Administrator',
 		'employee' => 'Employee',
-		'investor' => 'Investor',
-		'participants' => 'Participants'
+		'investor' => 'Investor'
 	],
 
 	'maritalstatus' => [
-		'single' => 'Single', 
+		'single' => 'Single',  
 		'married' => 'Married', 
 		'divorced' => 'Divorced', 
 		'separated' => 'Seperated', 
