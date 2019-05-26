@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeActiveDeductionsTable extends Migration
+class CreateUserIdentificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateEmployeeActiveDeductionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('employee_active_deductions', function (Blueprint $table) {
+        Schema::create('user_identifications', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('userid')->unsigned();
-            $table->integer('typeid')->unsigned();
-            $table->boolean('isActive');
+            $table->integer('documenttypeid')->unsigned();
+            $table->string('attachment')->nullable();
             $table->timestamps();
-            
+
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('typeid')->references('id')->on('deduction_types')->onDelete('cascade');
+            $table->foreign('documenttypeid')->references('id')->on('document_types')->onDelete('cascade');
         });
     }
 
@@ -32,6 +32,6 @@ class CreateEmployeeActiveDeductionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employee_active_deductions');
+        Schema::dropIfExists('user_identifications');
     }
 }

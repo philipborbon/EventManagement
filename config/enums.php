@@ -20,7 +20,7 @@ return [
 		'F' => 'Female'
 	],
 
-	'eventstatus' => [
+	'schedulestatus' => [
 		'active' => 'Active',
 		'done' => 'Done',
 		'cancelled' => 'Cancelled'
@@ -30,5 +30,11 @@ return [
 		'available' => 'Available',
 		'reserved' => 'Reserved',
 		'rented' => 'Rented'
+	],
+
+	'reservationstatus' => [
+		'awarded' => 'Awarded',
+		'cancelled' => 'Cancelled',
+		'waved' => 'Waved'
 	]
 ];

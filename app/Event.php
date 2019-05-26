@@ -14,7 +14,7 @@ class Event extends Model
 
         $description = "";
 
-        $types = config('enums.eventstatus');
+        $types = config('enums.schedulestatus');
 
         if ( array_key_exists($type, $types) ) {
             $description = $types[$type];

@@ -15,13 +15,13 @@ class AddPayrollForeignKeys extends Migration
     {
         Schema::table('payout_deductions', function (Blueprint $table) {
             $table->foreign('payoutid')->references('id')->on('monthly_payouts')->onDelete('cascade');
-            $table->foreign('type')->references('id')->on('deduction_types')->onDelete('cascade');
+            $table->foreign('typeid')->references('id')->on('deduction_types')->onDelete('cascade');
         });
         
 
-        Schema::table('employee_active_deductions', function (Blueprint $table) {
-            $table->foreign('type')->references('id')->on('deduction_types')->onDelete('cascade');
-        });        
+        // Schema::table('employee_active_deductions', function (Blueprint $table) {
+        //     $table->foreign('typeid')->references('id')->on('deduction_types')->onDelete('cascade');
+        // });        
     }
 
     /**
@@ -33,12 +33,12 @@ class AddPayrollForeignKeys extends Migration
     {
         Schema::table('payout_deductions', function (Blueprint $table) {
             $table->dropForeign(['payoutid']);
-            $table->dropForeign(['type']);
+            $table->dropForeign(['typeid']);
         });
         
 
-        Schema::table('employee_active_deductions', function (Blueprint $table) {
-            $table->dropForeign(['type']);
-        });        
+        // Schema::table('employee_active_deductions', function (Blueprint $table) {
+        //     $table->dropForeign(['type']);
+        // });        
     }
 }

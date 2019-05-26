@@ -75,7 +75,7 @@
             <label for="status" class="control-label">Status</label>
 
             <select id="status" class="form-control" name="status" autofocus>
-              @foreach(config('enums.eventstatus') as $key => $value)
+              @foreach(config('enums.schedulestatus') as $key => $value)
                 <option value="{{ $key }}" {{ $event->status == $key ? 'selected' : '' }}>{{ $value }}</option>
               @endforeach
             </select>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePayoutDeductionsTable extends Migration
+class CreateMayorSchedulesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreatePayoutDeductionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payout_deductions', function (Blueprint $table) {
+        Schema::create('mayor_schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('payoutid')->unsigned();
-            $table->integer('typeid')->unsigned();
-            $table->double('amount', 8, 2);
+            $table->string('name')->nullable();
+            $table->dateTime('schedule')->nullable();
+            $table->enum('status', ['cancelled', 'active', 'done'])->default('active');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreatePayoutDeductionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payout_deductions');
+        Schema::dropIfExists('mayor_schedules');
     }
 }

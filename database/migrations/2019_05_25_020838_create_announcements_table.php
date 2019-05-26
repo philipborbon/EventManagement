@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePayoutDeductionsTable extends Migration
+class CreateAnnouncementsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreatePayoutDeductionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payout_deductions', function (Blueprint $table) {
+        Schema::create('announcements', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('payoutid')->unsigned();
-            $table->integer('typeid')->unsigned();
-            $table->double('amount', 8, 2);
+            $table->string('headline')->nullable();
+            $table->text('description')->nullable();
+            $table->date('date')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreatePayoutDeductionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payout_deductions');
+        Schema::dropIfExists('announcements');
     }
 }
