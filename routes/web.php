@@ -34,6 +34,16 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::patch('rentalspaces/{id}/spacemap','RentalSpaceController@updateMap');
 
 	Route::resource('rentalareatypes','RentalAreaTypeController');
+
 	Route::resource('activities','ActivityController');
+	Route::get('activities/{id}/participants','ActivityController@participants');
+	Route::get('activities/{id}/participants/create','ActivityController@createParticipant');
+	Route::post('activities/{id}/participants','ActivityController@storeParticipant');
+	Route::get('activities/{id}/participants/{participantId}/edit','ActivityController@editParticipant');
+	Route::patch('activities/{id}/participants/{participantId}','ActivityController@updateParticipant');
+	Route::delete('activities/{id}/participants/{participantId}','ActivityController@destroyParticipant');
+
+	Route::get('activities/{id}/participants/create','ActivityController@createParticipant');
+
 	Route::resource('documenttypes','DocumentTypeController');
 });

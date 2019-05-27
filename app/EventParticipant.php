@@ -12,4 +12,8 @@ class EventParticipant extends Model
 	public function activity(){
 		return $this->belongsTo(Activity::class, 'activityid');
 	}
+
+	public function getFullname(){
+		return $this->firstname . ' ' . $this->lastname;
+	}
 }
