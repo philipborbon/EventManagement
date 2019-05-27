@@ -33,7 +33,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::get('rentalspaces/{id}/spacemap','RentalSpaceController@spaceMap');
 	Route::patch('rentalspaces/{id}/spacemap','RentalSpaceController@updateMap');
 
-
 	Route::resource('rentalareatypes','RentalAreaTypeController');
 	Route::resource('activities','ActivityController');
+	Route::resource('documenttypes','DocumentTypeController');
 });
