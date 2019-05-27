@@ -18,7 +18,7 @@
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         <label for="name" class="control-label">Name</label>
 
-        <input id="name" type="text" class="form-control" name="name" value="{{ $event->name }}" required autofocus>
+        <input id="name" type="text" class="form-control" name="name" value="{{ old('name', $event->name) }}" required autofocus>
 
         @if ($errors->has('name'))
             <span class="help-block">
@@ -30,7 +30,7 @@
     <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
         <label for="description" class="control-label">Description</label>
 
-        <input id="description" type="text" class="form-control" name="description" value="{{ $event->description }}" required autofocus>
+        <input id="description" type="text" class="form-control" name="description" value="{{ old('description', $event->description) }}" required autofocus>
 
         @if ($errors->has('description'))
             <span class="help-block">
@@ -44,7 +44,7 @@
         <div class="form-group{{ $errors->has('startdate') ? ' has-error' : '' }}">
             <label for="startdate" class="control-label">Start Date</label>
 
-            <input id="startdate" type="date" class="form-control" name="startdate" value="{{ $event->startdate }}" required autofocus>
+            <input id="startdate" type="date" class="form-control" name="startdate" value="{{ old('startdate', $event->startdate) }}" required autofocus>
 
             @if ($errors->has('startdate'))
                 <span class="help-block">
@@ -58,7 +58,7 @@
         <div class="form-group{{ $errors->has('enddate') ? ' has-error' : '' }}">
             <label for="enddate" class="control-label">End Date</label>
 
-            <input id="enddate" type="date" class="form-control" name="enddate" value="{{ $event->enddate }}" required autofocus>
+            <input id="enddate" type="date" class="form-control" name="enddate" value="{{ old('enddate', $event->enddate) }}" required autofocus>
 
             @if ($errors->has('enddate'))
                 <span class="help-block">
@@ -76,7 +76,7 @@
 
             <select id="status" class="form-control" name="status" autofocus>
               @foreach(config('enums.schedulestatus') as $key => $value)
-                <option value="{{ $key }}" {{ $event->status == $key ? 'selected' : '' }}>{{ $value }}</option>
+                <option value="{{ $key }}" {{ old('status', $event->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
               @endforeach
             </select>
 

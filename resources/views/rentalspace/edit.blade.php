@@ -22,7 +22,7 @@
 
               <select id="eventid" class="form-control" name="eventid" autofocus>
                 @foreach($events as $event)
-                  <option value="{{ $event->id }}" {{ $space->eventid == $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
+                  <option value="{{ $event->id }}" {{ old('eventid', $space->eventid) == $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
                 @endforeach
               </select>
 
@@ -40,7 +40,7 @@
 
               <select id="typeid" class="form-control" name="typeid" autofocus>
                 @foreach($types as $type)
-                  <option value="{{ $type->id }}" {{ $space->typeid == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
+                  <option value="{{ $type->id }}" {{ old('typeid', $space->typeid) == $type->id ? 'selected' : '' }}>{{ $type->name }}</option>
                 @endforeach
               </select>
 
@@ -56,7 +56,7 @@
       <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
           <label for="name" class="control-label">Name</label>
 
-          <input id="name" type="text" class="form-control" name="name" value="{{ $space->name }}" required autofocus>
+          <input id="name" type="text" class="form-control" name="name" value="{{ old('name', $space->name) }}" required autofocus>
 
           @if ($errors->has('name'))
               <span class="help-block">
@@ -68,7 +68,7 @@
       <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
           <label for="location" class="control-label">Location</label>
 
-          <input id="location" type="text" class="form-control" name="location" value="{{ $space->location }}" required autofocus>
+          <input id="location" type="text" class="form-control" name="location" value="{{ old('location', $space->location) }}" required autofocus>
 
           @if ($errors->has('location'))
               <span class="help-block">
@@ -82,7 +82,7 @@
           <div class="form-group{{ $errors->has('area') ? ' has-error' : '' }}">
               <label for="area" class="control-label">Area (sq. m&sup2;)</label>
 
-              <input id="area" type="number" step="0.01" min="0" class="form-control" name="area" value="{{ $space->area }}" required autofocus>
+              <input id="area" type="number" step="0.01" min="0" class="form-control" name="area" value="{{ old('area', $space->area) }}" required autofocus>
 
               @if ($errors->has('area'))
                   <span class="help-block">
@@ -96,7 +96,7 @@
           <div class="form-group{{ $errors->has('amount') ? ' has-error' : '' }}">
               <label for="amount" class="control-label">Amount</label>
 
-              <input id="amount" type="number" step="0.01" min="0" class="form-control" name="amount" value="{{ $space->amount }}" required autofocus>
+              <input id="amount" type="number" step="0.01" min="0" class="form-control" name="amount" value="{{ old('amount', $space->amount) }}" required autofocus>
 
               @if ($errors->has('amount'))
                   <span class="help-block">
@@ -114,7 +114,7 @@
 
               <select id="status" class="form-control" name="status" autofocus>
                 @foreach(config('enums.spacestatus') as $key => $value)
-                  <option value="{{ $key }}" {{ $space->status == $key ? 'selected' : '' }}>{{ $value }}</option>
+                  <option value="{{ $key }}" {{ old('status', $space->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
                 @endforeach
               </select>
 
