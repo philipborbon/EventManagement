@@ -40,7 +40,7 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        $event = $this->validate(request(), [
+        $activity = $this->validate(request(), [
             'eventid' => 'required|exists:events,id',
             'name' => 'required|string',
             'location' => 'required|string',
@@ -48,11 +48,11 @@ class ActivityController extends Controller
             'time' => 'required|date_format:"H:i"'
         ]);
 
-        $dateTime = DateTime::createFromFormat('Y-m-d H:i', $event['date'] . ' ' . $event['time']);
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i', $activity['date'] . ' ' . $activity['time']);
 
-        $event['schedule'] = $dateTime->format('Y-m-d H:i:s');
+        $activity['schedule'] = $dateTime->format('Y-m-d H:i:s');
 
-        Activity::create($event);
+        Activity::create($activity);
 
         return back()->with('success', 'Activity has been added.');
     }
@@ -96,13 +96,16 @@ class ActivityController extends Controller
             'eventid' => 'required|exists:events,id',
             'name' => 'required|string',
             'location' => 'required|string',
-            'schedule' => 'required|date'
+            'date' => 'required|date_format:"Y-m-d"',
+            'time' => 'required|date_format:"H:i"'
         ]);
         
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i', $request->get('date') . ' ' . $request->get('time'));
+
         $activity->eventid = $request->get('eventid');
         $activity->name = $request->get('name');
         $activity->location = $request->get('location');
-        $activity->schedule = $request->get('schedule');
+        $activity->schedule = $dateTime->format('Y-m-d H:i:s');
         $activity->save();
 
         return redirect('activities')->with('success','Activity has been updated.');
@@ -116,6 +119,8 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $activity = Activity::find($id);
+        $activity->delete();
+        return redirect('activities')->with('success','Activity has been deleted.');
     }
 }

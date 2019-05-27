@@ -26,7 +26,7 @@
             <tr>
               <th scope="row">{{$activity->id}}</th>
               <td>{{$activity->name}}</td>
-              <td>{{$activity->schedule}}</td>
+              <td>{{ date('M d, Y H:i', strtotime($activity->schedule)) }}</td>
               <td><a href="{{action('ActivityController@edit', $activity['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>
                 <form action="{{action('ActivityController@destroy', $activity['id'])}}" method="post">

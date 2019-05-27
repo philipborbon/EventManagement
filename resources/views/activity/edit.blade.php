@@ -57,20 +57,32 @@
 
     <div class="row">
         <div class="col-6">
-        <div class="form-group{{ $errors->has('schedule') ? ' has-error' : '' }}">
-            <label for="schedule" class="control-label">Schedule</label>
+        <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
+            <label for="date" class="control-label">Date</label>
 
-            <input id="schedule" type="datetime-local" class="form-control" name="schedule" value="@php echo date('Y-m-d\TH:i:s', strtotime($activity->schedule)) @endphp" required autofocus>
+            <input id="date" type="date" class="form-control" name="date" value="{{ old('date', date('Y-m-d', strtotime($activity->schedule))) }}" required autofocus>
 
-            @if ($errors->has('schedule'))
+            @if ($errors->has('date'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('schedule') }}</strong>
+                    <strong>{{ $errors->first('date') }}</strong>
+                </span>
+            @endif
+        </div>
+        </div>
+        <div class="col-6">
+        <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
+            <label for="time" class="control-label">Time</label>
+
+            <input id="time" type="time" class="form-control" name="time" value="{{  old('time', date('H:i', strtotime($activity->schedule))) }}" required autofocus>
+
+            @if ($errors->has('time'))
+                <span class="help-block">
+                    <strong>{{ $errors->first('time') }}</strong>
                 </span>
             @endif
         </div>
         </div>
     </div>
-
     <div class="form-group">
         <button type="submit" class="btn btn-primary">
             Save
