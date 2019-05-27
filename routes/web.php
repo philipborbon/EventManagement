@@ -23,13 +23,17 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('rentalspaces','RentalSpaceController');
-Route::resource('rentalareatypes','RentalAreaTypeController');
-Route::resource('activities','ActivityController');
-Route::resource('events','EventController');
-Route::resource('salarygrades','SalaryGradeController');
-Route::resource('deductiontypes','DeductionTypeController');
-
 Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
 	Route::resource('users','UserController');
+	Route::resource('events','EventController');
+	Route::resource('salarygrades','SalaryGradeController');
+	Route::resource('deductiontypes','DeductionTypeController');
+
+	Route::resource('rentalspaces','RentalSpaceController');
+	Route::get('rentalspaces/{id}/spacemap','RentalSpaceController@spaceMap');
+	Route::patch('rentalspaces/{id}/spacemap','RentalSpaceController@updateMap');
+
+
+	Route::resource('rentalareatypes','RentalAreaTypeController');
+	Route::resource('activities','ActivityController');
 });

@@ -20,7 +20,7 @@
               <th scope="col">Area</th>
               <th scope="col">Amount</th>
               <th scope="col">Status</th>
-              <th scope="col" colspan="2">Action</th>
+              <th scope="col" colspan="3">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -33,6 +33,7 @@
               <td>{{$space->amount}}</td>
               <td>{{$space->getStatus()}}</td>
               <td><a href="{{action('RentalSpaceController@edit', $space['id'])}}" class="btn btn-warning">Edit</a></td>
+              <td><a href="{{action('RentalSpaceController@spaceMap', $space['id'])}}" class="btn btn-primary">Edit Map</a></td>
               <td>
                 <form action="{{action('RentalSpaceController@destroy', $space['id'])}}" method="post">
                   {{csrf_field()}}

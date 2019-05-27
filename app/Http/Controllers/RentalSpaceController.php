@@ -7,6 +7,7 @@ use Illuminate\Validation\Rule;
 use EventManagement\RentalSpace;
 use EventManagement\Event;
 use EventManagement\RentalAreaType;
+use EventManagement\RentalSpaceArea;
 
 class RentalSpaceController extends Controller
 {
@@ -126,5 +127,56 @@ class RentalSpaceController extends Controller
         $space = RentalSpace::find($id);
         $space->delete();
         return redirect('rentalspaces')->with('success','Rental space has been deleted.');
+    }
+
+    public function spaceMap($id){
+        $space = RentalSpace::find($id);
+
+        $spaceAreas = RentalSpaceArea::where('rentalspaceid', $id)->get();
+
+        $areas = [];
+
+        foreach($spaceAreas as $area){
+            $areas[] = [
+                'lat' => floatval($area->latitude),
+                'lng' => floatval($area->longitude)
+            ];
+        }
+
+        return view('rentalspace.map', compact('id', 'space', 'areas'));
+    }
+
+    public function updateMap(Request $request, $id){
+        $this->validate(request(), [
+            'vertices' => 'required|string',
+            'area' => 'required|regex:/^\d+(\.\d{1,2})?$/'                              
+        ]);
+
+        $space = RentalSpace::find($id);
+        $space->area = $request->get('area');
+
+        $space->save();
+
+        RentalSpaceArea::where('rentalspaceid', $id)->delete();
+
+        $vertices = $request->get('vertices');
+        $vertices = trim(trim($vertices, ')'), '(');
+        $vertices = explode('),(', $vertices);
+
+        $data = array();
+
+        foreach($vertices as $vertix){
+            $coordinate = explode(',', $vertix);
+
+            $data[] = [
+                'rentalspaceid' => $id,
+                'latitude' => $coordinate[0],
+                'longitude' => $coordinate[1]
+            ];
+        }
+
+        RentalSpaceArea::insert($data);
+
+        return redirect('rentalspaces')->with('success','Rental space map has been updated.');
     }
 }

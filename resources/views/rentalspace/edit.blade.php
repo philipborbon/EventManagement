@@ -82,7 +82,7 @@
           <div class="form-group{{ $errors->has('area') ? ' has-error' : '' }}">
               <label for="area" class="control-label">Area</label>
 
-              <input id="area" type="number" step="0.05" min="0" class="form-control" name="area" value="{{ $space->area }}" required autofocus>
+              <input id="area" type="number" step="0.01" min="0" class="form-control" name="area" value="{{ $space->area }}" required autofocus>
 
               @if ($errors->has('area'))
                   <span class="help-block">
@@ -96,7 +96,7 @@
           <div class="form-group{{ $errors->has('amount') ? ' has-error' : '' }}">
               <label for="amount" class="control-label">Amount</label>
 
-              <input id="amount" type="number" step="0.05" min="0" class="form-control" name="amount" value="{{ $space->amount }}" required autofocus>
+              <input id="amount" type="number" step="0.01" min="0" class="form-control" name="amount" value="{{ $space->amount }}" required autofocus>
 
               @if ($errors->has('amount'))
                   <span class="help-block">
