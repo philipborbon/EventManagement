@@ -7,6 +7,11 @@ use EventManagement\DeductionType;
 
 class DeductionTypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Create a new controller instance.
      *
