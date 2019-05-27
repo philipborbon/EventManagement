@@ -2,6 +2,8 @@
 
 namespace EventManagement\Http\Controllers;
 
+use DateTime;
+
 use Illuminate\Http\Request;
 use EventManagement\Activity;
 use EventManagement\Event;
@@ -42,8 +44,13 @@ class ActivityController extends Controller
             'eventid' => 'required|exists:events,id',
             'name' => 'required|string',
             'location' => 'required|string',
-            'schedule' => 'required|date'
+            'date' => 'required|date_format:"Y-m-d"',
+            'time' => 'required|date_format:"H:i"'
         ]);
+
+        $dateTime = DateTime::createFromFormat('Y-m-d H:i', $event['date'] . ' ' . $event['time']);
+
+        $event['schedule'] = $dateTime->format('Y-m-d H:i:s');
 
         Activity::create($event);
 
