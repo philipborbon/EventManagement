@@ -17,7 +17,6 @@ class CreateAnnouncementsTable extends Migration
             $table->increments('id');
             $table->string('headline')->nullable();
             $table->text('description')->nullable();
-            $table->date('date')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

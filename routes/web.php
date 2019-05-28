@@ -46,4 +46,5 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::get('activities/{id}/participants/create','ActivityController@createParticipant');
 
 	Route::resource('documenttypes','DocumentTypeController');
+	Route::resource('announcements','AnnouncementController');
 });
