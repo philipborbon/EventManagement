@@ -10,7 +10,7 @@
           <p>{{ Session::get('success') }}</p>
         </div>
         @endif
-        <div class="m-1 text-right"><a href="{{action('ActivityController@create')}}" class="btn btn-primary">Add Activity</a></div>
+        <div class="m-1 text-right"><a href="{{action('MayorScheduleController@create')}}" class="btn btn-primary">Add Mayor Schedule</a></div>
         <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -18,20 +18,21 @@
               <th scope="col">Name</th>
               <th scope="col">Location</th>
               <th scope="col">Schedule</th>
-              <th scope="col" colspan="3">Action</th>
+              <th scope="col">Status</th>
+              <th scope="col" colspan="2">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($activities as $activity)
+            @foreach($schedules as $schedule)
             <tr>
-              <th scope="row">{{$activity->id}}</th>
-              <td>{{$activity->name}}</td>
-              <td>{{$activity->location}}</td>
-              <td>{{ date('M d, Y H:i', strtotime($activity->schedule)) }}</td>
-              <td><a href="{{action('ActivityController@edit', $activity['id'])}}" class="btn btn-warning">Edit</a></td>
-              <td><a href="{{action('ActivityController@participants', $activity['id'])}}" class="btn btn-primary">Participants</a></td>
+              <th scope="row">{{$schedule->id}}</th>
+              <td>{{$schedule->name}}</td>
+              <td>{{$schedule->location}}</td>
+              <td>{{ date('M d, Y H:i', strtotime($schedule->schedule)) }}</td>
+              <td>{{$schedule->getStatus()}}</td>
+              <td><a href="{{action('MayorScheduleController@edit', $schedule['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>
-                <form action="{{action('ActivityController@destroy', $activity['id'])}}" method="post">
+                <form action="{{action('MayorScheduleController@destroy', $schedule['id'])}}" method="post">
                   {{csrf_field()}}
                   <input name="_method" type="hidden" value="DELETE">
                   <button class="btn btn-danger" type="submit">Delete</button>

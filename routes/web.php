@@ -47,4 +47,5 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 
 	Route::resource('documenttypes','DocumentTypeController');
 	Route::resource('announcements','AnnouncementController');
+	Route::resource('mayorschedules','MayorScheduleController');
 });

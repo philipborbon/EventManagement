@@ -17,6 +17,7 @@ class CreateMayorSchedulesTable extends Migration
             $table->increments('id');
             $table->string('name')->nullable();
             $table->dateTime('schedule')->nullable();
+            $table->string('location')->nullable();
             $table->enum('status', ['cancelled', 'active', 'done'])->default('active');
             $table->timestamps();
         });

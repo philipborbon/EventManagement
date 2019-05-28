@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h1>Update New Mayor Schedule</h1>
+  <h1>Create New Mayor Schedule</h1>
 
   @if (Session::has('success'))
   <div class="alert alert-success">
@@ -10,13 +10,13 @@
   </div><br />
   @endif
 
-  <form method="POST" action="{{ url('activities') }}">
+  <form method="POST" action="{{ url('mayorschedules') }}">
     {{ csrf_field() }}
 
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         <label for="name" class="control-label">Name</label>
 
-        <input id="name" type="text" class="form-control" name="name" value="{{ old('name', $schedule->name) }}" required autofocus>
+        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
 
         @if ($errors->has('name'))
             <span class="help-block">
@@ -28,7 +28,7 @@
     <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
         <label for="location" class="control-label">Location</label>
 
-        <input id="location" type="text" class="form-control" name="location" value="{{ old('location', $schedule->location) }}" required autofocus>
+        <input id="location" type="text" class="form-control" name="location" value="{{ old('location') }}" required autofocus>
 
         @if ($errors->has('location'))
             <span class="help-block">
@@ -42,7 +42,7 @@
         <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
             <label for="date" class="control-label">Date</label>
 
-            <input id="date" type="date" class="form-control" name="date" value="{{ old('date', date('Y-m-d', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="date" type="date" class="form-control" name="date" value="{{ old('date') }}" required autofocus>
 
             @if ($errors->has('date'))
                 <span class="help-block">
@@ -55,7 +55,7 @@
         <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
             <label for="time" class="control-label">Time</label>
 
-            <input id="time" type="time" class="form-control" name="time" value="{{ old('time', date('H:i', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="time" type="time" class="form-control" name="time" value="{{ old('time') }}" required autofocus>
 
             @if ($errors->has('time'))
                 <span class="help-block">

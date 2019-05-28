@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h1>Update New Mayor Schedule</h1>
+  <h1>Update Mayor Schedule</h1>
 
   @if (Session::has('success'))
   <div class="alert alert-success">
@@ -10,8 +10,10 @@
   </div><br />
   @endif
 
-  <form method="POST" action="{{ url('activities') }}">
+  <form method="POST" action="{{ action('MayorScheduleController@update', $id) }}">
     {{ csrf_field() }}
+
+    <input name="_method" type="hidden" value="PATCH">
 
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         <label for="name" class="control-label">Name</label>
@@ -42,7 +44,7 @@
         <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
             <label for="date" class="control-label">Date</label>
 
-            <input id="date" type="date" class="form-control" name="date" value="{{ old('date', date('Y-m-d', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="date" type="date" class="form-control" name="date" value="{{ old('date', date('Y-m-d', strtotime($schedule->schedule))) }}" required autofocus>
 
             @if ($errors->has('date'))
                 <span class="help-block">
@@ -55,7 +57,7 @@
         <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
             <label for="time" class="control-label">Time</label>
 
-            <input id="time" type="time" class="form-control" name="time" value="{{ old('time', date('H:i', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="time" type="time" class="form-control" name="time" value="{{  old('time', date('H:i', strtotime($schedule->schedule))) }}" required autofocus>
 
             @if ($errors->has('time'))
                 <span class="help-block">
@@ -73,7 +75,7 @@
 
             <select id="status" class="form-control" name="status" autofocus>
               @foreach(config('enums.schedulestatus') as $key => $value)
-                <option value="{{ $key }}" {{ old('status') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                <option value="{{ $key }}" {{ old('status', $schedule->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
               @endforeach
             </select>
 
