@@ -19,6 +19,11 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
+              
+              @if  ( $user->usertype == 'admin' )
+              <th scope="col">User</th>
+              @endif
+
               <th scope="col">Document Type</th>
               <th scope="col">Attachment</th>
               <th scope="col">Verified</th>
@@ -29,6 +34,11 @@
             @foreach($identifications as $identification)
             <tr>
               <th scope="row">{{ $identification->id }}</th>
+
+              @if  ( $user->usertype == 'admin' )
+              <td scope="col">{{ $identification->user->getFullname() }}</td>
+              @endif
+
               <td>{{ $identification->documentType->name }}</td>
               <td>
                 <div style="width: 200px; height: 100px; overflow: hidden;">
@@ -52,11 +62,11 @@
                     @endif
                   </form>
                 </div>
+                @endif
 
                 <div class="mt-2">
                   <a href="{{action('UserIdentificationController@show', $identification['id'])}}" class="btn btn-warning">View</a>
                 </div>
-                @endif
               </td>
               <td>
                 <form action="{{action('UserIdentificationController@destroy', $identification['id'])}}" method="post">
