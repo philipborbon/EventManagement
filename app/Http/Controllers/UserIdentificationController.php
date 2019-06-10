@@ -3,10 +3,12 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
-use EventManagement\Announcement;
-use Illuminate\Validation\Rule;
+use EventManagement\DocumentType;
+use Storage;
+use Auth;
+use EventManagement\UserIdentification;
 
-class AnnouncementController extends Controller
+class UserIdentificationController extends Controller
 {
     public function __construct()
     {
@@ -20,8 +22,8 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::all();
-        return view('announcement.index', compact('announcements'));
+        $identifications = UserIdentification::all();
+        return view('useridentification.index', compact('identifications'));
     }
 
     /**
@@ -31,7 +33,8 @@ class AnnouncementController extends Controller
      */
     public function create()
     {
-        return view('announcement.create');
+        $types = DocumentType::all();
+        return view('useridentification.create', compact('types'));
     }
 
     /**
@@ -42,15 +45,6 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        $announcement = $this->validate(request(), [
-            'headline' => 'required|string',
-            'description' => 'required|string',
-            'active' => Rule::in([1, 0])
-        ]);
-
-        Announcement::create($announcement);
-
-        return back()->with('success', 'Announcement has been added.');
     }
 
     /**
@@ -72,8 +66,7 @@ class AnnouncementController extends Controller
      */
     public function edit($id)
     {
-        $announcement = Announcement::find($id);
-        return view('announcement.edit', compact('id', 'announcement'));
+        //
     }
 
     /**
@@ -85,20 +78,7 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate(request(), [
-            'headline' => 'required|string',
-            'description' => 'required|string',
-            'active' => Rule::in([1, 0])
-        ]);
-
-        $announcement = Announcement::find($id);
-        $announcement->headline = $request->get('headline');
-        $announcement->description = $request->get('description');
-        $announcement->active = $request->get('active') == "1" ? true : false;
-
-        $announcement->save();
-
-        return redirect('announcements')->with('success', 'Announcement has been updated.');
+        //
     }
 
     /**
@@ -110,5 +90,39 @@ class AnnouncementController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function upload(Request $request)
+    {
+        $uploadedFile = $request->file('file');
+        $filename = time().$uploadedFile->getClientOriginalName();
+
+        Storage::disk('local')->putFileAs (
+            'files/'.$filename,
+            $uploadedFile,
+            $filename
+        );
+
+        $identification = $this->validate(request(), [
+            'documenttypeid' => 'required|exists:document_types,id'
+        ]);
+
+        $identification['attachment'] = $filename;
+        $identification['userid'] = Auth::user()->id;
+
+        UserIdentification::create($identification);
+
+        return response()->json($identification);
+    }
+
+    public function removeFile(Request $request){
+        $filename = $request->get('name');
+        Storage::disk('local')->delete('files/'.$filename);
+
+        return response()->json([
+            'deleted' => true,
+            'filename' => $filename
+        ]);
     }
 }

@@ -8,7 +8,7 @@ use EventManagement\DocumentType;
 
 class UserIdentification extends Model
 {
-	protected $fillable = ['userid', 'documenttypeid', 'attachment'];
+	protected $fillable = ['userid', 'documenttypeid', 'attachment', 'verified'];
 
 	public function user(){
 		return $this->belongsTo(User::class, 'userid');

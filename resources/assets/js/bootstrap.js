@@ -55,3 +55,10 @@ if (token) {
 //     cluster: 'mt1',
 //     encrypted: true
 // });
+
+
+/**
+ * Dropzone
+ */
+window.Dropzone = require('dropzone');
+Dropzone.autoDiscover = false;

@@ -48,4 +48,8 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::resource('documenttypes','DocumentTypeController');
 	Route::resource('announcements','AnnouncementController');
 	Route::resource('mayorschedules','MayorScheduleController');
+
+	Route::resource('useridentifications', 'UserIdentificationController');
+	Route::post('useridentifications/upload', 'UserIdentificationController@upload');
+	Route::post('useridentifications/removeFile', 'UserIdentificationController@removeFile');
 });

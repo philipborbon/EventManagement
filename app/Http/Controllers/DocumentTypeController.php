@@ -43,7 +43,7 @@ class DocumentTypeController extends Controller
     {
         $document = $this->validate(request(), [
             'name' => 'required|string',
-            'description' => 'required|string'
+            'description' => 'nullable|string'
         ]);
 
         DocumentType::create($document);
@@ -85,7 +85,7 @@ class DocumentTypeController extends Controller
     {
         $this->validate(request(), [
             'name' => 'required|string',
-            'description' => 'required|string'
+            'description' => 'nullable|string'
         ]);
 
 		$document = DocumentType::find($id);
