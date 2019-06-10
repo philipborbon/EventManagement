@@ -3,19 +3,11 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use EventManagement\Announcement;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -23,6 +15,16 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if (Auth::check()) {
+            return view('home');
+        } else {
+            return redirect('welcome');
+        }
+    }
+
+    public function welcome()
+    {
+        $announcements = Announcement::where('active', true)->get();
+        return view('welcome', compact('announcements'));
     }
 }

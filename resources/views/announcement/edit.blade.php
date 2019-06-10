@@ -30,7 +30,7 @@
     <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
         <label for="description" class="control-label">Description</label>
 
-        <input id="description" type="text" class="form-control" name="description" value="{{ old('description', $announcement->description) }}" required autofocus>
+        <textarea id="description" type="text" class="form-control" name="description" required autofocus>{{ old('description', $announcement->description) }}</textarea>
 
         @if ($errors->has('description'))
             <span class="help-block">

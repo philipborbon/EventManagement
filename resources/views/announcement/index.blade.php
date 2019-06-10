@@ -10,7 +10,7 @@
           <p>{{ Session::get('success') }}</p>
         </div>
         @endif
-        <div class="m-1 text-right"><a href="{{action('AnnouncementController@create')}}" class="btn btn-primary">Add Event</a></div>
+        <div class="m-1 text-right"><a href="{{action('AnnouncementController@create')}}" class="btn btn-primary">Add Announcement</a></div>
         <table class="table">
           <thead class="thead-dark">
             <tr>

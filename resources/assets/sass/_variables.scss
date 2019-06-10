@@ -9,7 +9,7 @@ $list-group-border-color: $laravel-border-color;
 $card-border-color: $laravel-border-color;
 
 // Brands
-$primary: #3097D1;
+$primary: #2196F3;
 $info: #8eb4cb;
 $success: #2ab27b;
 $warning: #cbb956;
@@ -24,3 +24,12 @@ $text-color: #636b6f;
 // Inputs
 $input-border-color: lighten($text-color, 40%);
 $input-placeholder-color: lighten($text-color, 30%);
+
+
+// https://work.smarchal.com/twbscolor/4.0.0/sass/2196f31976d2ffffffe3f2fd0
+// navigation bar
+$bgDefault      : #1976D2;
+$bgHighlight    : #2196F3;
+$colDefault     : #ffffff;
+$colHighlight   : #e3f2fd;
+$dropDown       : false;
