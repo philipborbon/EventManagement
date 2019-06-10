@@ -15,8 +15,23 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $links = array (
+            'Users' => '/users',
+            'Events' => '/events',
+            'Salary Grades' => '/salarygrades',
+            'Deduction Types' => '/deductiontypes',
+            'Rental Spaces' => '/rentalspaces',
+            'Rental Area Types' => '/rentalareatypes',
+            'Activities' => '/activities',
+            'Document Types' => '/documenttypes',
+            'Announcements' => '/announcements',
+            'Mayor Schedules' => '/mayorschedules',
+            'User Identifications' => '/useridentifications'
+        );
+
+
         if (Auth::check()) {
-            return view('home');
+            return view('home', compact('links'));
         } else {
             return redirect('welcome');
         }
