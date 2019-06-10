@@ -10,12 +10,32 @@
   </div><br />
   @endif
 
-  <form method="POST" action="{{ action('UserController@update', $id) }}">
+  <form method="POST" action="{{ action('AccountController@update', $id) }}">
       {{ csrf_field() }}
 
       <input name="_method" type="hidden" value="PATCH">
 
-      <div class="row">
+    <div class="row">
+        <div class="col-6">
+            <div>E-Mail Address: <b>{{ $user->email }}</b></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div>
+            User Type: <b>
+            @if ( array_key_exists($user->usertype, config('enums.usertype')) )
+            {{ config('enums.usertype')[$user->usertype] }}
+            @else
+            --
+            @endif
+            </b>
+            </div>
+        </div>
+    </div>
+
+      <div class="row mt-3">
 
         <div class="col">
         <div class="form-group{{ $errors->has('firstname') ? ' has-error' : '' }}">
@@ -44,28 +64,6 @@
             @endif
         </div>
       </div>
-    </div>
-
-    <div class="row">
-    <div class="col-6">
-    <div class="form-group">
-        <label>E-Mail Address</label>
-
-        <input
-                type="email"
-                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                name="email"
-                value="{{ old('email', $user->email) }}"
-                required
-        >
-
-        @if ($errors->has('email'))
-            <div class="invalid-feedback">
-                <strong>{{ $errors->first('email') }}</strong>
-            </div>
-        @endif
-    </div>
-    </div>
     </div>
 
     <div class="row">
@@ -105,26 +103,6 @@
 
     <div class="row">
         <div class="col-12"><p>Note: Don't fill out the password if you don't want to update your password.</p></div>
-    </div>
-
-    <div class="row">
-    <div class="col-6">
-    <div class="form-group{{ $errors->has('usertype') ? ' has-error' : '' }}">
-        <label for="usertype" class="control-label">User Type</label>
-
-        <select id="usertype" class="form-control" name="usertype" autofocus>
-          @foreach(config('enums.usertype') as $key => $value)
-            <option value="{{ $key }}" {{ old('usertype', $user->usertype) == $key ? 'selected' : '' }}>{{ $value }}</option>
-          @endforeach
-        </select>
-
-        @if ($errors->has('usertype'))
-            <span class="help-block">
-                <strong>{{ $errors->first('usertype') }}</strong>
-            </span>
-        @endif
-    </div>
-    </div>
     </div>
 
     <div class="form-group{{ $errors->has('address') ? ' has-error' : '' }}">

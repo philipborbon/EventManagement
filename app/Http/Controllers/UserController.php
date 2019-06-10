@@ -99,6 +99,8 @@ class UserController extends Controller
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'email' => 'required|string|email|unique:users,email,' . $id,
+            'password' => 'string|nullable',
+            'password_confirmation' => 'string|nullable|required_with:password|same:password',
             'usertype' => Rule::in(['employee', 'investor', 'participants']),
             'address' => 'nullable|string',
             'age' => 'nullable|integer',
@@ -110,7 +112,7 @@ class UserController extends Controller
         $user->email = $request->get('email');
 
         $password = $request->get('password');
-        if ( $password == "" ){
+        if ( $password != "" ){
             $user->password = bcrypt($request->get('password')); 
         }
 

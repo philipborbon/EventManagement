@@ -20,6 +20,10 @@
                             {{ Auth::user()->getFullname() }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a href="/account" class="dropdown-item">
+                                My Account
+                            </a>
+
                             <a href="{{ route('logout') }}" class="dropdown-item"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 Logout

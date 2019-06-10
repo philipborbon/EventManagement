@@ -26,12 +26,7 @@ class UserIdentificationController extends Controller
         $user = Auth::user();
 
         $userId = -1;
-
-        if ($user->usertype == 'admin') {
-            if (Input::get('user')) {
-                $userId = Input::get('user');
-            }
-        } else {
+        if ($user->usertype != 'admin') {
             $userId = $user->id;
         }
 

@@ -3,6 +3,8 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use EventManagement\User;
 use Auth;
 
 class AccountController extends Controller
@@ -63,7 +65,10 @@ class AccountController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $id = $user->id;
+
+        return view('account.edit', compact('user', 'id'));
     }
 
     /**
@@ -75,7 +80,34 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+
+        $this->validate(request(), [
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'password' => 'string|nullable',
+            'password_confirmation' => 'string|nullable|required_with:password|same:password',
+            'address' => 'nullable|string',
+            'age' => 'nullable|integer',
+            'sex' => Rule::in(['F', 'M']),
+            'maritalstatus' => Rule::in(['single', 'married', 'divorced', 'separated', 'widowed'])
+        ]);
+        $user->firstname = $request->get('firstname');
+        $user->lastname = $request->get('lastname');
+
+        $password = $request->get('password');
+        if ( $password != "" ){
+            $user->password = bcrypt($request->get('password')); 
+        }
+
+        $user->address = $request->get('address');
+        $user->age = $request->get('age');
+        $user->sex = $request->get('sex');
+        $user->maritalstatus = $request->get('maritalstatus');
+        $user->save();
+
+
+        return redirect('account')->with('success','Account has been updated.');
     }
 
     /**
