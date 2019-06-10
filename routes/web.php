@@ -14,6 +14,7 @@
 Route::get('/', function () {
     if (Auth::check()) {
         return redirect()->action('HomeController@index');
+
     } else {
         return view('welcome');
     }
@@ -22,6 +23,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('account','AccountController');
+Route::resource('useridentifications', 'UserIdentificationController');
+Route::post('useridentifications/upload', 'UserIdentificationController@upload');
+Route::post('useridentifications/removeFile', 'UserIdentificationController@removeFile');
 
 Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
 	Route::resource('users','UserController');
@@ -49,7 +55,5 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::resource('announcements','AnnouncementController');
 	Route::resource('mayorschedules','MayorScheduleController');
 
-	Route::resource('useridentifications', 'UserIdentificationController');
-	Route::post('useridentifications/upload', 'UserIdentificationController@upload');
-	Route::post('useridentifications/removeFile', 'UserIdentificationController@removeFile');
+	Route::patch('useridentifications/verify/{id}', 'UserIdentificationController@verify');
 });

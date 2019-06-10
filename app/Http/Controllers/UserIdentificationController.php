@@ -3,6 +3,7 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use EventManagement\DocumentType;
 use Storage;
 use Auth;
@@ -22,8 +23,21 @@ class UserIdentificationController extends Controller
      */
     public function index()
     {
-        $identifications = UserIdentification::all();
-        return view('useridentification.index', compact('identifications'));
+        $user = Auth::user();
+
+        $userId = -1;
+
+        if ($user->usertype == 'admin') {
+            if (Input::get('user')) {
+                $userId = Input::get('user');
+            }
+        } else {
+            $userId = $user->id;
+        }
+
+        $identifications = $userId != -1 ? UserIdentification::where('userid', $userId)->get() :  UserIdentification::all();
+
+        return view('useridentification.index', compact('identifications', 'user'));
     }
 
     /**
@@ -55,7 +69,9 @@ class UserIdentificationController extends Controller
      */
     public function show($id)
     {
-        //
+        $identification = UserIdentification::find($id);
+        $user = Auth::user();
+        return view('useridentification.show', compact('identification', 'user'));
     }
 
     /**
@@ -89,7 +105,13 @@ class UserIdentificationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $identification = UserIdentification::find($id);
+
+        Storage::disk('local')->delete('public/'.$identification->attachment);
+
+        $identification->delete();
+
+        return redirect('useridentifications')->with('success', 'User identification has been deleted.');
     }
 
 
@@ -99,7 +121,7 @@ class UserIdentificationController extends Controller
         $filename = time().$uploadedFile->getClientOriginalName();
 
         Storage::disk('local')->putFileAs (
-            'files/'.$filename,
+            'public',
             $uploadedFile,
             $filename
         );
@@ -118,11 +140,21 @@ class UserIdentificationController extends Controller
 
     public function removeFile(Request $request){
         $filename = $request->get('name');
-        Storage::disk('local')->delete('files/'.$filename);
+        Storage::disk('local')->delete('public/'.$filename);
 
         return response()->json([
             'deleted' => true,
             'filename' => $filename
         ]);
+    }
+
+    public function verify(Request $request, $id)
+    {
+        $identification = UserIdentification::find($id);
+        $identification->verified = $request->get('verified');
+
+        $identification->save();
+
+        return redirect('useridentifications')->with('success', 'User identification has been verified status has been updated.');
     }
 }

@@ -48,18 +48,23 @@
 <script>
 var drop = new Dropzone('#attachment', {
     init: function() {
-        this.on("maxfilesexceeded", function(file) {
+        this.on('maxfilesexceeded', function(file) {
             this.removeAllFiles();
             this.addFile(file);
         });
 
-        this.on("sending", function(file, xhr, formData) {
-            formData.append("documenttypeid", $('#documenttypeid').val());
+        this.on('sending', function(file, xhr, formData) {
+            formData.append('documenttypeid', $('#documenttypeid').val());
+        });
+
+        this.on('success', function(file, responseText) {
+            window.location.replace('/useridentifications');
         });
     },
     createImageThumbnails: true,
     addRemoveLinks: false,
     maxFiles: 1,
+    acceptedFiles: 'image/*',
     url: "{{ action('UserIdentificationController@upload') }}",
     headers: {
         'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content

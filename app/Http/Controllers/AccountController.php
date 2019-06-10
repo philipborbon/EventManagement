@@ -3,6 +3,7 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class AccountController extends Controller
 {
@@ -10,7 +11,7 @@ class AccountController extends Controller
     {
         $this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +19,8 @@ class AccountController extends Controller
      */
     public function index()
     {
-        //
+        $user = Auth::user();
+        return view('account.index', compact('user'));
     }
 
     /**

@@ -182,9 +182,9 @@
           @endforeach
         </select>
 
-        @if ($errors->has('age'))
+        @if ($errors->has('maritalstatus'))
             <span class="help-block">
-                <strong>{{ $errors->first('age') }}</strong>
+                <strong>{{ $errors->first('maritalstatus') }}</strong>
             </span>
         @endif
     </div>
