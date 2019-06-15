@@ -18,6 +18,7 @@
               <th scope="col">Date</th>
               <th scope="col">Half Day</th>
               <th scope="col">Double Pay</th>
+              <th scope="col">Overtime</th>
               <th scope="col">Status</th>
               <th scope="col" colspan="2">Action</th>
             </tr>
@@ -29,6 +30,7 @@
               <td>{{$attendance->date->format('M d, Y')}}</td>
               <td>{{$attendance->ishalfday ? 'Yes' : 'No' }}</td>
               <td>{{$attendance->doublepay ? 'Yes' : 'No' }}</td>
+              <td>{{(double) $attendance->overtime}} Hrs</td>
               <td>{{$attendance->getStatus()}}</td>
               <td><a href="{{action('AttendanceController@edit', $attendance['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>

@@ -58,7 +58,7 @@ class AttendanceController extends Controller
             'date' => 'required|date_format:"Y-m-d|unique:attendances',
             'ishalfday' => 'in:1,0',
             'doublepay' => 'in:1,0',
-            'overtime' => 'nullable|double',
+            'overtime' => 'nullable|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'status' => Rule::in(['onduty', 'onleave'])
         ]);
 
@@ -105,7 +105,7 @@ class AttendanceController extends Controller
             'date' => 'required|date_format:"Y-m-d|unique:attendances,date,' . $id,
             'ishalfday' => 'in:1,0',
             'doublepay' => 'in:1,0',
-            'overtime' => 'nullable|double',
+            'overtime' => 'nullable|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'status' => Rule::in(['onduty', 'onleave'])
         ]);
 
