@@ -27,8 +27,8 @@
             <tr>
               <th scope="row">{{$event->id}}</th>
               <td>{{$event->name}}</td>
-              <td>{{$event->startdate}}</td>
-              <td>{{$event->enddate}}</td>
+              <td>{{$event->startdate->format('M d, Y')}}</td>
+              <td>{{$event->enddate->format('M d, Y')}}</td>
               <td>{{$event->getStatus()}}</td>
               <td><a href="{{action('EventController@edit', $event['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>

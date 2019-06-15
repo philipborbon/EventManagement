@@ -17,12 +17,8 @@
 
     <div class="form-group{{ $errors->has('eventid') ? ' has-error' : '' }}">
         <label for="eventid" class="control-label">Event</label>
-
-        <select id="eventid" class="form-control" name="eventid" autofocus>
-          @foreach($events as $event)
-            <option value="{{ $event->id }}" {{ $activity->eventid == $event->id ? 'selected' : '' }}>{{ $event->name }}</option>
-          @endforeach
-        </select>
+        <div class="font-weight-bold">{{ $activity->event->name }}</div>
+        <input type="hidden" name="eventid" value="{{ $activity->eventid }}">
 
         @if ($errors->has('eventid'))
             <span class="help-block">
@@ -34,7 +30,7 @@
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         <label for="name" class="control-label">Name</label>
 
-        <input id="name" type="text" class="form-control" name="name" value="{{ $activity->name }}" required autofocus>
+        <input id="name" type="text" class="form-control" name="name" value="{{ old('name', $activity->name) }}" required autofocus>
 
         @if ($errors->has('name'))
             <span class="help-block">
@@ -46,7 +42,7 @@
     <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
         <label for="location" class="control-label">Location</label>
 
-        <input id="location" type="text" class="form-control" name="location" value="{{ $activity->location }}" required autofocus>
+        <input id="location" type="text" class="form-control" name="location" value="{{ old('location', $activity->location) }}" required autofocus>
 
         @if ($errors->has('location'))
             <span class="help-block">
@@ -60,7 +56,7 @@
         <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
             <label for="date" class="control-label">Date</label>
 
-            <input id="date" type="date" class="form-control" name="date" value="{{ old('date', date('Y-m-d', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="date" type="date" class="form-control" name="date" value="{{ old('date', $activity->schedule->format('Y-m-d')) }}" required autofocus>
 
             @if ($errors->has('date'))
                 <span class="help-block">
@@ -73,7 +69,7 @@
         <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
             <label for="time" class="control-label">Time</label>
 
-            <input id="time" type="time" class="form-control" name="time" value="{{  old('time', date('H:i', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="time" type="time" class="form-control" name="time" value="{{  old('time', $activity->schedule->format('H:i'))}}" required autofocus>
 
             @if ($errors->has('time'))
                 <span class="help-block">

@@ -15,6 +15,7 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
+              <th scope="col">Event</th>
               <th scope="col">Name</th>
               <th scope="col">Location</th>
               <th scope="col">Schedule</th>
@@ -25,6 +26,7 @@
             @foreach($activities as $activity)
             <tr>
               <th scope="row">{{$activity->id}}</th>
+              <td>{{$activity->event->name}}</td>
               <td>{{$activity->name}}</td>
               <td>{{$activity->location}}</td>
               <td>{{ date('M d, Y H:i', strtotime($activity->schedule)) }}</td>

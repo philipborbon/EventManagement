@@ -96,6 +96,7 @@ class EventController extends Controller
             'enddate' => 'required|date|after_or_equal:startdate',
             'status' => Rule::in(['cancelled', 'active', 'done'])
         ]);
+        
         $event->name = $request->get('name');
         $event->description = $request->get('description');
         $event->startdate = $request->get('startdate');

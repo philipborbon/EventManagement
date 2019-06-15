@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h1>Update New Mayor Schedule</h1>
+  <h1>Update Event</h1>
 
   @if (Session::has('success'))
   <div class="alert alert-success">
@@ -10,13 +10,15 @@
   </div><br />
   @endif
 
-  <form method="POST" action="{{ url('activities') }}">
+  <form method="POST" action="{{ action('EventController@update', $id) }}">
     {{ csrf_field() }}
+
+    <input name="_method" type="hidden" value="PATCH">
 
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         <label for="name" class="control-label">Name</label>
 
-        <input id="name" type="text" class="form-control" name="name" value="{{ old('name', $schedule->name) }}" required autofocus>
+        <input id="name" type="text" class="form-control" name="name" value="{{ old('name', $event->name) }}" required autofocus>
 
         @if ($errors->has('name'))
             <span class="help-block">
@@ -25,41 +27,42 @@
         @endif
     </div>
 
-    <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
-        <label for="location" class="control-label">Location</label>
+    <div class="form-group{{ $errors->has('description') ? ' has-error' : '' }}">
+        <label for="description" class="control-label">Description</label>
 
-        <input id="location" type="text" class="form-control" name="location" value="{{ old('location', $schedule->location) }}" required autofocus>
+        <input id="description" type="text" class="form-control" name="description" value="{{ old('description', $event->description) }}" required autofocus>
 
-        @if ($errors->has('location'))
+        @if ($errors->has('description'))
             <span class="help-block">
-                <strong>{{ $errors->first('location') }}</strong>
+                <strong>{{ $errors->first('description') }}</strong>
             </span>
         @endif
     </div>
 
     <div class="row">
         <div class="col-6">
-        <div class="form-group{{ $errors->has('date') ? ' has-error' : '' }}">
-            <label for="date" class="control-label">Date</label>
+        <div class="form-group{{ $errors->has('startdate') ? ' has-error' : '' }}">
+            <label for="startdate" class="control-label">Start Date</label>
 
-            <input id="date" type="date" class="form-control" name="date" value="{{ old('date', date('Y-m-d', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="startdate" type="date" class="form-control" name="startdate" value="{{ old('startdate', $event->startdate->format('Y-m-d')) }}" required autofocus>
 
-            @if ($errors->has('date'))
+            @if ($errors->has('startdate'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('date') }}</strong>
+                    <strong>{{ $errors->first('startdate') }}</strong>
                 </span>
             @endif
         </div>
         </div>
+
         <div class="col-6">
-        <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">
-            <label for="time" class="control-label">Time</label>
+        <div class="form-group{{ $errors->has('enddate') ? ' has-error' : '' }}">
+            <label for="enddate" class="control-label">End Date</label>
 
-            <input id="time" type="time" class="form-control" name="time" value="{{ old('time', date('H:i', strtotime($activity->schedule))) }}" required autofocus>
+            <input id="enddate" type="date" class="form-control" name="enddate" value="{{ old('enddate', $event->enddate->format('Y-m-d')) }}" required autofocus>
 
-            @if ($errors->has('time'))
+            @if ($errors->has('enddate'))
                 <span class="help-block">
-                    <strong>{{ $errors->first('time') }}</strong>
+                    <strong>{{ $errors->first('enddate') }}</strong>
                 </span>
             @endif
         </div>
@@ -73,7 +76,7 @@
 
             <select id="status" class="form-control" name="status" autofocus>
               @foreach(config('enums.schedulestatus') as $key => $value)
-                <option value="{{ $key }}" {{ old('status') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                <option value="{{ $key }}" {{ old('status', $event->status) == $key ? 'selected' : '' }}>{{ $value }}</option>
               @endforeach
             </select>
 

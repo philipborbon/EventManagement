@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use EventManagement\Announcement;
 use EventManagement\Activity;
+use EventManagement\Event;
 
 class HomeController extends Controller
 {
@@ -56,9 +57,15 @@ class HomeController extends Controller
         $announcements = Announcement::where('active', true)
             ->orderBy('created_at', 'DESC')
             ->get();
-        $activities = Activity::whereHas('event', function($query){
-            $query->where('status', 'active');
-        })->orderBy('schedule', 'ASC')->get();
-        return view('welcome', compact('announcements', 'activities'));
+
+        $events = Event::with('activities')
+            ->where('status', 'active')
+            ->orderBy('startdate', 'ASC')
+            ->whereHas('activities', function($query){
+                $query->orderBy('schedule', 'ASC');
+            })
+            ->get();
+
+        return view('welcome', compact('announcements', 'events'));
     }
 }

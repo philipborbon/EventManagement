@@ -9,6 +9,8 @@ class Event extends Model
 {
 	protected $fillable = ['name', 'description', 'startdate', 'enddate', 'status'];
 
+    protected $dates = ['startdate', 'enddate'];
+
     public function getStatus(){
         $type = $this->status;
 

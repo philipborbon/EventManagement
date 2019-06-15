@@ -56,7 +56,7 @@
 
             <div class="mt-5">
                 @if (count($announcements))
-                <div class="row mb-3">
+                <div class="row">
                     <div class="col-md-8 offset-md-2">
                         <div class="card">
                             <div class="card-header">Announcements</div>
@@ -74,28 +74,41 @@
                 </div>
                 @endif
 
-                <div class="row">
+                @if (count($events))
+                    @foreach($events as $event)
+                    <div class="row mt-3">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="card">
+                                <div class="card-header">Activities For {{$event->name}}</div>
+
+                                @if (count($event->activities))
+                                <ul class="list-group list-group-flush">
+                                    @foreach($event->activities as $activity)
+                                    <li class="list-group-item">
+                                        <div>{{ $activity->name }}</div>
+                                        <div>{{ $activity->schedule->format('M d, Y | h:i A') }}</div>
+                                        <div>{{ $activity->description }}</div>
+                                    </li>
+                                    @endforeach
+                                </ul>
+                                @else
+                                <div class="card-body">No scheduled activities.</div>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                @else
+                <div class="row mt-3">
                     <div class="col-md-8 offset-md-2">
                         <div class="card">
                             <div class="card-header">Activities</div>
-
-                            @if (count($activities))
-                            <ul class="list-group list-group-flush">
-                                @foreach($activities as $activity)
-                                <li class="list-group-item">
-                                    <div class="font-weight-bold">{{ $activity->name }}</div>
-                                    <div class="font-italic">{{ $activity->schedule->format('M d, Y H:i') }}</div>
-                                    <div>{{ $location->description }}</div>
-                                </li>
-                                @endforeach
-                            </ul>
-                            @else
                             <div class="card-body">No scheduled activities.</div>
-                            @endif
                         </div>
                     </div>
                 </div>
-                
+                @endif
+
             </div>
         </div>
     </div>
