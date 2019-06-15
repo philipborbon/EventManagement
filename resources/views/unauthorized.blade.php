@@ -13,8 +13,7 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background-color: #E3F2FD;
                 font-family: 'Raleway', sans-serif;
                 font-weight: 100;
                 height: 100vh;
@@ -50,7 +49,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #1976D2;
                 padding: 0 25px;
                 font-size: 12px;
                 font-weight: 600;
@@ -79,7 +78,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    You cannot access this page! This is for only for "{{ $role }}".
+                    Only "{{ $role }}" are allowed to access this page.
                 </div>
             </div>
         </div>
