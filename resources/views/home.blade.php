@@ -7,11 +7,15 @@
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
-                <div class="card-body">
-                @foreach($links as $key => $value)
-                <a href="{{ $value }}" class="btn btn-primary m-2 p-2 pl-3 pr-3">{{ $key }}</a>
+                <ul class="list-group list-group-flush">
+                @foreach($links as $group)
+                    <li class="list-group-item">
+                    @foreach($group as $key => $value)
+                    <a href="{{ $value }}" class="btn btn-primary m-2 p-2 pl-3 pr-3">{{ $key }}</a>
+                    @endforeach
+                    </li>
                 @endforeach
-                </div>
+                </ul>
             </div>
         </div>
     </div>

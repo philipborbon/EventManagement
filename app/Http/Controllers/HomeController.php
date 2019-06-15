@@ -16,17 +16,28 @@ class HomeController extends Controller
     public function index()
     {
         $links = array (
-            'Users' => '/users',
-            'Events' => '/events',
-            'Salary Grades' => '/salarygrades',
-            'Deduction Types' => '/deductiontypes',
-            'Rental Spaces' => '/rentalspaces',
-            'Rental Area Types' => '/rentalareatypes',
-            'Activities' => '/activities',
-            'Document Types' => '/documenttypes',
-            'Announcements' => '/announcements',
-            'Mayor Schedules' => '/mayorschedules',
-            'User Identifications' => '/useridentifications'
+            array (
+                'Users' => '/users',
+                'User Identifications' => '/useridentifications',
+                'Document Types' => '/documenttypes',
+            ),
+
+            array (
+                'Salary Grades' => '/salarygrades',
+                'Deduction Types' => '/deductiontypes'
+            ),
+
+            array (
+                'Events' => '/events',
+                'Activities' => '/activities',
+                'Announcements' => '/announcements',
+                'Mayor Schedules' => '/mayorschedules',
+            ),
+
+            array (
+                'Rental Spaces' => '/rentalspaces',
+                'Rental Area Types' => '/rentalareatypes',
+            )
         );
 
 
@@ -39,7 +50,9 @@ class HomeController extends Controller
 
     public function welcome()
     {
-        $announcements = Announcement::where('active', true)->get();
+        $announcements = Announcement::where('active', true)
+            ->orderBy('created_at', '')
+            ->get();
         return view('welcome', compact('announcements'));
     }
 }

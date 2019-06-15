@@ -3,15 +3,9 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
-use EventManagement\DeductionType;
 
-class DeductionTypeController extends Controller
+class ReservationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -19,8 +13,7 @@ class DeductionTypeController extends Controller
      */
     public function index()
     {
-        $types = DeductionType::all();
-        return view('deductiontype.index', compact('types'));
+        //
     }
 
     /**
@@ -30,7 +23,7 @@ class DeductionTypeController extends Controller
      */
     public function create()
     {
-        return view('deductiontype.create');
+        //
     }
 
     /**
@@ -41,14 +34,7 @@ class DeductionTypeController extends Controller
      */
     public function store(Request $request)
     {
-        $type = $this->validate(request(), [
-          'name' => 'required|string',
-          'description' => 'nullable|string'
-        ]);
-
-        DeductionType::create($type);
-
-        return back()->with('success', 'Type has been added.');;
+        //
     }
 
     /**
@@ -70,8 +56,7 @@ class DeductionTypeController extends Controller
      */
     public function edit($id)
     {
-        $type = DeductionType::find($id);
-        return view('deductiontype.edit', compact('type','id'));
+        //
     }
 
     /**
@@ -83,18 +68,7 @@ class DeductionTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $type = DeductionType::find($id);
-
-        $this->validate(request(), [
-          'name' => 'required|string',
-          'description' => 'nullable|string'
-        ]);
-        $type->name = $request->get('name');
-        $type->description = $request->get('description');
-        $type->save();
-
-
-        return redirect('deductiontypes')->with('success','Type has been updated.');
+        //
     }
 
     /**
@@ -105,8 +79,6 @@ class DeductionTypeController extends Controller
      */
     public function destroy($id)
     {
-        $type = DeductionType::find($id);
-        $type->delete();
-        return redirect('deductiontypes')->with('success','Type has been  deleted.');
+        //
     }
 }
