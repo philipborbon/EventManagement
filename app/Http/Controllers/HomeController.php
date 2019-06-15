@@ -5,6 +5,7 @@ namespace EventManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use EventManagement\Announcement;
+use EventManagement\Activity;
 
 class HomeController extends Controller
 {
@@ -24,6 +25,7 @@ class HomeController extends Controller
 
             array (
                 'Salary Grades' => '/salarygrades',
+                'Attendances' => '/attendances',
                 'Deduction Types' => '/deductiontypes'
             ),
 
@@ -51,8 +53,11 @@ class HomeController extends Controller
     public function welcome()
     {
         $announcements = Announcement::where('active', true)
-            ->orderBy('created_at', '')
+            ->orderBy('created_at', 'DESC')
             ->get();
-        return view('welcome', compact('announcements'));
+        $activities = Activity::whereHas('event', function($query){
+            $query->where('status', 'active');
+        })->orderBy('schedule', 'ASC')->get();
+        return view('welcome', compact('announcements', 'activities'));
     }
 }
