@@ -8,7 +8,7 @@ use EventManagement\DeductionType;
 
 class EmployeeActiveDeduction extends Model
 {
-	protected $fillable = ['userid', 'typeid', 'isactive'];
+	protected $fillable = ['userid', 'typeid', 'amount'];
 
 	public function user(){
 		return $this->belongsTo(User::class, 'userid');

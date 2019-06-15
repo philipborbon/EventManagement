@@ -26,7 +26,8 @@ class HomeController extends Controller
             array (
                 'Salary Grades' => '/salarygrades',
                 'Attendances' => '/attendances',
-                'Deduction Types' => '/deductiontypes'
+                'Deduction Types' => '/deductiontypes',
+                'Employee Active Deductions' => '/activedeductions'
             ),
 
             array (

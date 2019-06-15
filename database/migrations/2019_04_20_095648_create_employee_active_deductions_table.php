@@ -17,7 +17,7 @@ class CreateEmployeeActiveDeductionsTable extends Migration
             $table->increments('id');
             $table->integer('userid')->unsigned();
             $table->integer('typeid')->unsigned();
-            $table->boolean('isActive');
+            $table->double('amount')->default(0);
             $table->timestamps();
             
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');

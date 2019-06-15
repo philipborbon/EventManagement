@@ -51,4 +51,5 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::patch('useridentifications/verify/{id}', 'UserIdentificationController@verify');
 
 	Route::resource('attendances', 'AttendanceController');
+	Route::resource('activedeductions', 'EmployeeActiveDeductionController');
 });
