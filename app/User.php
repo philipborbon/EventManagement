@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function getFullname()
     {
-      return "{$this->firstname} {$this->lastname}";
+      return "{$this->lastname}, {$this->firstname}";
     }
 
     public function getUserType(){

@@ -110,7 +110,7 @@
 
         <select id="usertype" class="form-control" name="usertype" autofocus>
           @foreach(config('enums.usertype') as $key => $value)
-            <option value="{{ $key }}" {{ old('usertype') == $key ? 'selected' : '' }}>{{ $value }}</option>
+            <option value="{{ $key }}" {{ old('usertype', 'employee') == $key ? 'selected' : '' }}>{{ $value }}</option>
           @endforeach
         </select>
 

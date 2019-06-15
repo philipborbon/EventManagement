@@ -36,5 +36,10 @@ return [
 		'awarded' => 'Awarded',
 		'cancelled' => 'Cancelled',
 		'waved' => 'Waved'
+	],
+
+	'attendancestatus' => [
+		'onduty' => 'On Duty',
+		'onleave' => 'On Leave'
 	]
 ];

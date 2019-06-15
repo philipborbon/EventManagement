@@ -149,7 +149,7 @@ class ActivityController extends Controller
             'lastname' => 'required|string',
             'address' => 'nullable|string',
             'age' => 'nullable|integer',
-            'sex' => Rule::in(['F', 'M']),
+            'sex' => Rule::in(['F', 'M'])
         ]);
 
         EventParticipant::create($participant);

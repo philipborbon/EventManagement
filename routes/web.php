@@ -44,9 +44,11 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 
 	Route::get('activities/{id}/participants/create','ActivityController@createParticipant');
 
-	Route::resource('documenttypes','DocumentTypeController');
-	Route::resource('announcements','AnnouncementController');
-	Route::resource('mayorschedules','MayorScheduleController');
+	Route::resource('documenttypes', 'DocumentTypeController');
+	Route::resource('announcements', 'AnnouncementController');
+	Route::resource('mayorschedules', 'MayorScheduleController');
 
 	Route::patch('useridentifications/verify/{id}', 'UserIdentificationController@verify');
+
+	Route::resource('attendances', 'AttendanceController');
 });

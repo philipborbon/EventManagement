@@ -19,7 +19,7 @@ class CreateAttendancesTable extends Migration
             $table->date('date');
             $table->boolean('ishalfday');
             $table->boolean('doublepay');
-            $table->time('overtime')->nullable();
+            $table->double('overtime')->nullable();
             $table->enum('status', ['onduty', 'onleave']);
             $table->timestamps();
             
