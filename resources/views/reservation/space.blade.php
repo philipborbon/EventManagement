@@ -2,11 +2,14 @@
 
 @section('content')
 <div class="container">
-    @if (Session::has('success'))
-    <div class="alert alert-success">
-      <p>{{ Session::get('success') }}</p>
-    </div><br />
-    @endif
+        @if (Session::has('message'))
+          <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>
+        @endif
+        @if (Session::has('success'))
+        <div class="alert alert-success">
+          <p>{{ Session::get('success') }}</p>
+        </div>
+        @endif
 
     <div class="row mb-5">
         <div class="col-3">
@@ -99,6 +102,10 @@
             google.maps.event.trigger(polygon, 'click');
             console.log('awesome');
         });
+
+        if (space.status != 'available') {
+            card.find('[data-role="create"]').remove();
+        }
 
         return card;
     }

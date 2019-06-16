@@ -38,6 +38,10 @@ class ReservationController extends Controller
         $space = RentalSpace::find(request()->input('spaceid'));
         $user = Auth::user();
 
+        if ( $space->status != 'available' ) {
+            return redirect('rentaspace')->with('message', 'Space is not available.');
+        }
+
         return view('reservation.create', compact('space', 'user'));
     }
 
