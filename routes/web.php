@@ -52,4 +52,6 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 
 	Route::resource('attendances', 'AttendanceController');
 	Route::resource('activedeductions', 'EmployeeActiveDeductionController');
+	Route::resource('monthlypayouts', 'MonthlyPayoutController');
+	Route::post('monthlypayouts/generate', 'MonthlyPayoutController@generate');
 });

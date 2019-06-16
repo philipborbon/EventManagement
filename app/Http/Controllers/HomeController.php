@@ -25,13 +25,6 @@ class HomeController extends Controller
             ),
 
             array (
-                'Salary Grades' => '/salarygrades',
-                'Attendances' => '/attendances',
-                'Deduction Types' => '/deductiontypes',
-                'Employee Active Deductions' => '/activedeductions'
-            ),
-
-            array (
                 'Events' => '/events',
                 'Activities' => '/activities',
                 'Announcements' => '/announcements',
@@ -41,6 +34,14 @@ class HomeController extends Controller
             array (
                 'Rental Spaces' => '/rentalspaces',
                 'Rental Area Types' => '/rentalareatypes',
+            ),
+
+            array (
+                'Salary Grades' => '/salarygrades',
+                'Attendances' => '/attendances',
+                'Deduction Types' => '/deductiontypes',
+                'Employee Active Deductions' => '/activedeductions',
+                'Monthly Payouts' => '/monthlypayouts'
             )
         );
 
