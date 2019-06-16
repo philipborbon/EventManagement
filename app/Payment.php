@@ -22,4 +22,8 @@ class Payment extends Model
 	public function reservation(){
 		return $this->belongsTo(Reservation::class, 'reservationid');
 	}
+
+	public function proofs(){
+		return $this->hasMany(ProofOfPayment::class, 'paymentid');
+	}
 }

@@ -3,9 +3,17 @@
 namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
+use EventManagement\RentalSpace;
+use EventManagement\Reservation;
+use Auth;
 
 class ReservationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +31,10 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //
+        $space = RentalSpace::find(request()->input('spaceid'));
+        $user = Auth::user();
+
+        return view('reservation.create', compact('space', 'user'));
     }
 
     /**
@@ -34,7 +45,15 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $reservation = $this->validate(request(), [
+            'userid' => 'required|exists:users,id',
+            'rentalspaceid' => 'required|exists:rental_spaces,id',
+            'status' => 'in:onhold,awarded,cancelled,waved'
+        ]);
+
+        Reservation::create($reservation);
+
+        return redirect('rentaspace/reservations')->with('success', 'Reservation has been added');
     }
 
     /**
@@ -80,5 +99,27 @@ class ReservationController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function spaces(){
+        $spaces = RentalSpace::with('coordinates')
+            ->whereHas('event', function($query){
+                $query->where('status', 'active');
+            })
+            ->has('coordinates', '>', '0')
+            ->orderBy('name')->get();
+
+        return view('reservation.space', compact('spaces'));
+    }
+
+    public function reservations(){
+        $user = Auth::user();
+        $reservations = Reservation::where('userid', $user->id)->get();
+
+        return view('reservation.reservation', compact('reservations'));
+    }
+
+    public function createProof($id){
+
     }
 }

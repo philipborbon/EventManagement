@@ -5,6 +5,7 @@ namespace EventManagement;
 use Illuminate\Database\Eloquent\Model;
 use EventManagement\User;
 use EventManagement\RentalSpace;
+use EventManagement\Payment;
 
 class Reservation extends Model
 {
@@ -16,5 +17,9 @@ class Reservation extends Model
 
 	public function rentalSpace(){
 		return $this->belongsTo(RentalSpace::class, 'rentalspaceid');
+	}
+
+	public function payment(){
+	    return $this->hasOne(Payment::class, 'reservationid');
 	}
 }

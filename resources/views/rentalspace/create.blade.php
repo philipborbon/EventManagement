@@ -78,7 +78,7 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group{{ $errors->has('area') ? ' has-error' : '' }}">
-              <label for="area" class="control-label">Area (sq. m&sup2;)</label>
+              <label for="area" class="control-label">Area (sq. m)</label>
 
               <input id="area" type="number" step="0.01" min="0" class="form-control" name="area" value="{{ old('area') }}" required autofocus>
 

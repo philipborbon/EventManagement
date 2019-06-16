@@ -13,7 +13,7 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group{{ $errors->has('area') ? ' has-error' : '' }}">
-              <label for="area" class="control-label">Area (sq. m&sup2;)</label>
+              <label for="area" class="control-label">Area (sq. m)</label>
 
               <input id="area" type="number" step="0.01" min="0" class="form-control" name="area" value="{{ $space->area }}" required autofocus>
 
@@ -36,7 +36,7 @@
     </div>
 
     <div id="map" class="mb-5" style="width:100%; height: 500px;"></div>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj7ruN9WfQAh-7LaTDlazuDKU16Zoukxc&libraries=drawing,geometry"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_KEY', '')}}&libraries=drawing,geometry"></script>
     <script>
       var coordinates = {!! json_encode($areas) !!};
       // This example requires the Drawing library. Include the libraries=drawing
@@ -44,8 +44,8 @@
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=drawing">
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: coordinates.length > 0 ? coordinates[0] : {lat: 6.6252948, lng: 124.5956936},
-          zoom: 16
+          center: coordinates.length > 0 ? coordinates[0] : {lat: 6.6250537, lng: 124.5975442},
+          zoom: 18
         });
 
         var drawingManager = new google.maps.drawing.DrawingManager({

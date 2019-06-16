@@ -17,7 +17,7 @@
               <th scope="col">ID</th>
               <th scope="col">Type</th>
               <th scope="col">Name</th>
-              <th scope="col">Area Area (sq. m&sup2;)</th>
+              <th scope="col">Area Area (sq. m)</th>
               <th scope="col">Amount</th>
               <th scope="col">Status</th>
               <th scope="col" colspan="3">Action</th>

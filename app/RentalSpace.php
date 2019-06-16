@@ -5,6 +5,7 @@ namespace EventManagement;
 use Illuminate\Database\Eloquent\Model;
 use EventManagement\RentalAreaType;
 use EventManagement\Event;
+use EventManagement\RentalSpaceArea;
 
 class RentalSpace extends Model
 {
@@ -16,6 +17,10 @@ class RentalSpace extends Model
 
     public function event(){
         return $this->belongsTo(Event::class, 'eventid');
+    }
+
+    public function coordinates(){
+        return $this->hasMany(RentalSpaceArea::class, 'rentalspaceid');
     }
 
     public function getStatus(){

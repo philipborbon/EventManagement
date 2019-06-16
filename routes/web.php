@@ -22,6 +22,12 @@ Route::resource('useridentifications', 'UserIdentificationController');
 Route::post('useridentifications/upload', 'UserIdentificationController@upload');
 Route::post('useridentifications/removeFile', 'UserIdentificationController@removeFile');
 
+Route::get('rentaspace', 'ReservationController@spaces');
+Route::get('rentaspace/create', 'ReservationController@create');
+Route::post('rentaspace', 'ReservationController@store');
+Route::get('rentaspace/reservations', 'ReservationController@reservations');
+Route::get('rentaspace/reservations/{id}/proof', 'ReservationController@createProof');
+
 Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
 	Route::resource('users','UserController');
 	Route::resource('events','EventController');
