@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use EventManagement\Payment;
 use EventManagement\User;
 use EventManagement\RentalSpace;
+use EventManagement\ProofOfPayment;
+use EventManagement\DocumentType;
+use Storage;
 use DB;
 
 class PaymentController extends Controller
@@ -181,5 +184,65 @@ class PaymentController extends Controller
         $payment->delete();
 
         return redirect('payments')->with('success', 'Payment has been deleted.');
+    }
+
+    public function proof($id)
+    {
+        $payment = Payment::find($id);
+        $proofs = ProofOfPayment::where('paymentid', $id)->get();
+        return view('payment.proof', compact('proofs', 'payment', 'id'));
+    }
+
+    public function createProof($id){
+        $types = DocumentType::all();
+        return view('payment.proofcreate', compact('types', 'id'));
+    }
+
+    public function showProof($id, $proofId){
+        $proof = ProofOfPayment::find($proofId);
+        return view('payment.proofshow', compact('proof', 'id'));
+    }
+
+    public function destroyProof($id, $proofId){
+        $proof = ProofOfPayment::find($proofId);
+
+        Storage::disk('local')->delete('public/'.$proof->attachment);
+
+        $proof->delete();
+
+        return redirect('payments/'.$id.'/proof')->with('success', 'Proof Of Payment has been deleted.');
+    }
+
+    public function uploadProof(Request $request, $id)
+    {
+        $uploadedFile = $request->file('file');
+        $filename = time().$uploadedFile->getClientOriginalName();
+
+        Storage::disk('local')->putFileAs (
+            'public',
+            $uploadedFile,
+            $filename
+        );
+
+        $proof = $this->validate(request(), [
+            'documenttypeid' => 'required|exists:document_types,id'
+        ]);
+
+        $proof['attachment'] = $filename;
+        $proof['paymentid'] = $id;
+
+        ProofOfPayment::create($proof);
+
+        return response()->json($proof);
+    }
+
+    public function removeFile(Request $request, $id){
+        $filename = $request->get('name');
+        Storage::disk('local')->delete('public/'.$filename);
+
+        return response()->json([
+            'deleted' => true,
+            'filename' => $filename
+        ]);
     }
 }

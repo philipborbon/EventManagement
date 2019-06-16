@@ -20,7 +20,7 @@
               <th scope="col">Amount</th>
               <th scope="col">Verified</th>
               <th scope="col">From Reservation</th>
-              <th scope="col" colspan="2">Action</th>
+              <th scope="col" colspan="3">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -33,8 +33,9 @@
               <td>{{$payment->verified ? 'Yes' : 'No'}}</td>
               <td>{{$payment->reservationid ? 'Yes' : 'No'}}</td>
               <td>
-                <a href="{{action('PaymentController@edit', $payment['id'])}}" class="btn btn-warning">Edit</a>
+                <a href="{{action('PaymentController@edit', $payment['id'])}}" class="btn btn-warning">Edit</a> 
               </td>
+              <td><a href="{{action('PaymentController@proof', $payment['id'])}}" class="btn btn-primary">POP</a></td>
               <td>
                 <form action="{{action('PaymentController@destroy', $payment['id'])}}" method="post">
                   {{csrf_field()}}

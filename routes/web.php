@@ -57,4 +57,11 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 
 	Route::resource('reservations', 'ReservationController');
 	Route::resource('payments', 'PaymentController');
+
+	Route::get('payments/{id}/proof', 'PaymentController@proof');
+	Route::get('payments/{id}/proof/create', 'PaymentController@createProof');
+	Route::get('payments/{id}/proof/{proofId}', 'PaymentController@showProof');
+	Route::delete('payments/{id}/proof/{proofId}', 'PaymentController@destroyProof');
+	Route::post('payments/{id}/uploadProof', 'PaymentController@uploadProof');
+	Route::post('payments/{id}/removeFile', 'PaymentController@removeFile');
 });
