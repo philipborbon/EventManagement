@@ -17,16 +17,21 @@ Route::get('/', 'HomeController@index');
 Route::get('/welcome', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 Route::resource('account','AccountController');
 Route::resource('useridentifications', 'UserIdentificationController');
 Route::post('useridentifications/upload', 'UserIdentificationController@upload');
 Route::post('useridentifications/removeFile', 'UserIdentificationController@removeFile');
+
 
 Route::get('rentaspace', 'ReservationController@spaces');
 Route::get('rentaspace/create', 'ReservationController@create');
 Route::post('rentaspace', 'ReservationController@store');
 Route::get('rentaspace/reservations', 'ReservationController@reservations');
 Route::get('rentaspace/reservations/{id}/proof', 'ReservationController@createProof');
+Route::post('rentaspace/reservations/{id}/uploadProof', 'ReservationController@uploadProof');
+Route::post('rentaspace/reservations/{id}/removeFile', 'ReservationController@removeFile');
+
 
 Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
 	Route::resource('users','UserController');

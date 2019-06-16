@@ -5,6 +5,10 @@ namespace EventManagement\Http\Controllers;
 use Illuminate\Http\Request;
 use EventManagement\RentalSpace;
 use EventManagement\Reservation;
+use EventManagement\ProofOfPayment;
+use EventManagement\Payment;
+use EventManagement\DocumentType;
+use Storage;
 use Auth;
 
 class ReservationController extends Controller
@@ -51,7 +55,11 @@ class ReservationController extends Controller
             'status' => 'in:onhold,awarded,cancelled,waved'
         ]);
 
-        Reservation::create($reservation);
+        $reservation = Reservation::create($reservation);
+
+        $space = $reservation->rentalSpace;
+        $space->status = 'reserved';
+        $space->save();
 
         return redirect('rentaspace/reservations')->with('success', 'Reservation has been added');
     }
@@ -120,6 +128,72 @@ class ReservationController extends Controller
     }
 
     public function createProof($id){
+        $types = DocumentType::all();
+        return view('reservation.proofcreate', compact('types', 'id'));
+    }
 
+    public function uploadProof(Request $request, $id)
+    {
+        $uploadedFile = $request->file('file');
+        $filename = time().$uploadedFile->getClientOriginalName();
+
+        Storage::disk('local')->putFileAs (
+            'public',
+            $uploadedFile,
+            $filename
+        );
+
+        $proof = $this->validate(request(), [
+            'documenttypeid' => 'required|exists:document_types,id'
+        ]);
+
+        $payment = Payment::where('reservationid', $id)->first();
+
+        if ( $payment ){
+            $firstProof = $payment->proofs->first();
+
+            if ($firstProof) {
+                Storage::disk('local')->delete('public/'.$firstProof->attachment);
+                $firstProof->documenttypeid = $proof['documenttypeid'];
+                $firstProof->attachment = $filename;
+
+                $firstProof->save();
+
+                $proof = $firstProof;
+            } else {
+                $proof['attachment'] = $filename;
+                $proof['paymentid'] = $payment->id;
+
+                ProofOfPayment::create($proof);
+            }
+        } else {
+            $user = Auth::user();
+            $reservation = Reservation::find($id);
+
+            $payment = Payment::create ([
+                'userid' => $user->id,
+                'rentalspaceid' => $reservation->rentalspaceid,
+                'reservationid' => $reservation->id,
+                'amount' => $reservation->rentalSpace->amount,
+                'verified' => 0
+            ]);
+
+            $proof['attachment'] = $filename;
+            $proof['paymentid'] = $payment->id;
+
+            ProofOfPayment::create($proof);
+        }
+
+        return response()->json($proof);
+    }
+
+    public function removeFile(Request $request, $id){
+        $filename = $request->get('name');
+        Storage::disk('local')->delete('public/'.$filename);
+
+        return response()->json([
+            'deleted' => true,
+            'filename' => $filename
+        ]);
     }
 }

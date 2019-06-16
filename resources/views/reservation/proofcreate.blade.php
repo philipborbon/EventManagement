@@ -53,14 +53,14 @@ var drop = new Dropzone('#attachment', {
         });
 
         this.on('success', function(file, responseText) {
-            window.location.replace("{{ action('PaymentController@proof', $id) }}");
+            window.location.replace("{{ action('ReservationController@reservations') }}");
         });
     },
     createImageThumbnails: true,
     addRemoveLinks: false,
     maxFiles: 1,
     acceptedFiles: 'image/*',
-    url: "{{ action('PaymentController@uploadProof', $id) }}",
+    url: "{{ action('ReservationController@uploadProof', $id) }}",
     headers: {
         'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
     },
@@ -72,7 +72,7 @@ var drop = new Dropzone('#attachment', {
             headers: {
                 'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
             },
-            url: "{{ action('PaymentController@removeFile', $id) }}",
+            url: "{{ action('ReservationController@removeFile', $id) }}",
             data: { name: name },
             sucess: function(data){
                 console.log('success: ' + data);

@@ -33,6 +33,15 @@
               <td>Php {{ number_format($reservation->rentalSpace->amount, 2) }}</td>
               <td>
                   @if ($reservation->payment)
+                      @php
+                      $proof = $reservation->payment->proofs->first();
+                      @endphp
+
+                      @if ($proof)
+                      <div style="width: 200px; height: 100px; overflow: hidden;">
+                        <img src="{{ asset('/storage/' . $proof->attachment ) }}" class="img-fluid">
+                      </div>
+                      @endif
                   @else
                   --
                   @endif
