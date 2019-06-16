@@ -24,6 +24,12 @@
                                 My Account
                             </a>
 
+                            @if (Auth::user()->usertype == 'investor')
+                            <a href="/rentaspace/reservations" class="dropdown-item">
+                                My Reservations
+                            </a>
+                            @endif
+
                             <a href="{{ route('logout') }}" class="dropdown-item"
                                onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                 Logout

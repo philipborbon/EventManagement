@@ -54,7 +54,11 @@ class HomeController extends Controller
 
 
         if (Auth::check()) {
-            return view('home', compact('links'));
+            if (Auth::user()->usertype == 'investor') {
+                return redirect('rentaspace');
+            } else {
+                return view('home', compact('links'));
+            }
         } else {
             return redirect('welcome');
         }

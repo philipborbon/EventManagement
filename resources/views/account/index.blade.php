@@ -38,6 +38,15 @@
 
     <div class="row mt-4">
         <div class="col">
+            <div>
+                <label>User Type</label>
+                <div>{{ config('enums.usertype')[$user->usertype] }}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col">
             <label for="address" class="control-label">Address</label>
             <div>
                 @if ( $user->address )
