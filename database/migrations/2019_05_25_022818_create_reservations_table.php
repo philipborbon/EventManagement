@@ -17,7 +17,7 @@ class CreateReservationsTable extends Migration
             $table->increments('id');
             $table->integer('userid')->unsigned();
             $table->integer('rentalspaceid')->unsigned();
-            $table->enum('status', ['awarded', 'cancelled', 'waved']);
+            $table->enum('status', ['onhold', 'awarded', 'cancelled', 'waved']);
             $table->timestamps();
 
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');

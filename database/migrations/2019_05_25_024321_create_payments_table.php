@@ -17,7 +17,7 @@ class CreatePaymentsTable extends Migration
             $table->increments('id');
             $table->integer('userid')->unsigned();
             $table->integer('rentalspaceid')->unsigned();
-            $table->integer('reservationid')->unsigned();
+            $table->integer('reservationid')->nullable()->unsigned();
             $table->double('amount', 8, 2)->default(0);
             $table->boolean('verified')->default(false);
             $table->timestamps();

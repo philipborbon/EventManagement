@@ -33,6 +33,7 @@ return [
 	],
 
 	'reservationstatus' => [
+		'onhold' => 'On Hold',
 		'awarded' => 'Awarded',
 		'cancelled' => 'Cancelled',
 		'waved' => 'Waved'
