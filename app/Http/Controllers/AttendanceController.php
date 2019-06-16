@@ -52,13 +52,12 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: unique date with userid, how to
         $attendance = $this->validate(request(), [
             'userid' => 'required|exists:users,id',
-            'date' => 'required|date_format:"Y-m-d|unique:attendances',
+            'date' => 'required|date_format:"Y-m-d|unique_with:attendances,date,userid',
             'ishalfday' => 'in:1,0',
             'doublepay' => 'in:1,0',
-            'overtime' => 'nullable|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
+            'overtime' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'status' => Rule::in(['onduty', 'onleave'])
         ]);
 
@@ -99,10 +98,9 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // TODO: unique date with userid, how to
         $this->validate(request(), [
             'userid' => 'required|exists:users,id',
-            'date' => 'required|date_format:"Y-m-d|unique:attendances,date,' . $id,
+            'date' => 'required|date_format:"Y-m-d|unique_with:attendances,date,userid,' . $id,
             'ishalfday' => 'in:1,0',
             'doublepay' => 'in:1,0',
             'overtime' => 'nullable|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',

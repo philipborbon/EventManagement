@@ -49,10 +49,9 @@ class EmployeeActiveDeductionController extends Controller
      */
     public function store(Request $request)
     {
-        // TODO: unique typeid with userid, how to
         $activededuction = $this->validate(request(), [
             'userid' => 'required|exists:users,id',
-            'typeid' => 'required|exists:deduction_types,id',
+            'typeid' => 'required|exists:deduction_types,id|unique_with:employee_active_deductions,typeid,userid',
             'amount' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/'
         ]);
 
@@ -93,10 +92,9 @@ class EmployeeActiveDeductionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // TODO: unique typeid with userid, how to
         $this->validate(request(), [
             'userid' => 'required|exists:users,id',
-            'typeid' => 'required|exists:deduction_types,id',
+            'typeid' => 'required|exists:deduction_types,id|unique_with:employee_active_deductions,typeid,userid,' . $id,
             'amount' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/'
         ]);
 

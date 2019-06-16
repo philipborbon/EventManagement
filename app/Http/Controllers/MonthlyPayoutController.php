@@ -123,7 +123,6 @@ class MonthlyPayoutController extends Controller
         $year = $request->get('year');
         $dateavailable = $request->get('dateavailable');
 
-        // TODO: confirm are overtime double paid, on holiday are overtime get double?
         $attendances = DB::select("
             SELECT userid, 
             SUM(

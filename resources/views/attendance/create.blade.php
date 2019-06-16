@@ -51,7 +51,7 @@
             <div class="form-group{{ $errors->has('overtime') ? ' has-error' : '' }}">
                 <label for="overtime" class="control-label">Overtime (Hrs)</label>
 
-                <input id="overtime" type="number" min="0" step="0.01" class="form-control" name="overtime" value="{{ old('overtime') }}" autofocus>
+                <input id="overtime" type="number" min="0" step="0.01" class="form-control" name="overtime" value="{{ old('overtime', 0) }}" autofocus>
 
                 @if ($errors->has('overtime'))
                     <span class="help-block">
