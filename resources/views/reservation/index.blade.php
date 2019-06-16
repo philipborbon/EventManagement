@@ -10,34 +10,52 @@
           <p>{{ Session::get('success') }}</p>
         </div>
         @endif
-        <div class="m-1 text-right"><a href="{{action('PaymentController@create')}}" class="btn btn-primary">Add Payment</a></div>
         <table class="table">
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Name</th>
+              <th scope="col">Date</th>
               <th scope="col">Rental Space</th>
               <th scope="col">Amount</th>
-              <th scope="col">Verified</th>
-              <th scope="col">From Reservation</th>
-              <th scope="col" colspan="3">Action</th>
+              <th scope="col">Proof Of Payment</th>
+              <th scope="col">Status</th>
+              <th scope="col" colspan="2">Action</th>
             </tr>
           </thead>
           <tbody>
-            @foreach($payments as $payment)
+            @foreach($reservations as $reservation)
             <tr>
-              <th scope="row">{{$payment->id}}</th>
-              <td>{{$payment->user->getFullname()}}</td>
-              <td>{{$payment->rentalSpace->name}}</td>
-              <td>Php {{ number_format($payment->amount, 2) }}</td>
-              <td>{{$payment->verified ? 'Yes' : 'No'}}</td>
-              <td>{{$payment->reservationid ? 'Yes' : 'No'}}</td>
+              <th scope="row">{{$reservation->id}}</th>
+              <td>{{$reservation->created_at->format('M d, Y')}}</td>
+              <td>{{$reservation->rentalSpace->name}}</td>
+              <td>Php {{ number_format($reservation->rentalSpace->amount, 2) }}</td>
               <td>
-                <a href="{{action('PaymentController@edit', $payment['id'])}}" class="btn btn-warning">Edit</a> 
+                  @if ($reservation->payment)
+                      @php
+                      $proof = $reservation->payment->proofs->first();
+                      @endphp
+
+                      @if ($proof)
+                      <div style="width: 200px; height: 100px; overflow: hidden;">
+                        <img src="{{ asset('/storage/' . $proof->attachment ) }}" class="img-fluid">
+                      </div>
+                      @endif
+                  @else
+                  --
+                  @endif
               </td>
-              <td><a href="{{action('PaymentController@proof', $payment['id'])}}" class="btn btn-primary">POP</a></td>
+              <td>{{ config('enums.reservationstatus')[$reservation->status] }}</td>
               <td>
-                <form action="{{action('PaymentController@destroy', $payment['id'])}}" method="post">
+                @if ($reservation->status == 'onhold')
+                <form action="{{action('ReservationController@waive', $reservation['id'])}}" method="post">
+                  {{csrf_field()}}
+                  <input name="_method" type="hidden" value="PATCH">
+                  <button class="btn btn-warning" type="submit">Waive</button>
+                </form>
+                @endif
+              </td>
+              <td>
+                <form action="{{action('ReservationController@destroy', $reservation['id'])}}" method="post">
                   {{csrf_field()}}
                   <input name="_method" type="hidden" value="DELETE">
                   <button class="btn btn-danger" type="submit">Delete</button>

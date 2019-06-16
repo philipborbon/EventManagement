@@ -74,7 +74,7 @@ class PaymentController extends Controller
 
             DB::table('reservations')
                 ->where('rentalspaceid', '=', $rentalSpace->id)
-                ->where('status', '<>', 'waved')
+                ->where('status', '<>', 'waived')
                 ->update(array('status' => 'cancelled'));
         }
 
@@ -139,12 +139,12 @@ class PaymentController extends Controller
                 DB::table('reservations')
                     ->where('rentalspaceid', '=', $rentalSpace->id)
                     ->where('id', '<>', $reservation->id)
-                    ->where('status', '<>', 'waved')
+                    ->where('status', '<>', 'waived')
                     ->update(array('status' => 'cancelled'));
             } else {
                 DB::table('reservations')
                     ->where('rentalspaceid', '=', $rentalSpace->id)
-                    ->where('status', '<>', 'waved')
+                    ->where('status', '<>', 'waived')
                     ->update(array('status' => 'cancelled'));
             }
         } else {

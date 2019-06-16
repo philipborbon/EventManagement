@@ -67,6 +67,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::post('monthlypayouts/generate', 'MonthlyPayoutController@generate');
 
 	Route::resource('reservations', 'ReservationController');
+	Route::patch('reservations/{id}/waive', 'ReservationController@waive');
 	Route::resource('payments', 'PaymentController');
 
 	Route::get('payments/{id}/proof', 'PaymentController@proof');

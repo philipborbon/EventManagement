@@ -36,7 +36,7 @@ return [
 		'onhold' => 'On Hold',
 		'awarded' => 'Awarded',
 		'cancelled' => 'Cancelled',
-		'waved' => 'Waved'
+		'waived' => 'Waived'
 	],
 
 	'attendancestatus' => [

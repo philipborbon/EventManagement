@@ -25,7 +25,12 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        return view('reservation.index');
+        $reservations = Reservation::orderBy('created_at', 'DESC')
+            ->whereHas('user', function($query){
+                $query->orderBy('lastname', 'ASC');
+            })->get();
+
+        return view('reservation.index', compact('reservations'));
     }
 
     /**
@@ -56,7 +61,7 @@ class ReservationController extends Controller
         $reservation = $this->validate(request(), [
             'userid' => 'required|exists:users,id',
             'rentalspaceid' => 'required|exists:rental_spaces,id',
-            'status' => 'in:onhold,awarded,cancelled,waved'
+            'status' => 'in:onhold,awarded,cancelled,waived'
         ]);
 
         $reservation = Reservation::create($reservation);
@@ -110,7 +115,17 @@ class ReservationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $reservation = Reservation::find($id);
+
+        if ($reservation->status == 'onhold' || $reservation->status == 'awarded') {
+            $space = $reservation->rentalSpace;
+            $space->status = 'available';
+            $space->save();
+        }
+
+        $reservation->delete();
+
+        return back()->with('success', 'Reservation has been deleted');
     }
 
     public function spaces(){
@@ -199,5 +214,19 @@ class ReservationController extends Controller
             'deleted' => true,
             'filename' => $filename
         ]);
+    }
+
+    public function waive($id){
+        $reservation = Reservation::find($id);
+        if ($reservation->status == 'onhold') {
+            $reservation->status = 'waived';
+            $reservation->save();
+
+            $space = $reservation->rentalSpace;
+            $space->status = 'available';
+            $space->save();
+        }
+
+        return redirect('reservations')->with('success', 'Reservation has been waived.');
     }
 }

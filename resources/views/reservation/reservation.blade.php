@@ -47,7 +47,11 @@
                   @endif
               </td>
               <td>{{ config('enums.reservationstatus')[$reservation->status] }}</td>
-              <td><a href="{{action('ReservationController@createProof', $reservation['id'])}}" class="btn btn-primary">Upload POP</a></td>
+              <td>
+                @if ($reservation->status == 'onhold')
+                <a href="{{action('ReservationController@createProof', $reservation['id'])}}" class="btn btn-primary">Upload POP</a>
+                @endif
+              </td>
               <td>
                 <form action="{{action('ReservationController@destroy', $reservation['id'])}}" method="post">
                   {{csrf_field()}}

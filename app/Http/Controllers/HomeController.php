@@ -39,7 +39,8 @@ class HomeController extends Controller
             array (
                 'Rental Spaces' => '/rentalspaces',
                 'Rental Area Types' => '/rentalareatypes',
-                'Rental Payments' => '/payments'
+                'Rental Payments' => '/payments',
+                'Reservations' => '/reservations'
             ),
 
             array (
