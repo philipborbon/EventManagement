@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use EventManagement\Attendance;
 use EventManagement\User;
 use Illuminate\Validation\Rule;
+use Auth;
 
 class AttendanceController extends Controller
 {
@@ -21,14 +22,31 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        $attendances = Attendance::with('user')
-            ->orderBy('date', 'DESC')
-            ->whereHas('user', function($query) {
-                $query->orderBy('lastname', 'ASC')
-                ->orderBy('firstname', 'ASC');
-            })
-            ->get();
-        return view('attendance.index', compact('attendances'));
+        $user = Auth::user();
+        $attendances = NULL;
+
+        if ( Auth::user()->usertype == 'admin' ) {
+            $attendances = Attendance::with('user')
+                ->orderBy('date', 'DESC')
+                ->whereHas('user', function($query) {
+                    $query->orderBy('lastname', 'ASC')
+                    ->orderBy('firstname', 'ASC');
+                })
+                ->get();
+        } else {
+            $attendances = Attendance::with('user')
+                ->orderBy('date', 'DESC')
+                ->whereHas('user', function($query) {
+                    $user = Auth::user();
+
+                    $query->where('userid', $user->id)
+                        ->orderBy('lastname', 'ASC')
+                        ->orderBy('firstname', 'ASC');
+                })
+                ->get();
+        }
+
+        return view('attendance.index', compact('attendances', 'user'));
     }
 
     /**

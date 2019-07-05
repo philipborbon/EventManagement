@@ -10,28 +10,45 @@
           <p>{{ Session::get('success') }}</p>
         </div>
         @endif
+
+        @if ($user->usertype == 'admin')
         <div class="m-1 text-right"><a href="{{action('AttendanceController@create')}}" class="btn btn-primary">Add Attendance</a></div>
+        @endif
+
         <table class="table">
           <thead class="thead-dark">
             <tr>
+
+              @if ($user->usertype == 'admin')
               <th scope="col">Name</th>
+              @endif
+
               <th scope="col">Date</th>
               <th scope="col">Half Day</th>
               <th scope="col">Double Pay</th>
               <th scope="col">Overtime</th>
               <th scope="col">Status</th>
+
+              @if ($user->usertype == 'admin')
               <th scope="col" colspan="2">Action</th>
+              @endif
+
             </tr>
           </thead>
           <tbody>
             @foreach($attendances as $attendance)
             <tr>
+              @if ($user->usertype == 'admin')
               <th scope="row">{{$attendance->user->getFullname()}}</th>
+              @endif
+
               <td>{{$attendance->date->format('M d, Y')}}</td>
               <td>{{$attendance->ishalfday ? 'Yes' : 'No' }}</td>
               <td>{{$attendance->doublepay ? 'Yes' : 'No' }}</td>
               <td>{{(double) $attendance->overtime}} Hrs</td>
               <td>{{$attendance->getStatus()}}</td>
+
+              @if ($user->usertype == 'admin')
               <td><a href="{{action('AttendanceController@edit', $attendance['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>
                 <form action="{{action('AttendanceController@destroy', $attendance['id'])}}" method="post">
@@ -40,6 +57,8 @@
                   <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
               </td>
+              @endif
+              
             </tr>
             @endforeach
           </tbody>
