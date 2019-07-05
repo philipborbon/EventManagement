@@ -25,10 +25,11 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        $reservations = Reservation::orderBy('created_at', 'DESC')
-            ->whereHas('user', function($query){
-                $query->orderBy('lastname', 'ASC');
-            })->get();
+        $reservations = Reservation::join('users', 'users.id', '=', 'userid')
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('users.lastname', 'ASC')
+            ->select('reservations.*')
+            ->get();
 
         return view('reservation.index', compact('reservations'));
     }

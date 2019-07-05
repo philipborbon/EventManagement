@@ -24,10 +24,11 @@ class MonthlyPayoutController extends Controller
      */
     public function index()
     {
-        $payouts = MonthlyPayout::orderBy('dateavailable', 'DESC')
-            ->whereHas('user', function($query){
-                $query->orderBy('lastname', 'ASC');
-            })->get();
+        $payouts = MonthlyPayout::join('users', 'users.id', '=', 'userid')
+            ->orderBy('dateavailable', 'DESC')
+            ->orderBy('users.lastname', 'ASC')
+            ->select('monthly_payouts.*')
+            ->get();
         return view('payout.index', compact('payouts'));
     }
 

@@ -98,12 +98,9 @@ class HomeController extends Controller
             ->orderBy('created_at', 'DESC')
             ->get();
 
-        $events = Event::with('activities')
-            ->where('status', 'active')
+        $events = Event::where('status', 'active')
             ->orderBy('startdate', 'ASC')
-            ->whereHas('activities', function($query){
-                $query->orderBy('schedule', 'ASC');
-            })
+            ->whereHas('activities')
             ->get();
 
         return view('welcome', compact('announcements', 'events'));

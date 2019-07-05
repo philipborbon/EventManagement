@@ -26,6 +26,7 @@ class Event extends Model
     }
 
     public function activities(){
-        return $this->hasMany(Activity::class, 'eventid');
+        return $this->hasMany(Activity::class, 'eventid')
+                    ->orderBy('schedule');
     }
 }

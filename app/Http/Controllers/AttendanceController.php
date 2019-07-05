@@ -26,12 +26,11 @@ class AttendanceController extends Controller
         $attendances = NULL;
 
         if ( Auth::user()->usertype == 'admin' ) {
-            $attendances = Attendance::with('user')
+            $attendances = Attendance::join('users', 'users.id', '=', 'userid')
                 ->orderBy('date', 'DESC')
-                ->whereHas('user', function($query) {
-                    $query->orderBy('lastname', 'ASC')
-                    ->orderBy('firstname', 'ASC');
-                })
+                ->orderBy('users.lastname', 'ASC')
+                ->orderBy('users.firstname', 'ASC')
+                ->select('attendances.*')
                 ->get();
         } else {
             $attendances = Attendance::with('user')
