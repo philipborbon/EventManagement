@@ -24,13 +24,19 @@
 
               <th scope="col">Type</th>
               <th scope="col">Amount</th>
+
+              @if ($user->usertype == 'admin')
               <th scope="col" colspan="2">Action</th>
+              @endif
             </tr>
           </thead>
           <tbody>
             @foreach($deductions as $deduction)
             <tr>
+              @if ($user->usertype == 'admin')
               <th scope="row">{{$deduction->user->getFullname()}}</th>
+              @endif
+
               <td>{{$deduction->type->name}}</td>
               <td>Php {{number_format($deduction->amount, 2)}}</td>
 
