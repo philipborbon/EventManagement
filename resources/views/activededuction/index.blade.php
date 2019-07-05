@@ -10,11 +10,18 @@
           <p>{{ Session::get('success') }}</p>
         </div>
         @endif
+
+        @if ($user->usertype == 'admin')
         <div class="m-1 text-right"><a href="{{action('EmployeeActiveDeductionController@create')}}" class="btn btn-primary">Add Employee Deduction</a></div>
+        @endif
+
         <table class="table">
           <thead class="thead-dark">
             <tr>
+              @if ($user->usertype == 'admin')
               <th scope="col">Name</th>
+              @endif
+
               <th scope="col">Type</th>
               <th scope="col">Amount</th>
               <th scope="col" colspan="2">Action</th>
@@ -26,6 +33,8 @@
               <th scope="row">{{$deduction->user->getFullname()}}</th>
               <td>{{$deduction->type->name}}</td>
               <td>Php {{number_format($deduction->amount, 2)}}</td>
+
+              @if ($user->usertype == 'admin')
               <td><a href="{{action('EmployeeActiveDeductionController@edit', $deduction['id'])}}" class="btn btn-warning">Edit</a></td>
               <td>
                 <form action="{{action('EmployeeActiveDeductionController@destroy', $deduction['id'])}}" method="post">
@@ -34,6 +43,8 @@
                   <button class="btn btn-danger" type="submit">Delete</button>
                 </form>
               </td>
+              @endif
+
             </tr>
             @endforeach
           </tbody>

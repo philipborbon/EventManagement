@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use EventManagement\EmployeeActiveDeduction;
 use EventManagement\User;
 use EventManagement\DeductionType;
+use Auth;
 
 class EmployeeActiveDeductionController extends Controller
 {
@@ -21,8 +22,26 @@ class EmployeeActiveDeductionController extends Controller
      */
     public function index()
     {
-        $deductions = EmployeeActiveDeduction::all();
-        return view('activededuction.index', compact('deductions'));
+        $user = Auth::user();
+
+        $deductions = NULL;
+
+        if ( $user->usertype == 'admin' ) {
+            $deductions = EmployeeActiveDeduction::join('users', 'users.id', '=', 'userid')
+                ->orderBy('users.lastname', 'ASC')
+                ->orderBy('users.firstname', 'ASC')
+                ->select('employee_active_deductions.*')
+                ->get();
+        } else {
+            $deductions = EmployeeActiveDeduction::with('user')
+                ->whereHas('user', function($query) {
+                    $user = Auth::user();
+                    $query->where('userid', $user->id);
+                })
+                ->get();
+        }
+
+        return view('activededuction.index', compact('deductions', 'user'));
     }
 
     /**

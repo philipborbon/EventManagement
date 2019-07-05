@@ -38,10 +38,7 @@ class AttendanceController extends Controller
                 ->orderBy('date', 'DESC')
                 ->whereHas('user', function($query) {
                     $user = Auth::user();
-
-                    $query->where('userid', $user->id)
-                        ->orderBy('lastname', 'ASC')
-                        ->orderBy('firstname', 'ASC');
+                    $query->where('userid', $user->id);
                 })
                 ->get();
         }
