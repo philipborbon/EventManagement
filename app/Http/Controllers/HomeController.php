@@ -17,39 +17,70 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $links = array (
-            array (
-                'Users' => '/users',
-                'User Identifications' => '/useridentifications',
-                'Document Types' => '/documenttypes',
-            ),
+        $user = Auth::user();
 
-            array (
-                'Events' => '/events',
-                'Activities' => '/activities',
-                'Announcements' => '/announcements',
-                'Mayor Schedules' => '/mayorschedules',
-            ),
+        $links = NULL;
 
-            array (
-                'Rental Spaces' => '/rentalspaces',
-                'Rental Area Types' => '/rentalareatypes',
-                'Rental Payments' => '/payments',
-                'Reservations' => '/reservations'
-            ),
+        if ($user->usertype == 'admin') {
+            $links = array (
+                array (
+                    'Users' => '/users',
+                    'User Identifications' => '/useridentifications',
+                    'Document Types' => '/documenttypes',
+                ),
 
-            array (
-                'Salary Grades' => '/salarygrades',
-                'Attendances' => '/attendances',
-                'Deduction Types' => '/deductiontypes',
-                'Employee Active Deductions' => '/activedeductions',
-                'Monthly Payouts' => '/monthlypayouts'
-            )
-        );
+                array (
+                    'Events' => '/events',
+                    'Activities' => '/activities',
+                    'Announcements' => '/announcements',
+                    'Mayor Schedules' => '/mayorschedules',
+                ),
 
+                array (
+                    'Rental Spaces' => '/rentalspaces',
+                    'Rental Area Types' => '/rentalareatypes',
+                    'Rental Payments' => '/payments',
+                    'Reservations' => '/reservations'
+                ),
+
+                array (
+                    'Salary Grades' => '/salarygrades',
+                    'Attendances' => '/attendances',
+                    'Deduction Types' => '/deductiontypes',
+                    'Employee Active Deductions' => '/activedeductions',
+                    'Monthly Payouts' => '/monthlypayouts'
+                )
+            );
+        } else if ($user->usertype == 'employee'){
+            $links = array (
+                array (
+                    'Document Types' => '/documenttypes'
+                ),
+
+                array (
+                    'Events' => '/events',
+                    'Activities' => '/activities',
+                    'Announcements' => '/announcements',
+                    'Mayor Schedules' => '/mayorschedules',
+                ),
+
+                array (
+                    'Rental Spaces' => '/rentalspaces',
+                    'Rental Area Types' => '/rentalareatypes',
+                    'Rental Payments' => '/payments',
+                    'Reservations' => '/reservations'
+                ),
+
+                array (
+                    'Attendances' => '/attendances',
+                    'Employee Active Deductions' => '/activedeductions',
+                    'Monthly Payouts' => '/monthlypayouts'
+                )
+            );
+        }
 
         if (Auth::check()) {
-            if (Auth::user()->usertype == 'investor') {
+            if ($user->usertype == 'investor') {
                 return redirect('rentaspace');
             } else {
                 return view('home', compact('links'));
