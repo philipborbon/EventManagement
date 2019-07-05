@@ -15,6 +15,10 @@ class EmployeeMiddleware
      */
     public function handle($request, Closure $next)
     {
+        if ($request->user() && $request->user()->usertype != 'employee' && $request->user()->usertype != 'admin' ) {
+            return response(view('unauthorized')->with('role', 'Employees'));
+        }
+
         return $next($request);
     }
 }

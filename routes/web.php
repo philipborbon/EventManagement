@@ -32,12 +32,8 @@ Route::get('rentaspace/reservations/{id}/proof', 'ReservationController@createPr
 Route::post('rentaspace/reservations/{id}/uploadProof', 'ReservationController@uploadProof');
 Route::post('rentaspace/reservations/{id}/removeFile', 'ReservationController@removeFile');
 
-
-Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
-	Route::resource('users','UserController');
+Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddleware'], function(){
 	Route::resource('events','EventController');
-	Route::resource('salarygrades','SalaryGradeController');
-	Route::resource('deductiontypes','DeductionTypeController');
 
 	Route::resource('rentalspaces','RentalSpaceController');
 	Route::get('rentalspaces/{id}/spacemap','RentalSpaceController@spaceMap');
@@ -59,12 +55,9 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::resource('announcements', 'AnnouncementController');
 	Route::resource('mayorschedules', 'MayorScheduleController');
 
-	Route::patch('useridentifications/verify/{id}', 'UserIdentificationController@verify');
-
 	Route::resource('attendances', 'AttendanceController');
 	Route::resource('activedeductions', 'EmployeeActiveDeductionController');
 	Route::resource('monthlypayouts', 'MonthlyPayoutController');
-	Route::post('monthlypayouts/generate', 'MonthlyPayoutController@generate');
 
 	Route::resource('reservations', 'ReservationController');
 	Route::patch('reservations/{id}/waive', 'ReservationController@waive');
@@ -76,4 +69,14 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 	Route::delete('payments/{id}/proof/{proofId}', 'PaymentController@destroyProof');
 	Route::post('payments/{id}/uploadProof', 'PaymentController@uploadProof');
 	Route::post('payments/{id}/removeFile', 'PaymentController@removeFile');
+});
+
+Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
+	Route::resource('users','UserController');
+	Route::resource('salarygrades','SalaryGradeController');
+	Route::resource('deductiontypes','DeductionTypeController');
+
+	Route::patch('useridentifications/verify/{id}', 'UserIdentificationController@verify');
+
+	Route::post('monthlypayouts/generate', 'MonthlyPayoutController@generate');
 });
