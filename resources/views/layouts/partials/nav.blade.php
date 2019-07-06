@@ -28,6 +28,9 @@
                             <a href="/rentaspace/reservations" class="dropdown-item">
                                 My Reservations
                             </a>
+                            <a href="/rentaspace/rented" class="dropdown-item">
+                                My Rented Spaces
+                            </a>
                             @endif
 
                             <a href="{{ route('logout') }}" class="dropdown-item"

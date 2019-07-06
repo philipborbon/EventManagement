@@ -31,6 +31,7 @@ Route::get('rentaspace/reservations', 'ReservationController@reservations');
 Route::get('rentaspace/reservations/{id}/proof', 'ReservationController@createProof');
 Route::post('rentaspace/reservations/{id}/uploadProof', 'ReservationController@uploadProof');
 Route::post('rentaspace/reservations/{id}/removeFile', 'ReservationController@removeFile');
+Route::get('rentaspace/rented', 'PaymentController@rented');
 
 Route::get('notifications/awarded/{id}', 'ReservationController@reservationApproved');
 

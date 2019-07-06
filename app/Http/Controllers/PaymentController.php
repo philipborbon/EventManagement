@@ -10,6 +10,7 @@ use EventManagement\ProofOfPayment;
 use EventManagement\DocumentType;
 use Storage;
 use DB;
+use Auth;
 
 class PaymentController extends Controller
 {
@@ -249,5 +250,15 @@ class PaymentController extends Controller
             'deleted' => true,
             'filename' => $filename
         ]);
+    }
+
+    public function rented(){
+        $user = Auth::user();
+        $payments = Payment::where('userid', $user->id)
+            ->where('verified', true)
+            ->orderBy('created_at', 'ASC')
+            ->get();
+
+        return view('payment.rented', compact('payments'));
     }
 }
