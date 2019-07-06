@@ -82,4 +82,6 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 	Route::delete('payments/{id}/proof/{proofId}', 'PaymentController@destroyProof');
 	Route::post('payments/{id}/uploadProof', 'PaymentController@uploadProof');
 	Route::post('payments/{id}/removeFile', 'PaymentController@removeFile');
+
+	Route::get('financialreport', 'ReportController@financial');
 });

@@ -50,6 +50,10 @@ class HomeController extends Controller
                         'Deduction Types' => '/deductiontypes',
                         'Employee Active Deductions' => '/activedeductions',
                         'Payslip' => '/payslips'
+                    ),
+
+                    array (
+                        'Financial Report' => '/financialreport'
                     )
                 );
             } else if ($user->usertype == 'employee'){
@@ -76,6 +80,10 @@ class HomeController extends Controller
                         'Attendances' => '/attendances',
                         'Employee Active Deductions' => '/activedeductions',
                         'Payslip' => '/payslips'
+                    ),
+
+                    array (
+                        'Financial Report' => '/financialreport'
                     )
                 );
             }
