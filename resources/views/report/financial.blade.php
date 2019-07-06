@@ -41,7 +41,7 @@
           <td>{{$report->date}}</td>
           <td>{{$report->lastname . ', ' . $report->firstname}}</td>
           <td>{{$report->spacename}}</td>
-          <td>{{$report->area}}</td>
+          <td>{{$report->area}} sq. m</td>
           <td>Php {{number_format($report->amount, 2)}}</td>
         </tr>
         @endforeach

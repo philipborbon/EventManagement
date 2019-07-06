@@ -15,6 +15,7 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">ID</th>
+              <th scope="col">E-mail</th>
               <th scope="col">Name</th>
               <th scope="col">User Type</th>
               <th scope="col" colspan="2">Action</th>
@@ -24,6 +25,7 @@
             @foreach($users as $user)
             <tr>
               <th scope="row">{{$user->id}}</th>
+              <td>{{$user->email}}</td>
               <td>{{$user->getFullname()}}</td>
               <td>{{$user->getUserType()}}</td>
               <td><a href="{{action('UserController@edit', $user['id'])}}" class="btn btn-warning">Edit</a></td>
