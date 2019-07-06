@@ -108,7 +108,7 @@ class MonthlyPayoutController extends Controller
         $payout->datecollected = $request->get('datecollected');
         $payout->save();
 
-        return redirect('monthlypayouts')->with('success', 'Monthly Payout for ' . $payout->user->getFullname() . ' has been collected.');
+        return redirect('payslips')->with('success', 'Monthly Payout for ' . $payout->user->getFullname() . ' has been collected.');
     }
 
     /**
@@ -122,7 +122,7 @@ class MonthlyPayoutController extends Controller
         $payout = MonthlyPayout::find($id);
         $payout->delete();
 
-        return redirect('monthlypayouts')->with('success', 'Monthly Payout for ' . $payout->user->getFullname() . ' has been deleted.');
+        return redirect('payslips')->with('success', 'Monthly Payout for ' . $payout->user->getFullname() . ' has been deleted.');
     }
 
     public function generate(Request $request) {
@@ -188,6 +188,6 @@ class MonthlyPayoutController extends Controller
 
         $month = config('enums.months')[$month];
 
-        return redirect('monthlypayouts')->with('success', 'Payout for month of ' . "$month, $year" . 'has been created.');
+        return redirect('payslips')->with('success', 'Payout for month of ' . "$month, $year" . 'has been created.');
     }
 }

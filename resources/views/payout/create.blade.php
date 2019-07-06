@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h1>Create New Activity</h1>
+  <h1>Generate Payslips</h1>
 
   @if (Session::has('success'))
   <div class="alert alert-success">

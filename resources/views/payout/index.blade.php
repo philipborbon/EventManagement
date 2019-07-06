@@ -12,7 +12,7 @@
         @endif
 
         @if ($user->usertype == 'admin')
-        <div class="m-1 text-right"><a href="{{action('MonthlyPayoutController@create')}}" class="btn btn-primary">Create Payout</a></div>
+        <div class="m-1 text-right"><a href="{{action('MonthlyPayoutController@create')}}" class="btn btn-primary">Generate Payslips</a></div>
         @endif
 
         <table class="table">

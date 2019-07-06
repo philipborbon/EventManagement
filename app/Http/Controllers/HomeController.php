@@ -49,7 +49,7 @@ class HomeController extends Controller
                         'Attendances' => '/attendances',
                         'Deduction Types' => '/deductiontypes',
                         'Employee Active Deductions' => '/activedeductions',
-                        'Monthly Payouts' => '/monthlypayouts'
+                        'Payslip' => '/payslips'
                     )
                 );
             } else if ($user->usertype == 'employee'){
@@ -75,7 +75,7 @@ class HomeController extends Controller
                     array (
                         'Attendances' => '/attendances',
                         'Employee Active Deductions' => '/activedeductions',
-                        'Monthly Payouts' => '/monthlypayouts'
+                        'Payslip' => '/payslips'
                     )
                 );
             }

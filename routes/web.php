@@ -41,8 +41,8 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 
 	Route::resource('attendances', 'AttendanceController');
 	Route::resource('activedeductions', 'EmployeeActiveDeductionController');
-	Route::resource('monthlypayouts', 'MonthlyPayoutController');
-	Route::post('monthlypayouts/generate', 'MonthlyPayoutController@generate');
+	Route::resource('payslips', 'MonthlyPayoutController');
+	Route::post('payslips/generate', 'MonthlyPayoutController@generate');
 });
 
 Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddleware'], function(){
@@ -70,7 +70,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 
 	Route::get('attendances', 'AttendanceController@index');
 	Route::get('activedeductions', 'EmployeeActiveDeductionController@index');
-	Route::get('monthlypayouts', 'MonthlyPayoutController@index');
+	Route::get('payslips', 'MonthlyPayoutController@index');
 
 	Route::resource('reservations', 'ReservationController');
 	Route::patch('reservations/{id}/waive', 'ReservationController@waive');
