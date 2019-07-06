@@ -9,6 +9,7 @@ use EventManagement\SalaryGrade;
 use EventManagement\EmployeeActiveDeduction;
 use EventManagement\PayoutDeduction;
 use DB;
+use Auth;
 
 class MonthlyPayoutController extends Controller
 {
@@ -24,12 +25,23 @@ class MonthlyPayoutController extends Controller
      */
     public function index()
     {
-        $payouts = MonthlyPayout::join('users', 'users.id', '=', 'userid')
-            ->orderBy('dateavailable', 'DESC')
-            ->orderBy('users.lastname', 'ASC')
-            ->select('monthly_payouts.*')
-            ->get();
-        return view('payout.index', compact('payouts'));
+        $user = Auth::user();
+
+        $payouts = NULL;
+
+        if ($user->usertype == 'admin') {
+            $payouts = MonthlyPayout::join('users', 'users.id', '=', 'userid')
+                ->orderBy('dateavailable', 'DESC')
+                ->orderBy('users.lastname', 'ASC')
+                ->select('monthly_payouts.*')
+                ->get();                                
+        } else {
+            $payouts = MonthlyPayout::orderBy('dateavailable', 'DESC')
+                        ->where('userid', $user->id)
+                        ->get();
+        }
+
+        return view('payout.index', compact('payouts', 'user'));
     }
 
     /**
