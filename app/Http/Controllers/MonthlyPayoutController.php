@@ -148,7 +148,7 @@ class MonthlyPayoutController extends Controller
                 IF(doublepay = 1, 2, 1)
             ) AS totalhours
             FROM `attendances`
-            WHERE DATE_FORMAT(date, '%m %Y') = '06 2019'
+            WHERE DATE_FORMAT(date, '%m %Y') = '$month $year'
             GROUP BY userid, DATE_FORMAT(date, '%m %Y')
         ");
 
@@ -188,6 +188,6 @@ class MonthlyPayoutController extends Controller
 
         $month = config('enums.months')[$month];
 
-        return redirect('payslips')->with('success', 'Payslip for month of ' . "$month, $year" . 'has been created.');
+        return redirect('payslips')->with('success', 'Payslip for month of ' . "$month, $year" . ' has been created.');
     }
 }
