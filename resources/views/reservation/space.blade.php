@@ -70,15 +70,15 @@
 
             switch(space.status) {
                 case 'available':
-                    color = '#4CAF50'
+                    color = '#0D47A1';
                 break;
                 
                 case 'reserved':
-                    color = '#FF9800';
+                    color = '#E65100';
                 break;
                 
                 case 'rented':
-                    color = '#2196F3';
+                    color = '#B71C1C';
                 break;
             }
 
