@@ -24,6 +24,7 @@
           <th scope="col">Date</th>
           <th scope="col">From</th>
           <th scope="col">Space</th>
+          <th scope="col">Area</th>
           <th scope="col">Amount</th>
         </tr>
       </thead>
@@ -40,6 +41,7 @@
           <td>{{$report->date}}</td>
           <td>{{$report->lastname . ', ' . $report->firstname}}</td>
           <td>{{$report->spacename}}</td>
+          <td>{{$report->area}}</td>
           <td>Php {{number_format($report->amount, 2)}}</td>
         </tr>
         @endforeach
