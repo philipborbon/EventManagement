@@ -7,6 +7,11 @@ use DB;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
 	public function financial(){
 		$query = "
 			SELECT p.id, DATE_FORMAT(p.created_at, '%M %d, %Y') AS date, u.lastname, u.firstname, s.name AS spacename, s.area, s.amount
