@@ -15,6 +15,7 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Date</th>
+              <th scope="col">Renter</th>
               <th scope="col">Rental Space</th>
               <th scope="col">Amount</th>
               <th scope="col">Proof Of Payment</th>
@@ -27,6 +28,7 @@
             <tr>
               <th scope="row">{{$reservation->id}}</th>
               <td>{{$reservation->created_at->format('M d, Y')}}</td>
+              <td>{{$reservation->user->getFullname()}}</td>
               <td>{{$reservation->rentalSpace->name}}</td>
               <td>Php {{ number_format($reservation->rentalSpace->amount, 2) }}</td>
               <td>
