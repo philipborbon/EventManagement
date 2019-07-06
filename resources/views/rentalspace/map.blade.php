@@ -60,7 +60,7 @@
             strokeColor: '#81C784',
             fillOpacity: 0.5,
             strokeWeight: 5,
-            editable: true,
+            editable: false,
             zIndex: 1
           }
         });
@@ -73,7 +73,7 @@
                 strokeColor: '#81C784',
                 fillOpacity: 0.5,
                 strokeWeight: 5,
-                editable: true,
+                editable: false,
                 zIndex: 1
             });
             polygon.setMap(map);
@@ -103,7 +103,7 @@
           function setSelection(shape) {
               // clearSelection();
               selectedShape = shape;
-              shape.setEditable(true);
+              //shape.setEditable(true);
 
               drawingManager.setDrawingMode(null);
 
