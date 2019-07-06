@@ -22,8 +22,8 @@
               <th scope="col">Name</th>
               @endif
 
-              <th scope="col">Payout</th>
-              <th scope="col">Actual Payout</th>
+              <th scope="col">Salary</th>
+              <th scope="col">Salary After Deductions</th>
               <th scope="col">Date Available</th>
               <th scope="col">Date Collected</th>
 

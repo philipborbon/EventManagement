@@ -35,7 +35,7 @@
     <div class="row">
         <div class="col-2">
             <div class="form-group{{ $errors->has('payout') ? ' has-error' : '' }}">
-                <label for="payout" class="control-label">Payout</label>
+                <label for="payout" class="control-label">Salary</label>
                 <div class="font-weight-bold">Php {{ number_format($payout->payout, 2) }}</div>
                 
                 <input type="hidden" name="payout" value="{{ $payout->payout }}">
@@ -50,7 +50,7 @@
 
         <div class="col-3">
             <div class="form-group{{ $errors->has('actualpayout') ? ' has-error' : '' }}">
-                <label for="actualpayout" class="control-label">Actual Payout</label>
+                <label for="actualpayout" class="control-label">Salary After Deductions</label>
                 <div class="font-weight-bold">Php {{ number_format($payout->actualpayout, 2) }}</div>
                 
                 <input type="hidden" name="payout" value="{{ $payout->actualpayout }}">
