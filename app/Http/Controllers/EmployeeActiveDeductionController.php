@@ -34,10 +34,7 @@ class EmployeeActiveDeductionController extends Controller
                 ->get();
         } else {
             $deductions = EmployeeActiveDeduction::with('user')
-                ->whereHas('user', function($query) {
-                    $user = Auth::user();
-                    $query->where('userid', $user->id);
-                })
+                ->where('userid', $user->id)
                 ->get();
         }
 

@@ -35,10 +35,7 @@ class AttendanceController extends Controller
         } else {
             $attendances = Attendance::with('user')
                 ->orderBy('date', 'DESC')
-                ->whereHas('user', function($query) {
-                    $user = Auth::user();
-                    $query->where('userid', $user->id);
-                })
+                ->where('userid', $user->id)
                 ->get();
         }
 
