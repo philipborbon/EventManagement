@@ -2,8 +2,9 @@
 
 @section('content')
 <div class="container">
-    <div class="row mt-5">
+    <div class="row mt-3">
         <div class="col-md-10 offset-md-1">
+            <div id="notification-box"></div>
             <div class="card">
                 <div class="card-header">Dashboard</div>
 
@@ -20,4 +21,30 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+    function getNotification(){
+        $.ajax({
+            url: '/notifications/onhold',
+            success: function(data){
+                $('#notification-box').html('');
+
+                $.each(data, function(index, value){
+                    var notification = $('<div class="alert alert-warning" role="alert"/>')
+                        .html('Space ' + value.rental_space.name + ' has been reserved and is on hold.');
+
+                    $('#notification-box').append(notification);
+                });
+            }
+        });
+    }
+
+    getNotification();
+
+    setInterval(function(){ 
+        getNotification();
+    }, 10000);
+</script>
 @endsection

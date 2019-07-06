@@ -130,6 +130,8 @@ class ReservationController extends Controller
     }
 
     public function spaces(){
+        $user = Auth::user();
+
         $spaces = RentalSpace::with('coordinates')
             ->whereHas('event', function($query){
                 $query->where('status', 'active');
@@ -137,7 +139,7 @@ class ReservationController extends Controller
             ->has('coordinates', '>', '0')
             ->orderBy('name')->get();
 
-        return view('reservation.space', compact('spaces'));
+        return view('reservation.space', compact('spaces', 'user'));
     }
 
     public function reservations(){
@@ -229,5 +231,31 @@ class ReservationController extends Controller
         }
 
         return redirect('reservations')->with('success', 'Reservation has been waived.');
+    }
+
+    public function reservationOnHold(){
+        $reservations = Reservation::with('rentalSpace')
+            ->where('status', 'onhold')
+            ->orderBy('created_at', 'DESC')
+            ->skip(0)
+            ->take(10)
+            ->get();
+
+        return response()->json($reservations);
+    }
+
+    public function reservationApproved($id){
+        $currentMonth = date('m');
+
+        $reservations = Reservation::with('rentalSpace')
+            ->where('status', 'awarded')
+            ->where('userid', $id)
+            ->whereRaw('MONTH(created_at) = ?',[$currentMonth])
+            ->orderBy('created_at', 'DESC')
+            ->skip(0)
+            ->take(10)
+            ->get();
+
+        return response()->json($reservations);
     }
 }

@@ -32,6 +32,8 @@ Route::get('rentaspace/reservations/{id}/proof', 'ReservationController@createPr
 Route::post('rentaspace/reservations/{id}/uploadProof', 'ReservationController@uploadProof');
 Route::post('rentaspace/reservations/{id}/removeFile', 'ReservationController@removeFile');
 
+Route::get('notifications/awarded/{id}', 'ReservationController@reservationApproved');
+
 Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
 	Route::resource('users','UserController');
 	Route::resource('salarygrades','SalaryGradeController');
@@ -84,4 +86,6 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 	Route::post('payments/{id}/removeFile', 'PaymentController@removeFile');
 
 	Route::get('financialreport', 'ReportController@financial');
+
+	Route::get('notifications/onhold', 'ReservationController@reservationOnHold');
 });

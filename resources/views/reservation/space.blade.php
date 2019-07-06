@@ -11,7 +11,13 @@
         </div>
         @endif
 
-    <div class="row mb-5">
+    <div class="row mb-3">
+        <div class="col-12">
+        <div id="notification-box"></div>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-3">
         <div class="card">
             <div class="card-header">Rent A Space</div>
@@ -187,6 +193,28 @@
     }
 
     google.maps.event.addDomListener(window, "load", initMap);
+
+    function getNotification(){
+        $.ajax({
+            url: '/notifications/awarded/{{$user->id}}',
+            success: function(data){
+                $('#notification-box').html('');
+
+                $.each(data, function(index, value){
+                    var notification = $('<div class="alert alert-warning" role="alert"/>')
+                        .html('You reservation for space ' + value.rental_space.name + ' has been validated.');
+
+                    $('#notification-box').append(notification);
+                });
+            }
+        });
+    }
+
+    getNotification();
+
+    setInterval(function(){ 
+        getNotification();
+    }, 10000);
 </script>
 
 @endsection
