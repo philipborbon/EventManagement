@@ -4,6 +4,7 @@ namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
 use EventManagement\RentalAreaType;
+use EventManagement\RentalTypeArea;
 
 class RentalAreaTypeController extends Controller
 {
@@ -104,5 +105,54 @@ class RentalAreaTypeController extends Controller
         $type = RentalAreaType::find($id);
         $type->delete();
         return redirect('rentalareatypes')->with('success','Area Type has been deleted.');
+    }
+
+    public function typeMap($id){
+        $type = RentalAreaType::find($id);
+
+        $typeArea = RentalTypeArea::where('areatypeid', $id)->get();
+        $otherTypes = RentalAreaType::with('coordinates')
+                        ->where('id', '!=', $id)
+                        ->has('coordinates', '>', '0')
+                        ->get();
+
+        $areas = [];
+
+        foreach($typeArea as $area){
+            $areas[] = [
+                'lat' => floatval($area->latitude),
+                'lng' => floatval($area->longitude)
+            ];
+        }
+
+        return view('rentalareatype.map', compact('id', 'type', 'otherTypes', 'areas'));
+    }
+
+    public function updateMap(Request $request, $id){
+        $this->validate(request(), [
+            'vertices' => 'required|string'
+        ]);
+
+        RentalTypeArea::where('areatypeid', $id)->delete();
+
+        $vertices = $request->get('vertices');
+        $vertices = trim(trim($vertices, ')'), '(');
+        $vertices = explode('),(', $vertices);
+
+        $data = array();
+
+        foreach($vertices as $vertix){
+            $coordinate = explode(',', $vertix);
+
+            $data[] = [
+                'areatypeid' => $id,
+                'latitude' => $coordinate[0],
+                'longitude' => $coordinate[1]
+            ];
+        }
+
+        RentalTypeArea::insert($data);
+
+        return redirect('rentalareatypes')->with('success','Rental type map has been updated.');
     }
 }

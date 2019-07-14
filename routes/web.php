@@ -56,6 +56,8 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 	Route::patch('rentalspaces/{id}/spacemap','RentalSpaceController@updateMap');
 
 	Route::resource('rentalareatypes','RentalAreaTypeController');
+	Route::get('rentalareatypes/{id}/typemap','RentalAreaTypeController@typeMap');
+	Route::patch('rentalareatypes/{id}/typemap','RentalAreaTypeController@updateMap');
 
 	Route::resource('activities','ActivityController');
 	Route::get('activities/{id}/participants','ActivityController@participants');

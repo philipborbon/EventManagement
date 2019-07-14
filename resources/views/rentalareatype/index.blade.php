@@ -16,7 +16,7 @@
             <tr>
               <th scope="col">ID</th>
               <th scope="col">Name</th>
-              <th scope="col" colspan="2">Action</th>
+              <th scope="col" colspan="3">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -25,6 +25,7 @@
               <th scope="row">{{$type->id}}</th>
               <td>{{$type->name}}</td>
               <td><a href="{{action('RentalAreaTypeController@edit', $type['id'])}}" class="btn btn-warning">Edit</a></td>
+              <td><a href="{{action('RentalAreaTypeController@typeMap', $type['id'])}}" class="btn btn-primary">Edit Map</a></td>
               <td>
                 <form action="{{action('RentalAreaTypeController@destroy', $type['id'])}}" method="post">
                   {{csrf_field()}}
