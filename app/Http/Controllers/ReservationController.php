@@ -4,6 +4,7 @@ namespace EventManagement\Http\Controllers;
 
 use Illuminate\Http\Request;
 use EventManagement\RentalSpace;
+use EventManagement\RentalAreaType;
 use EventManagement\Reservation;
 use EventManagement\ProofOfPayment;
 use EventManagement\Payment;
@@ -139,7 +140,11 @@ class ReservationController extends Controller
             ->has('coordinates', '>', '0')
             ->orderBy('name')->get();
 
-        return view('reservation.space', compact('spaces', 'user'));
+        $types = RentalAreaType::with('coordinates')
+            ->has('coordinates', '>', '0')
+            ->orderBy('name')->get();
+
+        return view('reservation.space', compact('spaces', 'types', 'user'));
     }
 
     public function reservations(){

@@ -55,6 +55,7 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key={{env('GOOGLE_MAP_KEY', '')}}&libraries=drawing,geometry"></script>
 <script>
+    var types = {!! json_encode($types) !!};
     var spaces = {!! json_encode($spaces) !!};
 
     function getPolygons(){
@@ -85,6 +86,25 @@
             polygons.push({
                 space: space,
                 color: color,
+                coordinates: coordinates
+            });
+        });
+
+        return polygons;
+    }
+
+    function getTypePolygons(){
+        var polygons = [];
+
+        $.each(types, function(i, type){
+            var coordinates = [];
+            $.each(type.coordinates, function(j, coordinate){
+                coordinates.push({lat: coordinate.latitude, lng: coordinate.longitude});
+            });
+
+            polygons.push({
+                type: type,
+                color: '#CE93D8',
                 coordinates: coordinates
             });
         });
@@ -138,6 +158,7 @@
 
     function initMap() {
         var polygons = getPolygons();
+        var typePolygons = getTypePolygons();
 
         var start = null;
         if ( polygons.length > 0 ){
@@ -153,6 +174,31 @@
         var map = new google.maps.Map(document.getElementById('map'), {
             center: start != null ? start : {lat: 6.6250537, lng: 124.5975442},
             zoom: 18
+        });
+
+        $.each(typePolygons, function(index, value){
+            var polygon = new google.maps.Polygon({
+                paths: value.coordinates,
+                fillColor: value.color,
+                strokeColor: value.color,
+                fillOpacity: 0.5,
+                strokeWeight: 0,
+                editable: false,
+                zIndex: 1
+            });
+            polygon.setMap(map);
+
+            google.maps.event.addListener(polygon, 'click', function(event) {
+                var type = value.type;
+                var contentString = '<div>' +
+                    '<h5>' + type.name + ' Section</h5>' +
+                    '</div>'
+                ;
+
+                infowindow.setContent(contentString);
+                infowindow.setPosition(value.coordinates[0]);
+                infowindow.open(map);
+            });
         });
 
         $.each(polygons, function(index, value){
