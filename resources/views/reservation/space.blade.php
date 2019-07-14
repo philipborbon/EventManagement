@@ -12,8 +12,17 @@
         @endif
 
     <div class="row mb-3">
-        <div class="col-12">
-        <div id="notification-box"></div>
+        <div class="col-6">
+            <div id="notification-box"></div>
+        </div>
+        <div class="col-6">
+            <div class="row"><div class="col-12">Legend:</div></div>
+            <div class="row mt-2">
+                <div class="col-3"><div class="p-2 text-center" style="background-color: #0D47A1; color:white;">Available</div></div>
+                <div class="col-3"><div class="p-2 text-center" style="background-color: #E65100; color:white;">Reserved</div></div>
+                <div class="col-3"><div class="p-2 text-center" style="background-color: #B71C1C; color:white;">Rented</div></div>
+                <div class="col-3"><div class="p-2 text-center" style="background-color: #CE93D8;">Area Type</div></div>
+            </div>
         </div>
     </div>
 
