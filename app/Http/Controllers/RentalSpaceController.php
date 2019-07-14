@@ -138,6 +138,10 @@ class RentalSpaceController extends Controller
         $space = RentalSpace::find($id);
 
         $spaceAreas = RentalSpaceArea::where('rentalspaceid', $id)->get();
+        $otherSpaces = RentalSpace::with('coordinates')
+                        ->where('id', '!=', $id)
+                        ->has('coordinates', '>', '0')
+                        ->get();
 
         $areas = [];
 
@@ -148,7 +152,7 @@ class RentalSpaceController extends Controller
             ];
         }
 
-        return view('rentalspace.map', compact('id', 'space', 'areas'));
+        return view('rentalspace.map', compact('id', 'space', 'otherSpaces', 'areas'));
     }
 
     public function updateMap(Request $request, $id){
