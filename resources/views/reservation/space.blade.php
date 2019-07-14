@@ -38,6 +38,7 @@
             <div class="card-text" data-role="location"></div>
         </div>
         <div class="mb-3">
+            <div>Type: <span data-role="type"></span></div>
             <div>Area: <span data-role="area"></span> sq. m</div>
             <div>Amount: Php <span data-role="amount"></span></div>
             <div>Status: <span data-role="status"></span></div>
@@ -120,6 +121,7 @@
         var card = $($('[data-role="template"]').html());
         card.find('[data-role="name"]').html(space.name);
         card.find('[data-role="location"]').html(space.location);
+        card.find('[data-role="type"]').html(space.type.name);
         card.find('[data-role="area"]').html(numberWithCommas(space.area));
         card.find('[data-role="amount"]').html(formatMoney(space.amount));
         card.find('[data-role="status"]').html(space.status.capitalize());
@@ -221,6 +223,7 @@
                 var space = value.space;
                 var contentString = '<div>' +
                     '<h5>' + space.name + '</h5>' +
+                    '<div>Type: ' + space.type.name + '</div>' +
                     '<div>Area: ' + numberWithCommas(space.area) + ' sq. m</div>' +
                     '<div>Amount: Php ' + formatMoney(space.amount) + '</div>' + 
                     '<div>Status: ' + space.status.capitalize() + '</div>' +

@@ -133,7 +133,7 @@ class ReservationController extends Controller
     public function spaces(){
         $user = Auth::user();
 
-        $spaces = RentalSpace::with('coordinates')
+        $spaces = RentalSpace::with('coordinates', 'type')
             ->whereHas('event', function($query){
                 $query->where('status', 'active');
             })
