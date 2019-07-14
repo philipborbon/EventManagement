@@ -143,6 +143,10 @@ class RentalSpaceController extends Controller
                         ->has('coordinates', '>', '0')
                         ->get();
 
+        $types = RentalAreaType::with('coordinates')
+            ->has('coordinates', '>', '0')
+            ->orderBy('name')->get();
+
         $areas = [];
 
         foreach($spaceAreas as $area){
@@ -152,7 +156,7 @@ class RentalSpaceController extends Controller
             ];
         }
 
-        return view('rentalspace.map', compact('id', 'space', 'otherSpaces', 'areas'));
+        return view('rentalspace.map', compact('id', 'space', 'types', 'otherSpaces', 'areas'));
     }
 
     public function updateMap(Request $request, $id){

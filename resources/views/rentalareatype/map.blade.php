@@ -141,15 +141,6 @@
         });
 
         var polygons = getPolygons();
-
-        var start = null;
-        if ( polygons.length > 0 ){
-            var first = polygons[0];
-
-            if (first.length > 0) {
-                start = first[0];
-            }
-        }
         
         var infowindow = new google.maps.InfoWindow();
 
