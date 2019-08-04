@@ -9,6 +9,7 @@ use EventManagement\Activity;
 use EventManagement\Event;
 use EventManagement\EventParticipant;
 use Illuminate\Validation\Rule;
+use EventManagement\User;
 
 class ActivityController extends Controller
 {
@@ -139,50 +140,44 @@ class ActivityController extends Controller
 
     public function createParticipant($id){
         $activity = Activity::find($id);
-        return view('activity.create-participant', compact('id', 'activity'));
+        $users = User::where('usertype', 'participant')->get();
+        return view('activity.create-participant', compact('id', 'activity', 'users'));
     }
 
     public function storeParticipant(Request $request, $id){
         $participant = $this->validate(request(), [
             'activityid' => 'required|exists:activities,id',
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'address' => 'nullable|string',
-            'age' => 'nullable|integer',
-            'sex' => Rule::in(['F', 'M'])
+            'userid' => 'required|unique_with:event_participants,userid,activityid|exists:users,id',
+            'accepted' => 'sometimes|required|in:1,0'
         ]);
 
-        EventParticipant::create($participant);
+        $participant = EventParticipant::create($participant);
 
-        return back()->with('success', 'Participant has been added.');
+        if ($participant->accepted) {
+            return back()->with('success', 'Participant has been added.');
+        } else {
+            return back()->with('success', 'Registration has been added.');
+        }
     }
 
-    public function editParticipant($id, $participantId){
-        $activity = Activity::find($id);
+    public function acceptParticipant($id, $participantId){
         $participant = EventParticipant::find($participantId);
-        return view('activity.edit-participant', compact('id', 'participantId', 'activity', 'participant'));
-    }
-
-    public function updateParticipant(Request $request, $id, $participantId){
-        $this->validate(request(), [
-            'activityid' => 'required|exists:activities,id',
-            'firstname' => 'required|string',
-            'lastname' => 'required|string',
-            'address' => 'nullable|string',
-            'age' => 'nullable|integer',
-            'sex' => Rule::in(['F', 'M']),
-        ]);
-
-        $participant = EventParticipant::find($participantId);
-        $participant->firstname = $request->get('firstname');
-        $participant->lastname = $request->get('lastname');
-        $participant->address = $request->get('address');
-        $participant->age = $request->get('age');
-        $participant->sex = $request->get('sex');
+        $participant->accepted = true;
+        $participant->denied = false;
 
         $participant->save();
 
-        return redirect('activities/' . $id . '/participants')->with('success','Participant has been updated.');
+        return redirect('activities/' . $id . '/participants')->with('success','Participant has been accepted.');
+    }
+
+    public function denyParticipant($id, $participantId){
+        $participant = EventParticipant::find($participantId);
+        $participant->accepted = false;
+        $participant->denied = true;
+
+        $participant->save();
+
+        return redirect('activities/' . $id . '/participants')->with('success','Participant has been denied.');
     }
 
     public function destroyParticipant($id, $participantId)

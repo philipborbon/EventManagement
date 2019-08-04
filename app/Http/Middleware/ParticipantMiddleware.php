@@ -15,7 +15,12 @@ class ParticipantMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if ($request->user() && $request->user()->usertype != 'participant') {
+        if ($request->user() 
+                && $request->user()->usertype != 'employee' 
+                && $request->user()->usertype != 'admin' 
+                && $request->user()->usertype != 'participant'
+            )
+        {
             return response(view('unauthorized')->with('role', 'Participants'));
         }
 

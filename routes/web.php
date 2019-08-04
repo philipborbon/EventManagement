@@ -37,7 +37,7 @@ Route::get('notifications/awarded/{id}', 'ReservationController@reservationAppro
 
 Route::group(['middleware' => 'EventManagement\Http\Middleware\ParticipantMiddleware'], function(){
 	Route::get('events/register', 'ParticipantController@index');
-	Route::post('events/register', 'ParticipantController@register');
+	Route::post('activities/{id}/participants','ActivityController@storeParticipant');
 });
 
 Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
@@ -67,9 +67,8 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 	Route::resource('activities','ActivityController');
 	Route::get('activities/{id}/participants','ActivityController@participants');
 	Route::get('activities/{id}/participants/create','ActivityController@createParticipant');
-	Route::post('activities/{id}/participants','ActivityController@storeParticipant');
-	Route::get('activities/{id}/participants/{participantId}/edit','ActivityController@editParticipant');
-	Route::patch('activities/{id}/participants/{participantId}','ActivityController@updateParticipant');
+	Route::patch('activities/{id}/participants/{participantId}/accept','ActivityController@acceptParticipant');
+	Route::patch('activities/{id}/participants/{participantId}/deny','ActivityController@denyParticipant');
 	Route::delete('activities/{id}/participants/{participantId}','ActivityController@destroyParticipant');
 
 	Route::get('activities/{id}/participants/create','ActivityController@createParticipant');

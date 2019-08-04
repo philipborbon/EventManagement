@@ -19,10 +19,6 @@ class ParticipantController extends Controller
      */
     public function index()
     {
-        $announcements = Announcement::where('active', true)
-            ->orderBy('created_at', 'DESC')
-            ->get();
-
         $events = Event::where('status', 'active')
             ->orderBy('startdate', 'ASC')
             ->whereHas('activities')
@@ -30,7 +26,7 @@ class ParticipantController extends Controller
 
         $user = Auth::user();
 
-        return view('participant.index', compact('user', 'announcements', 'events'));
+        return view('participant.index', compact('user', 'events', 'activities'));
     }
 
     /**
