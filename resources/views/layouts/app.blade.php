@@ -7,6 +7,7 @@
 <div id="app">
     @include('layouts.partials.nav')    
 
+    @if (Auth::user()->usertype != 'participant')
     <div class="container mt-3 mb-3">
         <a href="/">Home</a> >
         <?php $link = "" ?>
@@ -23,6 +24,7 @@
             @endif
         @endfor
 	</div>
+    @endif
 
     @yield('content')
 </div>
