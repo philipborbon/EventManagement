@@ -35,6 +35,11 @@ Route::get('rentaspace/rented', 'PaymentController@rented');
 
 Route::get('notifications/awarded/{id}', 'ReservationController@reservationApproved');
 
+Route::group(['middleware' => 'EventManagement\Http\Middleware\ParticipantMiddleware'], function(){
+	Route::get('events/register', 'ParticipantController@index');
+	Route::post('events/register', 'ParticipantController@register');
+});
+
 Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware'], function(){
 	Route::resource('users','UserController');
 	Route::resource('salarygrades','SalaryGradeController');

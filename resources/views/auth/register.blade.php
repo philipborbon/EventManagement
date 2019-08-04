@@ -11,6 +11,24 @@
                         {!! csrf_field() !!}
 
                         <div class="form-group row">
+                            <label class="col-lg-4 col-form-label text-lg-right" for="usertype">User Type</label>
+
+                            <div class="col-lg-6">
+                                <select id="usertype" class="form-control" name="usertype" autofocus required>
+                                  @foreach(config('enums.registerusertype') as $key => $value)
+                                    <option value="{{ $key }}" {{ old('usertype', 'investor') == $key ? 'selected' : '' }}>{{ $value }}</option>
+                                  @endforeach
+                                </select>
+
+                                @if ($errors->has('usertype'))
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('usertype') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label class="col-lg-4 col-form-label text-lg-right">First Name</label>
 
                             <div class="col-lg-6">

@@ -1,10 +1,16 @@
 <?php
 
 return [
+	'registerusertype' => [
+		'investor' => 'Investor',
+		'participant' => 'Participant'
+	],
+
 	'usertype' => [
 		'admin' => 'Administrator',
 		'employee' => 'Employee',
-		'investor' => 'Investor'
+		'investor' => 'Investor',
+		'participant' => 'Participant'
 	],
 
 	'maritalstatus' => [

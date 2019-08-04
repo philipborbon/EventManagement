@@ -90,7 +90,9 @@ class HomeController extends Controller
         }
 
         if (Auth::check()) {
-            if ($user->usertype == 'investor') {
+            if ($user->usertype == 'participant') {
+                return redirect('events/register');
+            } else if ($user->usertype == 'investor') {
                 return redirect('rentaspace');
             } else {
                 return view('home', compact('links'));

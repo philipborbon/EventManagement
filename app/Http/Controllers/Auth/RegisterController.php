@@ -6,6 +6,7 @@ use EventManagement\User;
 use EventManagement\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -52,6 +53,7 @@ class RegisterController extends Controller
             'lastname' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed',
+            'usertype' => Rule::in(['admin', 'employee', 'investor', 'participant'])
         ]);
     }
 
@@ -68,12 +70,13 @@ class RegisterController extends Controller
             'lastname' => $data['lastname'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'usertype' => $data['usertype']
         ];
 
         if ( $user['email'] == 'admin@isulanevents.me' ) {
             $user['usertype'] = 'admin';
         } else {
-            $user['usertype'] = 'investor';
+            $user['usertype'] = $data['usertype'];
         }
 
         return User::create($user);
