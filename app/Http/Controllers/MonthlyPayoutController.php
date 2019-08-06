@@ -138,7 +138,42 @@ class MonthlyPayoutController extends Controller
 
         $attendances = DB::select("
             SELECT userid, 
-            SUM(8 * IF(doublepay = 1, 2, 1)) AS totalhours
+            
+            SUM(
+                (IF (
+                    status = 'onleave', 8, 
+                    IF (
+                        (
+                            (IF(amout > 0, IF(amin > 0, TIME_TO_SEC(TIMEDIFF(amout, amin)), 0), 0)/3600)
+                            + 
+                            (IF(pmout > 0, IF(pmin > 0, TIME_TO_SEC(TIMEDIFF(pmout, pmin)), 0), 0)/3600)
+                        ) <= 8,
+                        (
+                            (IF(amout > 0, IF(amin > 0, TIME_TO_SEC(TIMEDIFF(amout, amin)), 0), 0)/3600)
+                            + 
+                            (IF(pmout > 0, IF(pmin > 0, TIME_TO_SEC(TIMEDIFF(pmout, pmin)), 0), 0)/3600)
+                        ), 
+                        8
+                    )
+                ) + (
+                    (
+                        IF (
+                            (
+                                (IF(amout > 0, IF(amin > 0, TIME_TO_SEC(TIMEDIFF(amout, amin)), 0), 0)/3600)
+                                + 
+                                (IF(pmout > 0, IF(pmin > 0, TIME_TO_SEC(TIMEDIFF(pmout, pmin)), 0), 0)/3600)
+                            ) > 8,
+                            (
+                                (IF(amout > 0, IF(amin > 0, TIME_TO_SEC(TIMEDIFF(amout, amin)), 0), 0)/3600)
+                                + 
+                                (IF(pmout > 0, IF(pmin > 0, TIME_TO_SEC(TIMEDIFF(pmout, pmin)), 0), 0)/3600)
+                            ) - 8, 
+                            0
+                        )
+                    ) * 2
+                )) * IF(doublepay = 1, 2, 1)
+            ) AS totalhours
+
             FROM `attendances`
             WHERE DATE_FORMAT(date, '%m %Y') = '$month $year'
             GROUP BY userid, DATE_FORMAT(date, '%m %Y')
@@ -149,7 +184,7 @@ class MonthlyPayoutController extends Controller
             $hourlySalary = (double) ($salaryGrade->dailypay / 8);
             $totalhours = (double) $attendance->totalhours;
 
-            $salary = $hourlySalary * $totalhours;                              
+            $salary = $hourlySalary * $totalhours;
 
             $deductions = EmployeeActiveDeduction::where('userid', $attendance->userid)->get();
 
