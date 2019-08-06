@@ -67,7 +67,11 @@ class AttendanceController extends Controller
             'userid' => 'required|exists:users,id',
             'date' => 'required|date_format:"Y-m-d|unique_with:attendances,date,userid',
             'doublepay' => 'in:1,0',
-            'status' => Rule::in(['onduty', 'onleave'])
+            'status' => Rule::in(['onduty', 'onleave']),
+            'amin' => 'nullable|date_format:"H:i"',
+            'amout' => 'nullable|after:amin|date_format:"H:i"',
+            'pmin' => 'nullable|after:amout|required_with:amout|date_format:"H:i"',
+            'pmout' => 'nullable|after:pmout|date_format:"H:i"'
         ]);
 
         Attendance::create($attendance);
@@ -111,7 +115,11 @@ class AttendanceController extends Controller
             'userid' => 'required|exists:users,id',
             'date' => 'required|date_format:"Y-m-d|unique_with:attendances,date,userid,' . $id,
             'doublepay' => 'in:1,0',
-            'status' => Rule::in(['onduty', 'onleave'])
+            'status' => Rule::in(['onduty', 'onleave']),
+            'amin' => 'nullable|date_format:"H:i"',
+            'amout' => 'nullable|after:amin|date_format:"H:i"',
+            'pmin' => 'nullable|after:amout|date_format:"H:i"',
+            'pmout' => 'nullable|after:pmout|date_format:"H:i"'
         ]);
 
         $attendance = Attendance::find($id);
@@ -119,6 +127,10 @@ class AttendanceController extends Controller
         $attendance->date = $request->get('date');
         $attendance->doublepay = $request->get('doublepay');
         $attendance->status = $request->get('status');
+        $attendance->amin = $request->get('amin');
+        $attendance->amout = $request->get('amout');
+        $attendance->pmin = $request->get('pmin');
+        $attendance->pmout = $request->get('pmout');
 
         $attendance->save();
 

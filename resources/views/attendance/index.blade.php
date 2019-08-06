@@ -19,17 +19,21 @@
           <thead class="thead-dark">
             <tr>
 
-              @if ($user->usertype == 'admin')
-              <th scope="col">Name</th>
-              @endif
+            @if ($user->usertype == 'admin')
+            <th scope="col">Name</th>
+            @endif
 
-              <th scope="col">Date</th>
-              <th scope="col">Double Pay</th>
-              <th scope="col">Status</th>
+            <th scope="col">Date</th>
+            <th scope="col">Double Pay</th>
+            <th scope="col">Status</th>
+            <th scope="col">AM In</th>
+            <th scope="col">AM Out</th>
+            <th scope="col">PM In</th>
+            <th scope="col">PM Out</th>
 
-              @if ($user->usertype == 'admin')
-              <th scope="col" colspan="2">Action</th>
-              @endif
+            @if ($user->usertype == 'admin')
+            <th scope="col" colspan="2">Action</th>
+            @endif
 
             </tr>
           </thead>
@@ -43,6 +47,11 @@
               <td>{{$attendance->date->format('M d, Y')}}</td>
               <td>{{$attendance->doublepay ? 'Yes' : 'No' }}</td>
               <td>{{$attendance->getStatus()}}</td>
+
+              <td>{{$attendance->amin ? $attendance->getAmIn()->format('H:i') : '--'}}</td>
+              <td>{{$attendance->amout ? $attendance->getAmOut()->format('H:i') : '--'}}</td>
+              <td>{{$attendance->pmin ? $attendance->getPmIn()->format('H:i') : '--'}}</td>
+              <td>{{$attendance->pmout ? $attendance->getPmOut()->format('H:i') : '--'}}</td>
 
               @if ($user->usertype == 'admin')
               <td><a href="{{action('AttendanceController@edit', $attendance['id'])}}" class="btn btn-warning">Edit</a></td>
