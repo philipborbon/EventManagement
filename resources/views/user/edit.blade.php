@@ -104,7 +104,7 @@
     </div>
 
     <div class="row">
-        <div class="col-12"><p>Note: Don't fill out the password if you don't want to update your password.</p></div>
+        <div class="col-12"><p>Note: Leave password empty if you don't want to update your password.</p></div>
     </div>
 
     <div class="row">

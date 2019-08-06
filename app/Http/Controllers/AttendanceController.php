@@ -74,6 +74,13 @@ class AttendanceController extends Controller
             'pmout' => 'nullable|after:pmin|date_format:"H:i"'
         ]);
 
+        if ($attendance['status'] == 'onleave') {
+            $attendance['amin'] = NULL;
+            $attendance['amout'] = NULL;
+            $attendance['pmin'] = NULL;
+            $attendance['pmout'] = NULL;
+        }
+
         Attendance::create($attendance);
 
         return back()->with('success', 'Attendance has been added.');
@@ -127,10 +134,18 @@ class AttendanceController extends Controller
         $attendance->date = $request->get('date');
         $attendance->doublepay = $request->get('doublepay');
         $attendance->status = $request->get('status');
-        $attendance->amin = $request->get('amin');
-        $attendance->amout = $request->get('amout');
-        $attendance->pmin = $request->get('pmin');
-        $attendance->pmout = $request->get('pmout');
+
+        if ($attendance->status == 'onleave') {
+            $attendance->amin = NULL;
+            $attendance->amout = NULL;
+            $attendance->pmin = NULL;
+            $attendance->pmout = NULL;
+        } else {
+            $attendance->amin = $request->get('amin');
+            $attendance->amout = $request->get('amout');
+            $attendance->pmin = $request->get('pmin');
+            $attendance->pmout = $request->get('pmout');
+        }
 
         $attendance->save();
 
