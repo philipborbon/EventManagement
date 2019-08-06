@@ -7,7 +7,7 @@ use EventManagement\User;
 
 class Attendance extends Model
 {
-	protected $fillable = ['userid', 'date', 'ishalfday', 'doublepay', 'overtime', 'status'];
+	protected $fillable = ['userid', 'date', 'doublepay', 'status'];
 
 	protected $dates = ['date'];
 

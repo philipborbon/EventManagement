@@ -66,9 +66,7 @@ class AttendanceController extends Controller
         $attendance = $this->validate(request(), [
             'userid' => 'required|exists:users,id',
             'date' => 'required|date_format:"Y-m-d|unique_with:attendances,date,userid',
-            'ishalfday' => 'in:1,0',
             'doublepay' => 'in:1,0',
-            'overtime' => 'required|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'status' => Rule::in(['onduty', 'onleave'])
         ]);
 
@@ -112,18 +110,14 @@ class AttendanceController extends Controller
         $this->validate(request(), [
             'userid' => 'required|exists:users,id',
             'date' => 'required|date_format:"Y-m-d|unique_with:attendances,date,userid,' . $id,
-            'ishalfday' => 'in:1,0',
             'doublepay' => 'in:1,0',
-            'overtime' => 'nullable|regex:/^[0-9]+(\.[0-9][0-9]?)?$/',
             'status' => Rule::in(['onduty', 'onleave'])
         ]);
 
         $attendance = Attendance::find($id);
         $attendance->userid = $request->get('userid');
         $attendance->date = $request->get('date');
-        $attendance->ishalfday = $request->get('ishalfday');
         $attendance->doublepay = $request->get('doublepay');
-        $attendance->overtime = $request->get('overtime');
         $attendance->status = $request->get('status');
 
         $attendance->save();

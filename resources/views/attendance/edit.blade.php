@@ -47,19 +47,6 @@
                 @endif
             </div>
         </div>
-        <div class="col-2">
-            <div class="form-group{{ $errors->has('overtime') ? ' has-error' : '' }}">
-                <label for="overtime" class="control-label">Overtime (Hrs)</label>
-
-                <input id="overtime" type="number" min="0" step="0.01" class="form-control" name="overtime" value="{{ old('overtime', $attendance->overtime) }}" autofocus>
-
-                @if ($errors->has('overtime'))
-                    <span class="help-block">
-                        <strong>{{ $errors->first('overtime') }}</strong>
-                    </span>
-                @endif
-            </div>
-        </div>
     </div>
 
     <div class="row">
@@ -84,22 +71,6 @@
 
     <div class="row">
     <div class="col-3">
-    <div class="form-group{{ $errors->has('ishalfday') ? ' has-error' : '' }}">
-        <label for="ishalfday" class="control-label">Is Half Day</label>
-
-        <select id="ishalfday" class="form-control" name="ishalfday" autofocus>
-            <option value="1" {{ old('ishalfday', $attendance->ishalfday) == '1' ? 'selected' : '' }}>Yes</option>
-            <option value="0" {{ old('ishalfday', $attendance->ishalfday) == '0' ? 'selected' : '' }}>No</option>
-        </select>
-
-        @if ($errors->has('ishalfday'))
-            <span class="help-block">
-                <strong>{{ $errors->first('ishalfday') }}</strong>
-            </span>
-        @endif
-    </div>
-    </div>
-    <div class="col-3">
     <div class="form-group{{ $errors->has('doublepay') ? ' has-error' : '' }}">
         <label for="doublepay" class="control-label">Is Double Pay</label>
 
@@ -108,9 +79,9 @@
             <option value="0" {{ old('doublepay', $attendance->doublepay) == '0' ? 'selected' : '' }}>No</option>
         </select>
 
-        @if ($errors->has('ishalfday'))
+        @if ($errors->has('doublepay'))
             <span class="help-block">
-                <strong>{{ $errors->first('ishalfday') }}</strong>
+                <strong>{{ $errors->first('doublepay') }}</strong>
             </span>
         @endif
     </div>

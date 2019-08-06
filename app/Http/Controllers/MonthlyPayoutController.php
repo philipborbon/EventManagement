@@ -138,15 +138,7 @@ class MonthlyPayoutController extends Controller
 
         $attendances = DB::select("
             SELECT userid, 
-            SUM(
-                (
-                    (8 / IF(ishalfday = 1, 2, 1)) 
-                    + 
-                    (overtime * 2)
-                )   
-                * 
-                IF(doublepay = 1, 2, 1)
-            ) AS totalhours
+            SUM(8 * IF(doublepay = 1, 2, 1)) AS totalhours
             FROM `attendances`
             WHERE DATE_FORMAT(date, '%m %Y') = '$month $year'
             GROUP BY userid, DATE_FORMAT(date, '%m %Y')
