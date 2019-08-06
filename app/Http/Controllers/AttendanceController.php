@@ -70,7 +70,7 @@ class AttendanceController extends Controller
             'status' => Rule::in(['onduty', 'onleave']),
             'amin' => 'nullable|date_format:"H:i"',
             'amout' => 'nullable|after:amin|date_format:"H:i"',
-            'pmin' => 'nullable|after:amout|required_with:amout|date_format:"H:i"',
+            'pmin' => 'nullable|after:amout|date_format:"H:i"',
             'pmout' => 'nullable|after:pmin|date_format:"H:i"'
         ]);
 
