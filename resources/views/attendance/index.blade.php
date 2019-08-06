@@ -30,6 +30,7 @@
             <th scope="col">AM Out</th>
             <th scope="col">PM In</th>
             <th scope="col">PM Out</th>
+            <th scope="col">Total Hours</th>
 
             @if ($user->usertype == 'admin')
             <th scope="col" colspan="2">Action</th>
@@ -52,6 +53,7 @@
               <td>{{$attendance->amout ? $attendance->getAmOut()->format('H:i') : '--'}}</td>
               <td>{{$attendance->pmin ? $attendance->getPmIn()->format('H:i') : '--'}}</td>
               <td>{{$attendance->pmout ? $attendance->getPmOut()->format('H:i') : '--'}}</td>
+              <td>{{ number_format($attendance->getTotalHours(), 2)}} hrs</td>
 
               @if ($user->usertype == 'admin')
               <td><a href="{{action('AttendanceController@edit', $attendance['id'])}}" class="btn btn-warning">Edit</a></td>
