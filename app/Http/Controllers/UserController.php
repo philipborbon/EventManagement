@@ -18,10 +18,27 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('user.index', compact('users'));
+        $keyword = $request->input('keyword');
+        $usertype = $request->input('usertype');
+
+        $builder = User::query();
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('firstname', 'like', "%" . $keyword . "%");
+                $query->orWhere('lastname', 'like', "%" . $keyword . "%");
+                $query->orWhere('email', 'like', "%" . $keyword . "%");
+            });
+        }
+
+        if ($usertype) {
+            $builder->where('usertype', 'like', $usertype);
+        }
+
+        $users = $builder->get();
+
+        return view('user.index', compact('users', 'keyword', 'usertype'));
     }
 
     /**

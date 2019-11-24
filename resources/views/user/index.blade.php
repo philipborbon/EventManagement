@@ -11,6 +11,29 @@
         </div>
         @endif
         <div class="m-1 text-right"><a href="{{action('UserController@create')}}" class="btn btn-primary">Add User</a></div>
+        <div>
+
+          <form method="GET" action="{{ action('UserController@index') }}">
+            <div class="form-group row">
+                <div class="col-lg-6">
+                  <input class="form-control" name="keyword" placeholder="Search..." type="text" value="{{$keyword}}">
+                </div>
+                <div class="col-lg-2">
+                  <select id="usertype" class="form-control" name="usertype">
+                    <option value="%" {{ $usertype == '%' ? 'selected' : '' }}>All User Type</option>
+
+                    @foreach(config('enums.usertype') as $key => $value)
+                      <option value="{{ $key }}" {{ $usertype == $key ? 'selected' : '' }}>{{ $value }}</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="col-lg-4">
+                  <input class="btn btn-primary" type="submit" value="Search">
+                </div>
+            </div>
+          </form>
+
+        </div>
         <table class="table">
           <thead class="thead-dark">
             <tr>
