@@ -64,6 +64,7 @@ var drop = new Dropzone('#attachment', {
     createImageThumbnails: true,
     addRemoveLinks: false,
     maxFiles: 1,
+    maxFilesize: 5120,
     acceptedFiles: 'image/*',
     url: "{{ action('UserIdentificationController@upload') }}",
     headers: {
