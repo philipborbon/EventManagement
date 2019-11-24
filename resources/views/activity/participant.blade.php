@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container">
-        <h1>{{ $activity->name }} Participants</h1>
+        <div class="row">
+          <div class="col-8"><h1>{{ $activity->name }} Participants</h1></div>
+          <div class="col-4 text-right"><a href="{{action('ActivityController@participants', $activity['id'])}}" class="btn btn-primary">Print</a></div>
+        </div>
 
         @if (Session::has('message'))
           <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>
@@ -12,7 +15,20 @@
           <p>{{ Session::get('success') }}</p>
         </div>
         @endif
+
         <div class="m-1 text-right"><a href="{{action('ActivityController@createParticipant', $id)}}" class="btn btn-primary">Add Participant</a></div>
+
+        <form method="GET" action="{{action('ActivityController@participants', $activity['id'])}}">
+          <div class="form-group row">
+              <div class="col-lg-6">
+                <input class="form-control" name="keyword" placeholder="Search..." type="text" value="{{$keyword}}">
+              </div>
+              <div class="col-lg-4">
+                <input class="btn btn-primary" type="submit" value="Search">
+              </div>
+          </div>
+        </form>
+
         <table class="table">
           <thead class="thead-dark">
             <tr>

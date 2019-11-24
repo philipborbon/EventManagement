@@ -132,10 +132,24 @@ class ActivityController extends Controller
         return redirect('activities')->with('success','Activity has been deleted.');
     }
 
-    public function participants($id){
-        $participants = EventParticipant::where('activityid', $id)->get();
+    public function participants($id, Request $request){
+        $keyword = $request->input('keyword');
+
+        $builder = EventParticipant::join('users', 'users.id', '=', 'userid');
+        $builder->where('activityid', $id);
+        $builder->orderBy('users.lastname', 'ASC');
+
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('users.firstname', 'like', "%" . $keyword . "%");
+                $query->orWhere('users.lastname', 'like', "%" . $keyword . "%");
+            });
+        }
+
         $activity = Activity::find($id);
-        return view('activity.participant', compact('id', 'participants', 'activity'));
+        $participants = $builder->get();
+
+        return view('activity.participant', compact('id', 'participants', 'activity', 'keyword'));
     }
 
     public function createParticipant($id){
