@@ -4,7 +4,7 @@
 <div class="container">
         <div class="row">
           <div class="col-8"><h1>{{ $activity->name }} Participants</h1></div>
-          <div class="col-4 text-right"><a href="{{action('ActivityController@printParticipants', $activity['id'])}}" class="btn btn-primary" target="_blank">Print</a></div>
+          <div class="col-4 text-right"><a href="{{action('ActivityController@printParticipants', ['id' => $activity['id'], 'keyword' => $keyword])}}" class="btn btn-primary" target="_blank">Print</a></div>
         </div>
 
         @if (Session::has('message'))
