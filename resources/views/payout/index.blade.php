@@ -49,6 +49,7 @@
               <th scope="col">Name</th>
               @endif
 
+              <th scope="col">For Month Of</th>
               <th scope="col">Salary</th>
               <th scope="col">Salary After Deductions</th>
               <th scope="col">Date Available</th>
@@ -67,7 +68,7 @@
               @if ($user->usertype == 'admin')
               <th scope="row">{{$payout->user->getFullname()}}</th>
               @endif
-
+              <td>{{$payout->month->format('F Y')}}</th>
               <td>Php {{number_format($payout->payout, 2)}}</td>
               <td>Php {{number_format($payout->actualpayout, 2)}}</td>
               <td>{{$payout->dateavailable->format('M d, Y')}}</td>

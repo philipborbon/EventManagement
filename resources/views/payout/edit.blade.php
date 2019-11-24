@@ -76,6 +76,23 @@
 
     <div class="row">
         <div class="col-4">
+            <div class="form-group{{ $errors->has('month') ? ' has-error' : '' }}">
+                <label for="month" class="control-label">For Month Of</label>
+                <div class="font-weight-bold">{{ $payout->month->format('F Y') }}</div>
+                
+                <input type="hidden" name="month" value="{{ $payout->month->format('Y-m-d') }}">
+
+                @if ($errors->has('month'))
+                    <span class="help-block">
+                        <strong>{{ $errors->first('month') }}</strong>
+                    </span>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
             <div class="form-group{{ $errors->has('dateavailable') ? ' has-error' : '' }}">
                 <label for="dateavailable" class="control-label">Date To Be Available</label>
                 <div class="font-weight-bold">{{ $payout->dateavailable->format('M d, Y') }}</div>

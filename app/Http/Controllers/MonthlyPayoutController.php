@@ -54,11 +54,11 @@ class MonthlyPayoutController extends Controller
         }
 
         if ($start) {
-            $builder->where('dateavailable', '>=', $start);
+            $builder->where('month', '>=', $start);
         }
 
         if ($end) {
-            $builder->where('dateavailable', '<=', $end);
+            $builder->where('month', '<=', $end);
         }
 
 
@@ -239,7 +239,7 @@ class MonthlyPayoutController extends Controller
                 'payout' => $salary,
                 'actualpayout' => $salary - $totalDeduction,
                 'dateavailable' => $dateavailable,
-                'month' => Carbon::createFromFormat('Y-m', "$year-$month"),
+                'month' => Carbon::createFromFormat('Y-m-d', "$year-$month-01"),
                 'totaldays' => $attendance->totaldays
             ]);
 

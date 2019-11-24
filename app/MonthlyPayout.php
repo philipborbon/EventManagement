@@ -10,7 +10,7 @@ class MonthlyPayout extends Model
 {
 	protected $fillable = ['userid', 'payout', 'actualpayout', 'dateavailable', 'datecollected', 'month', 'totaldays'];
 
-	protected $dates = ['dateavailable', 'datecollected'];
+	protected $dates = ['dateavailable', 'datecollected', 'month'];
 
 	public function user(){
 		return $this->belongsTo(User::class, 'userid');

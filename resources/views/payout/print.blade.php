@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mt-5">
-  <h1 class="text-center">{{ $payout->dateavailable->format('F') }} Payslip</h1>
+  <h1 class="text-center">{{ $payout->month->format('F Y') }} Payslip</h1>
 
   <div class="row">
     <div class="mt-3 col-4">
@@ -12,7 +12,7 @@
 
     <div class="mt-3 col-4">
       Total Work Days
-      <div><b>Unknown</b></div>
+      <div><b>{{ $payout->totaldays }}</b></div>
     </div>
   </div>
 
