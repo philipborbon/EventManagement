@@ -83,7 +83,7 @@
                 </form>
               </td>
               @endif
-              <td><a href="{{action('MonthlyPayoutController@print', $payout['id'])}}" class="btn btn-primary">Print</a></td>
+              <td><a href="{{action('MonthlyPayoutController@print', $payout['id'])}}" class="btn btn-primary" target="_blank">Print</a></td>
             </tr>
             @endforeach
           </tbody>

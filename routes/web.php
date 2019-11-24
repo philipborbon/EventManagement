@@ -81,7 +81,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 	Route::get('attendances', 'AttendanceController@index');
 	Route::get('activedeductions', 'EmployeeActiveDeductionController@index');
 	Route::get('payslips', 'MonthlyPayoutController@index');
-	Route::get('payslips/print', 'MonthlyPayoutController@print');
+	Route::get('payslips/{id}/print', 'MonthlyPayoutController@print');
 
 	Route::resource('reservations', 'ReservationController');
 	Route::patch('reservations/{id}/waive', 'ReservationController@waive');
