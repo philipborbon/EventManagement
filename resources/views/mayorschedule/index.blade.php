@@ -13,6 +13,28 @@
         @if (Auth::user()->usertype == 'admin')
         <div class="m-1 text-right"><a href="{{action('MayorScheduleController@create')}}" class="btn btn-primary">Add Mayor Schedule</a></div>
         @endif
+
+        <form method="GET" action="{{ action('MayorScheduleController@index') }}">
+          <div class="form-group row">
+              <div class="col-lg-4">
+                &nbsp;
+                <input class="form-control" name="keyword" placeholder="Search..." type="text" value="{{$keyword}}">
+              </div>
+              <div class="col-lg-2">
+                Start Date:
+                <input type="date" name="start" value="{{$start}}" class="form-control">
+              </div>
+              <div class="col-lg-2">
+                End Date:
+                <input type="date" name="end" value="{{$end}}" class="form-control">
+              </div>
+              <div class="col-lg-4">
+                <div>&nbsp;</div>
+                <input class="btn btn-primary" type="submit" value="Search">
+              </div>
+          </div>
+        </form>
+
         <table class="table">
           <thead class="thead-dark">
             <tr>

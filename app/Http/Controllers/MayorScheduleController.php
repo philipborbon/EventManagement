@@ -20,11 +20,33 @@ class MayorScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $schedules = MayorSchedule::orderBy('status', 'ASC')
-            ->orderBy('schedule', 'ASC')->get();
-        return view('mayorschedule.index', compact('schedules'));
+        $keyword = $request->input('keyword');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $builder = MayorSchedule::orderBy('status', 'ASC')
+            ->orderBy('schedule', 'ASC');
+
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('name', 'like', "%" . $keyword . "%");
+                $query->orWhere('location', 'like', "%" . $keyword . "%");
+            });
+        }
+
+        if ($start) {
+            $builder->where('schedule', '>=', $start);
+        }
+
+        if ($end) {
+            $builder->where('schedule', '<=', $end);
+        }
+
+        $schedules = $builder->get();
+
+        return view('mayorschedule.index', compact('schedules', 'keyword', 'start', 'end'));
     }
 
     /**
