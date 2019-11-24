@@ -9,6 +9,7 @@
       <tr>
         <th scope="col">Last Name</th>
         <th scope="col">First Name</th>
+        <th scope="col">Address</th>
       </tr>
     </thead>
     <tbody>
@@ -16,6 +17,7 @@
       <tr>
         <td>{{$participant->user->lastname}}</td>
         <td>{{$participant->user->firstname}}</td>
+        <td>{{$participant->user->address}}</td>
       </tr>
       @endforeach
     </tbody>
