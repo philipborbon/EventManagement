@@ -23,25 +23,46 @@ class MonthlyPayoutController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $start = $request->input('start');
+        $end = $request->input('end');
+
         $user = Auth::user();
 
         $payouts = NULL;
 
         if ($user->usertype == 'admin') {
-            $payouts = MonthlyPayout::join('users', 'users.id', '=', 'userid')
+            $keyword = $request->input('keyword');
+
+            $builder = MonthlyPayout::join('users', 'users.id', '=', 'userid')
                 ->orderBy('dateavailable', 'DESC')
                 ->orderBy('users.lastname', 'ASC')
-                ->select('monthly_payouts.*')
-                ->get();                                
+                ->select('monthly_payouts.*');
+
+            if ($keyword) {
+                $builder->where(function($query) use ($keyword) {
+                    $query->orWhere('users.firstname', 'like', "%" . $keyword . "%");
+                    $query->orWhere('users.lastname', 'like', "%" . $keyword . "%");
+                });
+            }
         } else {
-            $payouts = MonthlyPayout::orderBy('dateavailable', 'DESC')
-                        ->where('userid', $user->id)
-                        ->get();
+            $builder = MonthlyPayout::orderBy('dateavailable', 'DESC')
+                        ->where('userid', $user->id);
         }
 
-        return view('payout.index', compact('payouts', 'user'));
+        if ($start) {
+            $builder->where('dateavailable', '>=', $start);
+        }
+
+        if ($end) {
+            $builder->where('dateavailable', '<=', $end);
+        }
+
+
+        $payouts = $builder->get();
+
+        return view('payout.index', compact('payouts', 'user', 'keyword', 'start', 'end'));
     }
 
     /**
@@ -88,6 +109,14 @@ class MonthlyPayoutController extends Controller
             ->where('id', $id)->first();
 
         return view('payout.edit', compact('payout', 'id'));
+    }
+
+    public function print($id)
+    {
+        $payout = MonthlyPayout::with('deductions')
+            ->where('id', $id)->first();
+
+        return view('payout.print', compact('payout', 'id'));
     }
 
     /**
@@ -149,9 +178,11 @@ class MonthlyPayoutController extends Controller
                             (IF(pmout > 0, IF(pmin > 0, TIME_TO_SEC(TIMEDIFF(pmout, pmin)), 0), 0)/3600)
                         ) <= 8,
                         (
-                            (IF(amout > 0, IF(amin > 0, TIME_TO_SEC(TIMEDIFF(amout, amin)), 0), 0)/3600)
-                            + 
-                            (IF(pmout > 0, IF(pmin > 0, TIME_TO_SEC(TIMEDIFF(pmout, pmin)), 0), 0)/3600)
+                            FLOOR(
+                                (IF(amout > 0, IF(amin > 0, TIME_TO_SEC(TIMEDIFF(amout, amin)), 0), 0)/3600)
+                                + 
+                                (IF(pmout > 0, IF(pmin > 0, TIME_TO_SEC(TIMEDIFF(pmout, pmin)), 0), 0)/3600)
+                            )
                         ), 
                         8
                     )

@@ -15,6 +15,33 @@
         <div class="m-1 text-right"><a href="{{action('MonthlyPayoutController@create')}}" class="btn btn-primary">Generate Payslips</a></div>
         @endif
 
+        <form method="GET" action="{{ action('MonthlyPayoutController@index') }}">
+          <div class="form-group row">
+              @if ($user->usertype == 'admin')
+              <div class="col-lg-4">
+                &nbsp;
+                <input class="form-control" name="keyword" placeholder="Search..." type="text" value="{{$keyword}}">
+              </div>
+              @endif
+              <div class="col-lg-2">
+                Start Date:
+                <input type="date" name="start" value="{{$start}}" class="form-control">
+              </div>
+              <div class="col-lg-2">
+                End Date:
+                <input type="date" name="end" value="{{$end}}" class="form-control">
+              </div>
+              <div class="col-lg-4">
+                <div>&nbsp;</div>
+                @if ($user->usertype == 'admin')
+                <input class="btn btn-primary" type="submit" value="Search">
+                @else
+                <input class="btn btn-primary" type="submit" value="Go">
+                @endif
+              </div>
+          </div>
+        </form>
+
         <table class="table">
           <thead class="thead-dark">
             <tr>
@@ -28,7 +55,9 @@
               <th scope="col">Date Collected</th>
 
               @if ($user->usertype == 'admin')
-              <th scope="col" colspan="2">Action</th>
+              <th scope="col" colspan="3">Action</th>
+              @else
+              <th scope="col" colspan="1">Action</th>
               @endif
             </tr>
           </thead>
@@ -54,6 +83,7 @@
                 </form>
               </td>
               @endif
+              <td><a href="{{action('MonthlyPayoutController@print', $payout['id'])}}" class="btn btn-primary">Print</a></td>
             </tr>
             @endforeach
           </tbody>
