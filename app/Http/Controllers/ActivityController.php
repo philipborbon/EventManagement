@@ -153,6 +153,28 @@ class ActivityController extends Controller
         return view('activity.participant', compact('id', 'participants', 'activity', 'keyword'));
     }
 
+    public function printParticipants($id, Request $request){
+        $keyword = $request->input('keyword');
+
+        $builder = EventParticipant::join('users', 'users.id', '=', 'userid');
+        $builder->where('activityid', $id);
+        $builder->orderBy('users.lastname', 'ASC');
+        $builder->select('event_participants.*');
+        $builder->where('accepted', true);
+
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('users.firstname', 'like', "%" . $keyword . "%");
+                $query->orWhere('users.lastname', 'like', "%" . $keyword . "%");
+            });
+        }
+
+        $activity = Activity::find($id);
+        $participants = $builder->get();
+
+        return view('activity.printparticipant', compact('id', 'participants', 'activity', 'keyword'));
+    }
+
     public function createParticipant($id){
         $activity = Activity::find($id);
         $users = User::where('usertype', 'participant')->get();

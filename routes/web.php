@@ -66,6 +66,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 
 	Route::resource('activities','ActivityController');
 	Route::get('activities/{id}/participants','ActivityController@participants');
+	Route::get('activities/{id}/participants/print','ActivityController@printParticipants');
 	Route::get('activities/{id}/participants/create','ActivityController@createParticipant');
 	Route::patch('activities/{id}/participants/{participantId}/accept','ActivityController@acceptParticipant');
 	Route::patch('activities/{id}/participants/{participantId}/deny','ActivityController@denyParticipant');
