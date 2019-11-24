@@ -11,6 +11,8 @@ use EventManagement\PayoutDeduction;
 use DB;
 use Auth;
 
+use Carbon\Carbon;
+
 class MonthlyPayoutController extends Controller
 {
     public function __construct()
@@ -203,7 +205,9 @@ class MonthlyPayoutController extends Controller
                         )
                     ) * 2
                 )) * IF(doublepay = 1, 2, 1)
-            ) AS totalhours
+            ) AS totalhours,
+
+            SUM(1) AS totaldays
 
             FROM `attendances`
             WHERE DATE_FORMAT(date, '%m %Y') = '$month $year'
@@ -234,7 +238,9 @@ class MonthlyPayoutController extends Controller
                 'userid' => $attendance->userid,
                 'payout' => $salary,
                 'actualpayout' => $salary - $totalDeduction,
-                'dateavailable' => $dateavailable
+                'dateavailable' => $dateavailable,
+                'month' => Carbon::createFromFormat('Y-m', "$year-$month"),
+                'totaldays' => $attendance->totaldays
             ]);
 
             foreach($payoutDeductions as $deduction){

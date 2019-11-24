@@ -8,7 +8,7 @@ use EventManagement\PayoutDeduction;
 
 class MonthlyPayout extends Model
 {
-	protected $fillable = ['userid', 'payout', 'actualpayout', 'dateavailable', 'datecollected'];
+	protected $fillable = ['userid', 'payout', 'actualpayout', 'dateavailable', 'datecollected', 'month', 'totaldays'];
 
 	protected $dates = ['dateavailable', 'datecollected'];
 
