@@ -138,6 +138,7 @@ class ActivityController extends Controller
         $builder = EventParticipant::join('users', 'users.id', '=', 'userid');
         $builder->where('activityid', $id);
         $builder->orderBy('users.lastname', 'ASC');
+        $builder->select('event_participants.*');
 
         if ($keyword) {
             $builder->where(function($query) use ($keyword) {
