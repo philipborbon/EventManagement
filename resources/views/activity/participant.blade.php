@@ -36,7 +36,7 @@
                 @endif
               </td>
               <td>
-                @if ($participant->denied == 0)
+                @if ($participant->accepted == 1)
                 <form action="{{action('ActivityController@denyParticipant', ['id' => $participant['activityid'], 'participantId' => $participant['id']])}}" method="post">
                   {{csrf_field()}}
                   <input name="_method" type="hidden" value="PATCH">
