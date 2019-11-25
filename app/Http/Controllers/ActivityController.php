@@ -11,6 +11,8 @@ use EventManagement\EventParticipant;
 use Illuminate\Validation\Rule;
 use EventManagement\User;
 
+use DB;
+
 class ActivityController extends Controller
 {
     public function __construct()
@@ -23,10 +25,33 @@ class ActivityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $activities = Activity::all();
-        return view('activity.index', compact('activities'));
+        $keyword = $request->input('keyword');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $builder = Activity::join('events', 'events.id', '=', 'eventid')
+            ->select('activities.*');
+
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('activities.name', 'like', "%" . $keyword . "%");
+                $query->orWhere('events.name', 'like', "%" . $keyword . "%");
+            });
+        }
+
+        if ($start) {
+            $builder->whereDate('schedule', '>=', "$start");
+        }
+
+        if ($end) {
+            $builder->whereDate('schedule', '<=', "$end");
+        }
+
+        $activities = $builder->get();
+
+        return view('activity.index', compact('activities', 'keyword', 'start', 'end'));
     }
 
     /**
