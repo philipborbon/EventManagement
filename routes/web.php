@@ -97,6 +97,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 	Route::post('payments/{id}/removeFile', 'PaymentController@removeFile');
 
 	Route::get('financialreport', 'ReportController@financial');
+	Route::get('financialreport/print', 'ReportController@printFinancial');
 
 	Route::get('notifications/onhold', 'ReservationController@reservationOnHold');
 });

@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container">
-    <h1>{{ $title }}</h1>
+    <div class="row">
+      <div class="col-8"><h1>{{ $title }}</h1></div>
+      <div class="col-4 text-right"><a href="{{action('ReportController@printFinancial', ['keyword' => $keyword, 'start' => $start, 'end' => $end])}}" class="btn btn-primary" target="_blank">Print</a></div>
+    </div>
 
     @if (Session::has('message'))
       <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>
