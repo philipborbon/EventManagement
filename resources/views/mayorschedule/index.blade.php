@@ -2,7 +2,10 @@
 
 @section('content')
 <div class="container">
-    <h1>Mayor's Schedule</h1>
+    <div class="row">
+      <div class="col-8"><h1><h1>Mayor's Schedule</h1></h1></div>
+      <div class="col-4 text-right"><a href="{{action('MayorScheduleController@print', ['keyword' => $keyword, 'start' => $start, 'end' => $end])}}" class="btn btn-primary" target="_blank">Print</a></div>
+    </div>
 
     @if (Session::has('message'))
       <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>
@@ -12,6 +15,7 @@
       <p>{{ Session::get('success') }}</p>
     </div>
     @endif
+
     @if (Auth::user()->usertype == 'admin')
     <div class="m-1 text-right"><a href="{{action('MayorScheduleController@create')}}" class="btn btn-primary">Add Mayor's Schedule</a></div>
     @endif

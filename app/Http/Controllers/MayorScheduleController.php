@@ -49,6 +49,37 @@ class MayorScheduleController extends Controller
         return view('mayorschedule.index', compact('schedules', 'keyword', 'start', 'end'));
     }
 
+    public function print(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $builder = MayorSchedule::orderBy('status', 'ASC')
+            ->orderBy('schedule', 'ASC');
+
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('name', 'like', "%" . $keyword . "%");
+                $query->orWhere('location', 'like', "%" . $keyword . "%");
+            });
+        }
+
+        if ($start) {
+            $builder->where('schedule', '>=', $start);
+        }
+
+        if ($end) {
+            $builder->where('schedule', '<=', $end);
+        }
+
+
+
+        $schedules = $builder->get();
+
+        return view('mayorschedule.print', compact('schedules', 'keyword', 'start', 'end'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

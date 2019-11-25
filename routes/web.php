@@ -76,6 +76,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 
 	Route::resource('documenttypes', 'DocumentTypeController');
 	Route::resource('announcements', 'AnnouncementController');
+	Route::get('mayorschedules/print', 'MayorScheduleController@print');
 	Route::resource('mayorschedules', 'MayorScheduleController');
 
 	Route::get('attendances', 'AttendanceController@index');
