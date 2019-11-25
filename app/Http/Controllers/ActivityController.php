@@ -37,6 +37,7 @@ class ActivityController extends Controller
         if ($keyword) {
             $builder->where(function($query) use ($keyword) {
                 $query->orWhere('activities.name', 'like', "%" . $keyword . "%");
+                $query->orWhere('activities.location', 'like', "%" . $keyword . "%");
                 $query->orWhere('events.name', 'like', "%" . $keyword . "%");
             });
         }
@@ -66,6 +67,7 @@ class ActivityController extends Controller
         if ($keyword) {
             $builder->where(function($query) use ($keyword) {
                 $query->orWhere('activities.name', 'like', "%" . $keyword . "%");
+                $query->orWhere('activities.location', 'like', "%" . $keyword . "%");
                 $query->orWhere('events.name', 'like', "%" . $keyword . "%");
             });
         }
