@@ -43,6 +43,31 @@ class EventController extends Controller
         return view('event.index', compact('events', 'keyword', 'start', 'end'));
     }
 
+    public function print(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $builder = Event::query();
+
+        if ($keyword) {
+            $builder->where('name', 'like', "%" . $keyword . "%");
+        }
+
+        if ($start) {
+            $builder->where('startdate', '>=', $start);
+        }
+
+        if ($end) {
+            $builder->where('enddate', '<=', $end);
+        }
+
+        $events = $builder->get();
+
+        return view('event.print', compact('events', 'keyword', 'start', 'end'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

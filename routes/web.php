@@ -54,6 +54,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\AdminMiddleware']
 });
 
 Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddleware'], function(){
+	Route::get('events/print','EventController@print');
 	Route::resource('events','EventController');
 
 	Route::resource('rentalspaces','RentalSpaceController');
