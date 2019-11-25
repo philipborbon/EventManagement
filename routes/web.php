@@ -87,6 +87,7 @@ Route::group(['middleware' => 'EventManagement\Http\Middleware\EmployeeMiddlewar
 
 	Route::resource('reservations', 'ReservationController');
 	Route::patch('reservations/{id}/waive', 'ReservationController@waive');
+	Route::get('payments/print', 'PaymentController@print');
 	Route::resource('payments', 'PaymentController');
 
 	Route::get('payments/{id}/proof', 'PaymentController@proof');

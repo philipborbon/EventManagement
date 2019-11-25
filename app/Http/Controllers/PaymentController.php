@@ -55,6 +55,37 @@ class PaymentController extends Controller
         return view('payment.index', compact('payments', 'keyword', 'start', 'end'));
     }
 
+    public function print(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $builder = Payment::join('users', 'users.id', '=', 'userid')
+            ->join('rental_spaces', 'rental_spaces.id', '=', 'rentalspaceid')
+            ->select('payments.*');
+
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('users.firstname', 'like', "%" . $keyword . "%");
+                $query->orWhere('users.lastname', 'like', "%" . $keyword . "%");
+                $query->orWhere('rental_spaces.name', 'like', "%" . $keyword . "%");
+            });
+        }
+
+        if ($start) {
+            $builder->where('payments.created_at', '>=', $start);
+        }
+
+        if ($end) {
+            $builder->where('payments.created_at', '<=', $end);
+        }
+
+        $payments = $builder->get();
+
+        return view('payment.print', compact('payments', 'keyword', 'start', 'end'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

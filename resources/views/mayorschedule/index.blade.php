@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row">
-      <div class="col-8"><h1><h1>Mayor's Schedule</h1></h1></div>
+      <div class="col-8"><h1>Mayor's Schedule</h1></div>
       <div class="col-4 text-right"><a href="{{action('MayorScheduleController@print', ['keyword' => $keyword, 'start' => $start, 'end' => $end])}}" class="btn btn-primary" target="_blank">Print</a></div>
     </div>
 
