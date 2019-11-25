@@ -18,10 +18,29 @@ class EventController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::all();
-        return view('event.index', compact('events'));
+        $keyword = $request->input('keyword');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $builder = Event::query();
+
+        if ($keyword) {
+            $builder->where('name', 'like', "%" . $keyword . "%");
+        }
+
+        if ($start) {
+            $builder->where('startdate', '>=', $start);
+        }
+
+        if ($end) {
+            $builder->where('enddate', '<=', $end);
+        }
+
+        $events = $builder->get();
+
+        return view('event.index', compact('events', 'keyword', 'start', 'end'));
     }
 
     /**
