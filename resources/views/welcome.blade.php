@@ -51,7 +51,7 @@
 
         <div class="container mt-5 mb-2">
             <div class="row mb-2">
-                <div class="col-md-8 offset-md-2 title text-center">Welcome To {{ env('APP_NAME') }}!</div>
+                <div class="col-md-8 offset-md-2 title text-center">Welcome To {{ config('app.name', 'Laravel') }}!</div>
             </div>
 
             <div class="mt-5">
