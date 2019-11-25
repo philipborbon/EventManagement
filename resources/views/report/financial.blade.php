@@ -17,6 +17,28 @@
       <p>{{ Session::get('error') }}</p>
     </div>
     @endif
+
+    <form method="GET" action="{{ action('ReportController@financial') }}">
+      <div class="form-group row">
+          <div class="col-lg-4">
+            &nbsp;
+            <input class="form-control" name="keyword" placeholder="Search..." type="text" value="{{$keyword}}">
+          </div>
+          <div class="col-lg-2">
+            Start Date:
+            <input type="date" name="start" value="{{$start}}" class="form-control">
+          </div>
+          <div class="col-lg-2">
+            End Date:
+            <input type="date" name="end" value="{{$end}}" class="form-control">
+          </div>
+          <div class="col-lg-4">
+            <div>&nbsp;</div>
+            <input class="btn btn-primary" type="submit" value="Search">
+          </div>
+      </div>
+    </form>
+
     <table class="table">
       <thead class="thead-dark">
         <tr>
