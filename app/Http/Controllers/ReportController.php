@@ -13,17 +13,24 @@ class ReportController extends Controller
     }
 
 	public function financial(){
-		$query = "
-			SELECT p.id, DATE_FORMAT(p.created_at, '%M %d, %Y') AS date, u.lastname, u.firstname, s.name AS spacename, s.area, s.amount
-			FROM payments p
-			INNER JOIN users u ON p.userid = u.id
-			INNER JOIN rental_spaces s ON p.rentalspaceid = s.id
-            WHERE p.verified = true
-            ORDER BY p.created_at, u.lastname, u.firstname
-		";
+        $builder = DB::table('payments AS p')
+            ->join('users AS u', 'p.userid', '=', 'u.id')
+            ->join('rental_spaces AS s', 'p.rentalspaceid', '=', 's.id')
+            ->where('p.verified', true)
+            ->orderBy('p.created_at', 'u.lastname', 'u.firstname')
+            ->select (
+                'p.id', 
+                DB::raw("DATE_FORMAT(p.created_at, '%M %d, %Y') AS date"), 
+                'u.lastname', 
+                'u.firstname', 
+                's.name AS spacename', 
+                's.area', 
+                's.amount'
+            );
 
-		$reports = DB::select($query);
-		$title = "Financial Report";
+        $reports = $builder->get();
+
+		$title = 'Financial Report';
 
 		return view('report.financial', compact('reports', 'title'));
 	}
