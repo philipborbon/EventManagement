@@ -54,6 +54,35 @@ class ActivityController extends Controller
         return view('activity.index', compact('activities', 'keyword', 'start', 'end'));
     }
 
+    public function print(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $start = $request->input('start');
+        $end = $request->input('end');
+
+        $builder = Activity::join('events', 'events.id', '=', 'eventid')
+            ->select('activities.*');
+
+        if ($keyword) {
+            $builder->where(function($query) use ($keyword) {
+                $query->orWhere('activities.name', 'like', "%" . $keyword . "%");
+                $query->orWhere('events.name', 'like', "%" . $keyword . "%");
+            });
+        }
+
+        if ($start) {
+            $builder->whereDate('schedule', '>=', "$start");
+        }
+
+        if ($end) {
+            $builder->whereDate('schedule', '<=', "$end");
+        }
+
+        $activities = $builder->get();
+
+        return view('activity.print', compact('activities', 'keyword', 'start', 'end'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

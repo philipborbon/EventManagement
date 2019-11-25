@@ -4,6 +4,7 @@
 <div class="container">
   <div class="row">
     <div class="col-8"><h1>Activities</h1></div>
+    <div class="col-4 text-right"><a href="{{action('ActivityController@print', ['keyword' => $keyword, 'start' => $start, 'end' => $end])}}" class="btn btn-primary" target="_blank">Print</a></div>
   </div>
 
   @if (Session::has('message'))
