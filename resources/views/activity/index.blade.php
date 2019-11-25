@@ -2,6 +2,10 @@
 
 @section('content')
 <div class="container">
+  <div class="row">
+    <div class="col-8"><h1>Activities</h1></div>
+  </div>
+
   @if (Session::has('message'))
     <div class="alert alert-info"><p>{{ Session::get('message') }}</p></div>
   @endif
