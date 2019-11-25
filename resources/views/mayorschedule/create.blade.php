@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h1>Create New Mayor Schedule</h1>
+  <h1>Create New Mayor's Schedule</h1>
 
   @if (Session::has('success'))
   <div class="alert alert-success">

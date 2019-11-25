@@ -34,7 +34,7 @@ class HomeController extends Controller
                         'Events' => '/events',
                         'Activities' => '/activities',
                         'Announcements' => '/announcements',
-                        'Mayor Schedules' => '/mayorschedules',
+                        'Mayor\'s Schedules' => '/mayorschedules',
                     ),
 
                     array (
@@ -66,7 +66,7 @@ class HomeController extends Controller
                         'Events' => '/events',
                         'Activities' => '/activities',
                         'Announcements' => '/announcements',
-                        'Mayor Schedules' => '/mayorschedules',
+                        'Mayor\'s Schedules' => '/mayorschedules',
                     ),
 
                     array (

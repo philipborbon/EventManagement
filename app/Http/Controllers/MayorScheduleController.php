@@ -81,7 +81,7 @@ class MayorScheduleController extends Controller
 
         MayorSchedule::create($schedule);
 
-        return back()->with('success', 'Mayor schedule has been added.');
+        return back()->with('success', 'Mayor\'s schedule has been added.');
     }
 
     /**
@@ -133,7 +133,7 @@ class MayorScheduleController extends Controller
         $schedule->status = $request->get('status');
         $schedule->save();
 
-        return redirect('mayorschedules')->with('success','Mayor schedule has been updated.');
+        return redirect('mayorschedules')->with('success','Mayor\'s schedule has been updated.');
     }
 
     /**
@@ -147,6 +147,6 @@ class MayorScheduleController extends Controller
         $schedule = MayorSchedule::find($id);
         $schedule->delete();
 
-        return redirect('mayorschedules')->with('success','Mayor schedule has been deleted.');
+        return redirect('mayorschedules')->with('success','Mayor\'s schedule has been deleted.');
     }
 }
