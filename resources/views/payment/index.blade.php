@@ -17,6 +17,7 @@
               <th scope="col">ID</th>
               <th scope="col">Name</th>
               <th scope="col">Rental Space</th>
+              <th scope="col">Date</th>
               <th scope="col">Amount</th>
               <th scope="col">Verified</th>
               <th scope="col">From Reservation</th>
@@ -29,6 +30,7 @@
               <th scope="row">{{$payment->id}}</th>
               <td>{{$payment->user->getFullname()}}</td>
               <td>{{$payment->rentalSpace->name}}</td>
+              <td>{{$payment->created_at->format('M d, Y')}}</td>
               <td>Php {{ number_format($payment->amount, 2) }}</td>
               <td>{{$payment->verified ? 'Yes' : 'No'}}</td>
               <td>{{$payment->reservationid ? 'Yes' : 'No'}}</td>
